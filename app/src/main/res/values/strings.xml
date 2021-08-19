@@ -1,3 +1,11 @@
 <resources>
-    <string name="app_name">CalendarProjectTeamLinKot</string>
+    <string name="app_name">KalendaryoProject</string>
+    <string name="str_logo">Kalendaryo</string>
+    <string name="str_application">App</string>
+
+    <string-array name="view">
+        <item>Month</item>
+        <item>Week</item>
+        <item>Year</item>
+    </string-array>
 </resources>
