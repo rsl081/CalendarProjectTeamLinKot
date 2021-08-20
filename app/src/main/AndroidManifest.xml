@@ -9,11 +9,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.CalendarProjectTeamLinKot">
-        <activity android:name=".view.WeekAdapter"></activity>
-        <activity android:name=".view.YearAdapter" />
-        <activity
-            android:name=".view.MonthAdapter"
-            android:screenOrientation="portrait" />
         <activity
             android:name=".view.SplashActivity"
             android:screenOrientation="portrait" >

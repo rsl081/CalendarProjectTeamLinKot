@@ -1,11 +1,21 @@
 <resources>
-    <string name="app_name">KalendaryoProject</string>
-    <string name="str_logo">Kalendaryo</string>
-    <string name="str_application">App</string>
+    <string name="app_name">MeTaskProject</string>
+    <string name="str_metask">Metask</string>
+    <string name="str_app">App</string>
+
+    <!--SignIn-->
+    <string name="signin_pls_login_to_continue">Please login to continue</string>
+    <string name="signin_username">Username</string>
+    <string name="signin_password">Password</string>
+    <string name="signin_forgot_password">Forgot Password</string>
+    <string name="signin_btn_signin">Sign In</string>
+    <string name="signin_dont_have_an_account">Dont have an account?</string>
+    <string name="signin_register">Register</string>
 
     <string-array name="view">
         <item>Month</item>
         <item>Week</item>
         <item>Year</item>
     </string-array>
+
 </resources>
