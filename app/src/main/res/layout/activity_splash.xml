@@ -4,9 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/blue"
+    android:background="@color/white"
     tools:context=".view.SplashActivity">
-
 
     <ImageView
         android:id="@+id/ivLogo"
@@ -16,16 +15,17 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/schedulelogo" />
+        app:srcCompat="@drawable/mdi___calendar_clock" />
 
     <TextView
         android:id="@+id/tvAppName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
-        android:text="@string/str_logo"
+        android:text="@string/str_metask"
         android:textAppearance="@style/TextAppearance.AppCompat.Display1"
-        android:textColor="@color/sunset"
+        android:textColor="@color/black"
+        android:alpha="0.7"
         app:layout_constraintEnd_toEndOf="@+id/ivLogo"
         app:layout_constraintStart_toStartOf="@+id/ivLogo"
         app:layout_constraintTop_toBottomOf="@+id/ivLogo" />
@@ -35,9 +35,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="@string/str_application"
+        android:text="@string/str_app"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        android:textColor="@color/rosebud"
+        android:textColor="@color/light_gray"
         app:layout_constraintEnd_toEndOf="@+id/tvAppName"
         app:layout_constraintTop_toBottomOf="@+id/tvAppName" />
 </androidx.constraintlayout.widget.ConstraintLayout>

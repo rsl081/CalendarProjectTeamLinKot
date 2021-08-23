@@ -78,7 +78,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:text="Tasks"
+            android:text="Task"
             android:textAppearance="@style/TextAppearance.AppCompat.Small"
             android:textColor="@color/sunset"
             app:layout_constraintBottom_toBottomOf="@+id/tvview"
