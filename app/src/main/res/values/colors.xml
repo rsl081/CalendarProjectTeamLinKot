@@ -16,4 +16,6 @@
 
     <color name="mtrl_textinput_default_box_stroke_color">#b1cbbb</color>
 
+    <color name="snackbar_error_color">#F72400</color>
+
 </resources>
