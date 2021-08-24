@@ -9,6 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.CalendarProjectTeamLinKot">
+        <activity android:name=".view.DayActivity"></activity>
         <activity android:name=".view.BaseActivity"></activity>
         <activity android:name=".view.SignInActivity">
             <intent-filter>
