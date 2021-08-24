@@ -1,5 +1,6 @@
 package com.example.calendarprojectteamlinkot.view
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.TextUtils
@@ -14,49 +15,37 @@ class SignInActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_in)
 
-
+        btnSignIn.setOnClickListener {
+            signInRegisteredUser();
+        }
     }
 
-//    private fun signInRegisteredUser()
-//    {
-//        val email: String = et_.text.toString().trim{ it <= ' '}
-//        val password: String = et_password.text.toString().trim{ it <= ' '}
-//
-//        if(validateForm(email, password))
-//        {
-//            showProgressDialog(resources.getString(R.string.please_wait))
-//            auth.signInWithEmailAndPassword(email, password)
-//                .addOnCompleteListener(this) { task ->
-//                    hideProgressDialog()
-//                    if (task.isSuccessful) {
-//                        // Sign in success, update UI with the signed-in user's information
-//                        Log.d("Signin", "signInWithEmail:success")
-//                        val user = auth.currentUser
-//                        startActivity(Intent(this, MainActivity::class.java))
-//                    } else {
-//                        // If sign in fails, display a message to the user.
-//                        Log.w("Signin", "signInWithEmail:failure", task.exception)
-//                        Toast.makeText(baseContext, "Authentication failed.",
-//                            Toast.LENGTH_SHORT).show()
-//                    }
-//                }
-//        }else{
-//
-//        }
-//    }
+    private fun signInRegisteredUser()
+    {
+        val email: String = et_username_sigin.text.toString().trim{ it <= ' '}
+        val password: String = et_password_sigin.text.toString().trim{ it <= ' '}
 
-//    private fun validateForm(email: String, password: String): Boolean {
-//        return when{
-//            TextUtils.isEmpty(email)->{
-//                showErrorSnackBar("Please enter a email")
-//                false
-//            }
-//            TextUtils.isEmpty(password)->{
-//                showErrorSnackBar("Please enter a password")
-//                false
-//        }else->{
-//            true
-//        }
-//    }//end of validateForm
+        if(validateForm(email, password))
+        {
+            showProgressDialog(resources.getString(R.string.please_wait))
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+        }
+    }
+
+    private fun validateForm(email: String, password: String): Boolean {
+        return when{
+            TextUtils.isEmpty(email)->{
+                showErrorSnackBar("Please enter a email")
+                false
+            }
+                TextUtils.isEmpty(password)->{
+                    showErrorSnackBar("Please enter a password")
+                    false
+            }else->{
+                true
+            }
+        }
+    }//end of validateForm
 
 }
