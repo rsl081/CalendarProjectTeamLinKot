@@ -12,11 +12,18 @@
     <string name="sign_in_no_account">Don\'t have an account?</string>
     <string name="sign_in_register">Register</string>
 
-    <string-array name="view">
-        <item>Month</item>
-        <item>Week</item>
-        <item>Year</item>
-    </string-array>
+    <!--Content Descriptions-->
+    <string name="menu_button">Menu Button</string>
+    <string name="date_today">Date Today</string>
+
+    <!--Day View-->
+    <string name="card_view_greeting_morning">Good morning!</string>
+    <string name="card_view_greeting_afternoon">Good afternoon!</string>
+    <string name="card_view_greeting_evening">Good evening!</string>
+    <string name="card_view_number_of_tasks">You have 4 tasks today</string>
+    <string name="tasks">Tasks</string>
+    <string name="task">Task</string>
+
 
     <!--BaseActivity-->
     <string name="please_click_back_again_to_exit">Please click back again to exit.</string>
