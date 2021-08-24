@@ -24,6 +24,13 @@
     <string name="tasks">Tasks</string>
     <string name="task">Task</string>
 
+    <!--Task View-->
+    <string name="selected_task_date">Selected Task Date</string>
+    <string name="toggle_button_on">Show All</string>
+    <string name="toggle_button_off">My Tasks</string>
+    <string name="left_arrow_button">Left Arrow Button</string>
+    <string name="right_arrow_button">Right Arrow Button</string>
+
 
     <!--BaseActivity-->
     <string name="please_click_back_again_to_exit">Please click back again to exit.</string>
