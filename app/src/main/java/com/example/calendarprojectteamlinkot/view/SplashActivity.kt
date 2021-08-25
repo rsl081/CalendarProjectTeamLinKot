@@ -22,7 +22,7 @@ class SplashActivity : AppCompatActivity()
         animation.setAnimationListener(object : Animation.AnimationListener {
             override fun onAnimationStart(animation: Animation) {}
             override fun onAnimationEnd(animation: Animation) {
-                startActivity(Intent(this@SplashActivity, MainActivity::class.java))
+                startActivity(Intent(this@SplashActivity, SignInActivity::class.java))
                 finish()
             }
             override fun onAnimationRepeat(animation: Animation) {}
