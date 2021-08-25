@@ -14,6 +14,7 @@
         android:layout_marginStart="@dimen/nav_content_marginStartEnd"
         android:layout_marginEnd="@dimen/nav_content_marginStartEnd"
         android:layout_gravity="center"
+        android:paddingBottom="20dp"
         android:contentDescription="@string/display_picture"
         android:src="@drawable/ellipse_9"
         app:civ_border_color="@color/white"

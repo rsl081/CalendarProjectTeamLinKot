@@ -41,7 +41,7 @@ open class BaseActivity : AppCompatActivity() {
 //        return FirebaseAuth.getInstance().currentUser!!.uid
 //    }
 
-    protected fun doubleBacktoExit(){
+    fun doubleBackToExit(){
         if(doubleBackToExitPressedOnce){
             super.onBackPressed()
             return
