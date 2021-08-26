@@ -10,7 +10,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CalendarProjectTeamLinKot">
         <activity android:name=".view.CreateTaskActivity"></activity>
-        <activity android:name=".view.TaskActivity"></activity>
+        <activity android:name=".view.TaskActivity">
+        </activity>
         <activity android:name=".view.DayActivity">
         </activity>
         <activity android:name=".view.BaseActivity" />
@@ -24,7 +25,6 @@
         <activity
             android:name=".view.MainActivity"
             android:screenOrientation="portrait" >
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
