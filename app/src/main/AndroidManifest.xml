@@ -9,14 +9,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.CalendarProjectTeamLinKot">
-        <activity android:name=".view.CreateTaskActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+        <activity android:name=".view.CreateTaskActivity"></activity>
+        <activity android:name=".view.TaskActivity">
         </activity>
-        <activity android:name=".view.TaskActivity"/>
         <activity android:name=".view.DayActivity">
         </activity>
         <activity android:name=".view.BaseActivity" />
@@ -29,7 +24,13 @@
 
         <activity
             android:name=".view.MainActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

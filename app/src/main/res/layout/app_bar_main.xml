@@ -35,6 +35,14 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <include layout="@layout/activity_day" />
+    <include
+        android:id="@+id/activity_day"
+        layout="@layout/activity_day"
+        android:visibility="visible"
+        />
+    <include
+        android:id="@+id/activity_task"
+        layout="@layout/activity_task"
+        android:visibility="invisible"/>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
