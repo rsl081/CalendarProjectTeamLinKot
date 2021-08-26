@@ -22,8 +22,8 @@ class SignInActivity : BaseActivity() {
 
     private fun signInRegisteredUser()
     {
-        val email: String = et_username_sigin.text.toString().trim{ it <= ' '}
-        val password: String = et_password_sigin.text.toString().trim{ it <= ' '}
+        val email: String = et_username_signIn.text.toString().trim{ it <= ' '}
+        val password: String = et_password_signIn.text.toString().trim{ it <= ' '}
 
         if(validateForm(email, password))
         {
