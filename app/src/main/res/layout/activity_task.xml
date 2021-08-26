@@ -28,7 +28,7 @@
         app:layout_constraintGuide_begin="20dp" />
 
     <ImageButton
-        android:id="@+id/imageButton"
+        android:id="@+id/ibMenuButtonTaskView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
@@ -57,7 +57,7 @@
         android:contentDescription="@string/left_arrow_button"
         app:layout_constraintHorizontal_chainStyle="spread"
         app:layout_constraintStart_toStartOf="@+id/guideline"
-        app:layout_constraintTop_toBottomOf="@+id/imageButton"
+        app:layout_constraintTop_toBottomOf="@+id/ibMenuButtonTaskView"
         app:srcCompat="@drawable/left_arrow" />
 
     <TextView
@@ -69,7 +69,7 @@
         android:text="@string/selected_task_date"
         android:textSize="20sp"
         app:layout_constraintStart_toEndOf="@+id/imageView2"
-        app:layout_constraintTop_toBottomOf="@+id/imageButton" />
+        app:layout_constraintTop_toBottomOf="@+id/ibMenuButtonTaskView" />
 
     <ImageButton
         android:id="@+id/imageButton2"
@@ -80,7 +80,7 @@
         android:backgroundTint="@color/white"
         android:contentDescription="@string/right_arrow_button"
         app:layout_constraintStart_toEndOf="@+id/textView4"
-        app:layout_constraintTop_toBottomOf="@+id/imageButton"
+        app:layout_constraintTop_toBottomOf="@+id/ibMenuButtonTaskView"
         app:srcCompat="@drawable/right_arrow" />
 
     <ToggleButton
@@ -97,7 +97,7 @@
         android:textSize="12sp"
         app:layout_constraintEnd_toStartOf="@+id/guideline2"
         app:layout_constraintStart_toEndOf="@+id/imageButton2"
-        app:layout_constraintTop_toBottomOf="@+id/imageButton" />
+        app:layout_constraintTop_toBottomOf="@+id/ibMenuButtonTaskView" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="0dp"
@@ -108,5 +108,16 @@
         app:layout_constraintStart_toStartOf="@+id/guideline"
         app:layout_constraintTop_toBottomOf="@+id/imageView2" />
 
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/floatingActionButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:backgroundTint="@color/white"
+        android:clickable="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/guideline2"
+        app:srcCompat="@drawable/ic_baseline_add_24" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

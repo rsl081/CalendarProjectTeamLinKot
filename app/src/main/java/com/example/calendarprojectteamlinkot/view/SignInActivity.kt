@@ -72,8 +72,8 @@ class SignInActivity : BaseActivity() {
 
     private fun signInRegisteredUser()
     {
-        val email: String = et_username_sigin.text.toString().trim{ it <= ' '}
-        val password: String = et_password_sigin.text.toString().trim{ it <= ' '}
+        val email: String = et_username_signIn.text.toString().trim{ it <= ' '}
+        val password: String = et_password_signIn.text.toString().trim{ it <= ' '}
 
         if(validateForm(email, password))
         {
@@ -86,7 +86,7 @@ class SignInActivity : BaseActivity() {
     private fun validateForm(email: String, password: String): Boolean {
         return when{
             TextUtils.isEmpty(email)->{
-                showErrorSnackBar("Please enter a email")
+                showErrorSnackBar("Please enter an email")
                 false
             }
                 TextUtils.isEmpty(password)->{

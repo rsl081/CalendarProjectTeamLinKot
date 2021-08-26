@@ -3,12 +3,10 @@ package com.example.calendarprojectteamlinkot.view
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.example.calendarprojectteamlinkot.R
-import kotlinx.android.synthetic.main.activity_day.*
 
-class DayActivity : AppCompatActivity() {
+class CreateTaskActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_day)
+        setContentView(R.layout.activity_create_task)
     }
-
 }
