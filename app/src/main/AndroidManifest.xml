@@ -9,21 +9,30 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.CalendarProjectTeamLinKot">
-        <activity android:name=".view.DayActivity"></activity>
-        <activity android:name=".view.BaseActivity"></activity>
-        <activity android:name=".view.SignInActivity">
+        <activity
+            android:name=".view.DayActivity"/>
+        <activity
+            android:name=".view.BaseActivity"/>
+        <activity
+            android:name=".view.SignInActivity"/>
+        <activity
+            android:name=".view.SplashActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".view.MainActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.RegisterActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".view.RegisterPasswordActivity"
+            android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".view.SplashActivity"
-            android:screenOrientation="portrait"></activity>
-        <activity
-            android:name=".view.MainActivity"
-            android:screenOrientation="portrait" />
     </application>
 
 </manifest>
