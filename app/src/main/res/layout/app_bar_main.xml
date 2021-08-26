@@ -19,7 +19,17 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="@color/white"
-            >
+            app:titleTextColor="@color/light_gray"
+            app:titleMarginEnd="20dp">
+
+            <TextView
+                android:id="@+id/date_today"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="right"
+                android:layout_marginEnd="20dp"
+                android:textColor="@color/light_gray"
+                />
 
         </androidx.appcompat.widget.Toolbar>
 
