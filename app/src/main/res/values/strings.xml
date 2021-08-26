@@ -3,7 +3,7 @@
     <string name="str_metask">MeTask</string>
     <string name="str_app">App</string>
 
-    <!--SignIn-->
+    <!--Sign In-->
     <string name="sign_in_pls_login_to_continue">Please login to continue</string>
     <string name="sign_in_username">Username</string>
     <string name="sign_in_password">Password</string>
@@ -15,6 +15,10 @@
     <!--Content Descriptions-->
     <string name="menu_button">Menu Button</string>
     <string name="date_today">Date Today</string>
+    <string name="task_view">Task View</string>
+    <string name="calendar_view">Calendar View</string>
+    <string name="display_picture">Display Picture</string>
+    <string name="log_out_button">Log Out</string>
 
     <!--Day View-->
     <string name="card_view_greeting_morning">Good morning!</string>
@@ -24,8 +28,19 @@
     <string name="tasks">Tasks</string>
     <string name="task">Task</string>
 
+    <!--Task View-->
+    <string name="selected_task_date">Selected Task Date</string>
+    <string name="toggle_button_on">Show All</string>
+    <string name="toggle_button_off">My Tasks</string>
+    <string name="left_arrow_button">Left Arrow Button</string>
+    <string name="right_arrow_button">Right Arrow Button</string>
 
-    <!--BaseActivity-->
+    <!--Base Activity-->
     <string name="please_click_back_again_to_exit">Please click back again to exit.</string>
     <string name="please_wait">Please Wait&#8230;</string>
+
+    <!--Side Bar-->
+    <string name="empty_string"> </string>
+
+
 </resources>

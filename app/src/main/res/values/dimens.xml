@@ -1,8 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <!--BaseActivity-->
     <dimen name="progress_dialog_content_padding">10dp</dimen>
     <dimen name="progress_bar_size">50dp</dimen>
     <dimen name="progress_text_marginStart">16dp</dimen>
     <dimen name="progress_text_size">16sp</dimen>
+
+    <!--NavBar-->
+    <dimen name="nav_image_size">80dp</dimen>
+    <dimen name="nav_content_marginStartEnd">16dp</dimen>
+    <dimen name="height_of_nav_main">100dp</dimen>
+    <dimen name="nav_content_margin_top">5dp</dimen>
+    <dimen name="nav_content_margin_bottom">10dp</dimen>
+    <dimen name="nav_user_name_text_size">18sp</dimen>
+    <dimen name="nav_image_circular_border_width">1dp</dimen>
+
+    <!--Overrides-->
+    <dimen name="design_navigation_padding_top_default" tools:override="true">200dp</dimen>
+    <dimen name="design_navigation_separator_vertical_padding" tools:override="true">0dp</dimen>
+    <dimen name="design_navigation_padding_bottom" tools:override="true">20dp</dimen>
+    <dimen name="design_navigation_icon_size" tools:override="true">20dp</dimen>
+    <dimen name="design_navigation_icon_padding" tools:override="true">12dp</dimen>
 </resources>
