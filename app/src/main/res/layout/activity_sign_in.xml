@@ -78,7 +78,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView2">
 
         <androidx.appcompat.widget.AppCompatEditText
-            android:id="@+id/et_username_sigin"
+            android:id="@+id/et_username_signIn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/sign_in_username"
@@ -102,7 +102,7 @@
         app:layout_constraintTop_toBottomOf="@+id/usernameInput">
 
         <androidx.appcompat.widget.AppCompatEditText
-            android:id="@+id/et_password_sigin"
+            android:id="@+id/et_password_signIn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/sign_in_password"
