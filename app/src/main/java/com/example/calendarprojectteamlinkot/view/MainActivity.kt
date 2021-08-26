@@ -14,33 +14,15 @@ import kotlinx.android.synthetic.main.app_bar_main.*
 class MainActivity : BaseActivity(),
     NavigationView.OnNavigationItemSelectedListener {
 
-
-    override fun onCreate(savedInstanceState: Bundle?)
-    {
+    override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        setupActionBar()
+        setupActionBar(this, toolbar_main_activity)
 
         nav_view.setNavigationItemSelectedListener(this)
     }
 
-    private fun setupActionBar(){
-        setSupportActionBar(toolbar_main_activity)
-        toolbar_main_activity.setNavigationIcon(R.drawable.ic_baseline_menu_24)
-
-        toolbar_main_activity.setNavigationOnClickListener {
-            toggleDrawer()
-        }
-    }
-
-    private fun toggleDrawer(){
-        if(drawer_layout.isDrawerOpen(GravityCompat.START)){
-            drawer_layout.closeDrawer(GravityCompat.START)
-        }else{
-            drawer_layout.openDrawer(GravityCompat.START)
-        }
-    }
 
     override fun onBackPressed() {
         if(drawer_layout.isDrawerOpen(GravityCompat.START)){
