@@ -7,16 +7,24 @@
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:theme="@style/AppTheme.AppBarOverlay">
+        android:theme="@style/AppTheme.AppBarOverlay"
+        app:elevation="0dp"
+        app:contentInsetStart="12dp"
+        app:contentInsetLeft="12dp"
+        app:contentInsetStartWithNavigation="12dp"
+        >
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar_main_activity"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="@color/white"
-            app:popupTheme="@style/AppTheme.PopupOverlay">
+            >
 
         </androidx.appcompat.widget.Toolbar>
+
     </com.google.android.material.appbar.AppBarLayout>
+
+    <include layout="@layout/activity_day" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -3,12 +3,12 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_my_calendar"
-            android:icon="@drawable/mdi___view_dashboard"
+            android:icon="@drawable/calendar_view"
             android:title="@string/empty_string"/>
 
         <item
             android:id="@+id/nav_my_tasks"
-            android:icon="@drawable/mdi___view_day_outline"
+            android:icon="@drawable/task_view"
             android:title="@string/empty_string" />
     </group>
 </menu>
