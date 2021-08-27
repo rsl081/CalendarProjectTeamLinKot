@@ -9,6 +9,7 @@ import androidx.annotation.RequiresApi
 import com.example.calendarprojectteamlinkot.R
 import com.example.calendarprojectteamlinkot.models.Login
 import com.example.calendarprojectteamlinkot.models.User
+import com.example.calendarprojectteamlinkot.repository.ApiClass
 import com.example.calendarprojectteamlinkot.repository.ApiServices
 import com.example.calendarprojectteamlinkot.utils.Constants
 import kotlinx.android.synthetic.main.activity_sign_in.*
@@ -26,48 +27,56 @@ class SignInActivity : BaseActivity() {
         setContentView(R.layout.activity_sign_in)
 
         btnSignIn.setOnClickListener {
-            signInRegisteredUser();
+            signInRegisteredUser()
         }
 
-        val builder = Retrofit.Builder()
-            .baseUrl(Constants.BASE_URL)
-            .addConverterFactory(GsonConverterFactory.create())
+        tv_register.setOnClickListener {
+            startActivity(Intent(this, RegisterActivity::class.java))
+        }
 
-        val retrofit = builder.build()
+//        ApiClass().getUsernameFromApi(this)
 
-        val services = retrofit.create(ApiServices::class.java)
+//        val builder = Retrofit.Builder()
+//            .baseUrl(Constants.BASE_URL)
+//            .addConverterFactory(GsonConverterFactory.create())
+//
+//        val retrofit = builder.build()
+//
+//        val services = retrofit.create(ApiServices::class.java)
+//
+//
+//        val login = Login("raph","Pa\$\$w0rd")
+//        val listCall = services.login(login)
+//
+//        listCall.enqueue(object: Callback<User> {
+//            @RequiresApi(Build.VERSION_CODES.N)
+//            override fun onResponse(call: Call<User>, response: Response<User>) {
+//                if(response.isSuccessful) {
+//
+//                    val token  = response.body()?.token
+//                    Log.i("Response1", "$token")
+//                }else{
+//                    val rc =  response.code()
+//                    when(rc){
+//                        400->{
+//                            Log.e("Error 400", "Bad Connection")
+//                        }
+//                        404-> {
+//                            Log.e("Error 404", "Not Found")
+//                        }else ->{
+//                            Log.e("Error", "Generic Error" + rc)
+//                        }
+//                    }
+//                }
+//            }
+//
+//            override fun onFailure(call: Call<User>, t: Throwable) {
+//                Log.e("Errorrrrr", t!!.message.toString())
+//                //hideProgressDialog()
+//            }
+//        })
 
 
-        val login = Login("raph","Pa\$\$w0rd")
-        val listCall = services.login(login)
-
-        listCall.enqueue(object: Callback<User> {
-            @RequiresApi(Build.VERSION_CODES.N)
-            override fun onResponse(call: Call<User>, response: Response<User>) {
-                if(response.isSuccessful) {
-
-                    val token  = response.body()?.token
-                    Log.i("Response1", "$token")
-                }else{
-                    val rc =  response.code()
-                    when(rc){
-                        400->{
-                            Log.e("Error 400", "Bad Connection")
-                        }
-                        404-> {
-                            Log.e("Error 404", "Not Found")
-                        }else ->{
-                            Log.e("Error", "Generic Error" + rc)
-                        }
-                    }
-                }
-            }
-
-            override fun onFailure(call: Call<User>, t: Throwable) {
-                Log.e("Errorrrrr", t!!.message.toString())
-                //hideProgressDialog()
-            }
-        })
     }
 
     private fun signInRegisteredUser()
