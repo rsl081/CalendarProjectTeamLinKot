@@ -1,5 +1,6 @@
 package com.example.calendarprojectteamlinkot.view
 
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.text.TextUtils
@@ -47,10 +48,10 @@ class RegisterActivity : BaseActivity() {
         btn_next_register.setOnClickListener {
             signUpUsername()
         }
+
         btn_submit.setOnClickListener {
             signUpPassword()
         }
-
     }
 
     private fun setupActionBar()
@@ -97,7 +98,7 @@ class RegisterActivity : BaseActivity() {
         if(validatePassword(password, confirmpassowrd))
         {
             //Register from api then catch token
-            ApiClass().registerUsernameAndPasswordFromApi(username,password)
+            ApiClass().registerUsernameAndPasswordFromApi(this,username,password)
         }
     }
 
@@ -120,5 +121,12 @@ class RegisterActivity : BaseActivity() {
             }
         }
     }//end of validateForm
+
+
+    fun proceedToNextAct(){
+        val intent = Intent(this, MainActivity::class.java)
+        startActivity(intent)
+    }
+
 
 }

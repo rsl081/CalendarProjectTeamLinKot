@@ -1,5 +1,6 @@
 package com.example.calendarprojectteamlinkot.view
 
+import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
@@ -12,6 +13,7 @@ import com.example.calendarprojectteamlinkot.models.User
 import com.example.calendarprojectteamlinkot.repository.ApiClass
 import com.example.calendarprojectteamlinkot.repository.ApiServices
 import com.example.calendarprojectteamlinkot.utils.Constants
+import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_sign_in.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -26,6 +28,13 @@ class SignInActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_in)
 
+        Constants.MSHAREDPREFERENCES = getSharedPreferences(Constants.PREFERENCE_NAME, Context.MODE_PRIVATE)
+        if(Constants.MSHAREDPREFERENCES.contains(Constants.TOKEN_USER_MODEL)){
+            //if aleady signin punta na agad siya sa main acitivty
+            startActivity(Intent(this, MainActivity::class.java))
+            finish()
+        }
+
         btnSignIn.setOnClickListener {
             signInRegisteredUser()
         }
@@ -34,50 +43,8 @@ class SignInActivity : BaseActivity() {
             startActivity(Intent(this, RegisterActivity::class.java))
         }
 
-//        ApiClass().getUsernameFromApi(this)
-
-//        val builder = Retrofit.Builder()
-//            .baseUrl(Constants.BASE_URL)
-//            .addConverterFactory(GsonConverterFactory.create())
-//
-//        val retrofit = builder.build()
-//
-//        val services = retrofit.create(ApiServices::class.java)
-//
-//
-//        val login = Login("raph","Pa\$\$w0rd")
-//        val listCall = services.login(login)
-//
-//        listCall.enqueue(object: Callback<User> {
-//            @RequiresApi(Build.VERSION_CODES.N)
-//            override fun onResponse(call: Call<User>, response: Response<User>) {
-//                if(response.isSuccessful) {
-//
-//                    val token  = response.body()?.token
-//                    Log.i("Response1", "$token")
-//                }else{
-//                    val rc =  response.code()
-//                    when(rc){
-//                        400->{
-//                            Log.e("Error 400", "Bad Connection")
-//                        }
-//                        404-> {
-//                            Log.e("Error 404", "Not Found")
-//                        }else ->{
-//                            Log.e("Error", "Generic Error" + rc)
-//                        }
-//                    }
-//                }
-//            }
-//
-//            override fun onFailure(call: Call<User>, t: Throwable) {
-//                Log.e("Errorrrrr", t!!.message.toString())
-//                //hideProgressDialog()
-//            }
-//        })
-
-
     }
+
 
     private fun signInRegisteredUser()
     {
@@ -87,9 +54,14 @@ class SignInActivity : BaseActivity() {
         if(validateForm(email, password))
         {
             showProgressDialog(resources.getString(R.string.please_wait))
-            val intent = Intent(this, MainActivity::class.java)
-            startActivity(intent)
+            ApiClass().signinFromApi(this,email,password)
+
         }
+    }
+
+    fun proceedToNextAct(){
+        val intent = Intent(this, MainActivity::class.java)
+        startActivity(intent)
     }
 
     private fun validateForm(email: String, password: String): Boolean {

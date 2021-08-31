@@ -1,5 +1,10 @@
 package com.example.calendarprojectteamlinkot.utils
 
+import android.content.SharedPreferences
+import okhttp3.OkHttpClient
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
+
 
 object Constants {
     const val BASE_URL: String = "http://192.168.100.40:60001/api/"
@@ -12,4 +17,30 @@ object Constants {
     val isCompleted: Boolean = false
     val assignee: String = ""
     val createdBy: String = ""
+
+    const val TOKEN_USER_MODEL = "token_user_model"
+    lateinit var MSHAREDPREFERENCES: SharedPreferences
+    const val PREFERENCE_NAME = "MeTaskAppPreference"
+
+    private var retrofit: Retrofit? = null
+
+    val retrofitInstance: Retrofit?
+        get() {
+            if (retrofit == null) {
+                var client = OkHttpClient.Builder()
+                    .addInterceptor(OAuthInterceptor())
+                    //.readTimeout(45,TimeUnit.SECONDS)
+                    //.writeTimeout(45,TimeUnit.SECONDS)
+                    .build()
+
+                retrofit = Retrofit.Builder()
+                    .baseUrl(BASE_URL)
+                    .client(client)
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build()
+
+            }
+            return retrofit
+        }
+
 }
