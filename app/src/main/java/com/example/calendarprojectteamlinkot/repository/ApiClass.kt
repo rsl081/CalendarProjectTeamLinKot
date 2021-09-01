@@ -118,7 +118,7 @@ class ApiClass: Interceptor {
                     val editor = Constants.MSHAREDPREFERENCES.edit()
                     editor.putString(Constants.TOKEN_USER_MODEL, tokenResponseJsonString)
                     editor.apply()
-                    activity.proceedToNextAct()
+                    //activity.proceedToNextAct()
 
                     Log.i("Response1", "$tokenResponseJsonString")
 
