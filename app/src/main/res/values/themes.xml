@@ -4,9 +4,9 @@
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/sunset</item>
         <item name="colorPrimaryVariant">@color/rosebud</item>
-        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorOnPrimary">#808080</item>
         <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/blue</item>
+        <item name="colorSecondary">#57C84D</item>
         <item name="colorSecondaryVariant">@color/green_cyan</item>
         <item name="colorOnSecondary">@color/white</item>
         <!-- Status bar color. -->

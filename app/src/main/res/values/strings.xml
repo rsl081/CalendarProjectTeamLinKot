@@ -34,6 +34,8 @@
     <string name="toggle_button_off">My Tasks</string>
     <string name="left_arrow_button">Left Arrow Button</string>
     <string name="right_arrow_button">Right Arrow Button</string>
+    <string name="edit">Edit</string>
+    <string name="delete">Delete</string>
 
     <!--Base Activity-->
     <string name="please_click_back_again_to_exit">Please click back again to exit.</string>
