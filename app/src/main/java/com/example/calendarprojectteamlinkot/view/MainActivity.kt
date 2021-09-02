@@ -9,11 +9,13 @@ import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import android.widget.DatePicker
+import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.core.view.GravityCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.calendarprojectteamlinkot.R
 import com.example.calendarprojectteamlinkot.adapters.TaskListItemsAdapter
+import com.example.calendarprojectteamlinkot.databinding.ActivityTaskBinding
 import com.example.calendarprojectteamlinkot.models.Login
 import com.example.calendarprojectteamlinkot.models.Task
 import com.example.calendarprojectteamlinkot.models.User
@@ -32,6 +34,7 @@ import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
@@ -55,86 +58,47 @@ class MainActivity : BaseActivity(),
     var savedHour = 0
     var savedMinute = 0
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         init()
 
-        Constants.MSHAREDPREFERENCES = getSharedPreferences(Constants.PREFERENCE_NAME, Context.MODE_PRIVATE)
+        ApiClass().myTask(this)
 
-        val builder = Retrofit.Builder()
-            .baseUrl(Constants.BASE_URL)
-            .addConverterFactory(GsonConverterFactory.create())
-
-        val retrofit = builder.build()
-
-        val services = retrofit.create(ApiServices::class.java)
-
-        val msharedToken = Constants.MSHAREDPREFERENCES.getString(Constants.TOKEN_USER_MODEL, "")
-
-        val loginResponseCall: Call<List<Task>>? =
-            ApiClass().getUserServiceHeader()?.getTask("Bearer "+msharedToken!!, true)
-
-        loginResponseCall?.enqueue(object: Callback<List<Task>> {
-            @RequiresApi(Build.VERSION_CODES.N)
-            override fun onResponse(call: Call<List<Task>>, response: Response<List<Task>>) {
-                if(response.isSuccessful) {
-
-                    val task = response.body()
-                    Log.i("MyTask1", task.toString())
-                    var adapter: List<Task>
-                    if (task != null) {
-
-//                        for(t in task){
-//                            val qwe = t.assignee
-//                            val name = qwe?.username
-//                            if(username?.equals(name)!!){
-//
-//                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-//
-//                                    val parsedDate = LocalDateTime.parse(t.date, DateTimeFormatter.ISO_DATE_TIME)
-//                                    val formattedDate = parsedDate.format(DateTimeFormatter.ofPattern("EEEE, d MMMM, yyyy"))
-//
-//                                    val sdf = format(formattedDate)
-//                                    Log.i("MyTask1", sdf)
-//
-//                                } else {
-//                                    TODO("VERSION.SDK_INT < O")
-//                                }
-//
-//                            }
-//                        }
-
-                        rv_activity_task.layoutManager = LinearLayoutManager(this@MainActivity)
-                        rv_activity_task.setHasFixedSize(true)
-
-                        val adapter = TaskListItemsAdapter(this@MainActivity,
-                            task)
-
-                        rv_activity_task.adapter= adapter
-                    }
-                }else{
-                    val rc =  response.code()
-                    when(rc){
-                        400->{
-                            Log.e("Error 400", "Bad Request")
-                        }
-                        404-> {
-                            Log.e("Error 404", "Not Found")
-                        }else ->{
-                        Log.e("Error", "Generic Error" + rc)
-                    }
-                    }
-                }
+        toggleButton!!.setOnCheckedChangeListener { _, isChecked ->
+            if(isChecked) {
+                ApiClass().showAllTask(this)
+            } else {
+                ApiClass().myTask(this)
             }
+        }
 
-            override fun onFailure(call: Call<List<Task>>, t: Throwable) {
-                Log.e("Errorrrrr", t!!.message.toString())
-                //hideProgressDialog()
-            }
-        })
+        val calendar = Calendar.getInstance()
+        val currentDate = SimpleDateFormat("EEE, MMM d, yyyy")
 
+        val tvSelectTaskDate: String = currentDate.format(calendar.time)
+
+        tv_select_task_date.text = tvSelectTaskDate
+
+        ib_next.setOnClickListener {
+            calendar.add(Calendar.DAY_OF_MONTH, 1)
+
+            val tvSelectTaskDate: String = currentDate.format(calendar.time)
+
+            tv_select_task_date.text = tvSelectTaskDate
+        }
+
+        ib_previous.setOnClickListener {
+
+
+            calendar.add(Calendar.DAY_OF_MONTH, -1)
+
+            val tvSelectTaskDate: String = currentDate.format(calendar.time)
+
+            tv_select_task_date.text = tvSelectTaskDate
+        }
     }
 
     private fun init(){
@@ -203,14 +167,13 @@ class MainActivity : BaseActivity(),
         savedMonth = month
         savedYear = year
 
-        val simpledateformat = SimpleDateFormat("EEEE, d MMMM, yyyy")
+        val simpledateformat = SimpleDateFormat("EEE, MMM d, yyyy")
         val newDate = Calendar.getInstance()
         newDate[savedYear, savedMonth] = savedDay
 
         val selectedDate: String = simpledateformat.format(newDate.time)
 
         tv_select_task_date.text = selectedDate
-
     }
 
 

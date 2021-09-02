@@ -15,17 +15,18 @@
         android:usesCleartextTraffic="true"
         android:theme="@style/Theme.CalendarProjectTeamLinKot">
         <activity android:name=".view.TaskActivity">
+        </activity>
+        <activity android:name=".view.DayActivity" />
+        <activity android:name=".view.RegisterActivity">
+        </activity>
+        <activity android:name=".view.BaseActivity" />
+        <activity android:name=".view.SignInActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".view.DayActivity" />
-        <activity android:name=".view.RegisterActivity">
-        </activity>
-        <activity android:name=".view.BaseActivity" />
-        <activity android:name=".view.SignInActivity"></activity>
         <activity
             android:name=".view.SplashActivity"
             android:screenOrientation="portrait" />

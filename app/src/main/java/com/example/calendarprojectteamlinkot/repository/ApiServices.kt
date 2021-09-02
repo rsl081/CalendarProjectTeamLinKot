@@ -15,7 +15,9 @@ interface ApiServices {
     @GET("tasks")
     fun getTask(
         @Header("Authorization") auth: String,
-        @Query("MyTasks") myTask: Boolean): Call<List<Task>>
+        @Query("MyTasks") myTask: Boolean,
+        @Query("ShowAll") showAll: Boolean
+    ): Call<List<Task>>
 
     @Headers("Content-Type: application/json")
     @POST("Account/login")

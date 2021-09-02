@@ -12,9 +12,11 @@ import androidx.core.view.GravityCompat
 import com.example.calendarprojectteamlinkot.R
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_task.*
 import kotlinx.android.synthetic.main.app_bar_main.*
 import kotlinx.android.synthetic.main.dialog_progress.*
 import java.text.DateFormat
+import java.text.SimpleDateFormat
 import java.util.*
 
 open class BaseActivity : AppCompatActivity() {

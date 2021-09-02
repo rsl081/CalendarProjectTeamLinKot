@@ -3,8 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".view.TaskActivity">
+    android:layout_height="match_parent">
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline"
@@ -28,14 +27,14 @@
         app:layout_constraintGuide_begin="20dp" />
 
     <ImageButton
-        android:id="@+id/imageView2"
+        android:id="@+id/ib_previous"
         android:layout_width="wrap_content"
-        android:layout_height="25sp"
-        android:layout_marginStart="8dp"
+        android:layout_height="15dp"
         android:layout_marginTop="40dp"
         android:backgroundTint="@color/white"
         android:contentDescription="@string/left_arrow_button"
-        app:layout_constraintHorizontal_chainStyle="spread"
+        app:layout_constraintEnd_toStartOf="@+id/tv_select_task_date"
+        app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toStartOf="@+id/guideline"
         app:layout_constraintTop_toTopOf="@+id/guideline4"
         app:srcCompat="@drawable/left_arrow" />
@@ -44,38 +43,36 @@
         android:id="@+id/tv_select_task_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
         android:text="@string/selected_task_date"
-        android:textSize="20sp"
-        app:layout_constraintStart_toEndOf="@+id/imageView2"
-        app:layout_constraintTop_toTopOf="@+id/imageView2" />
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@+id/ib_previous"
+        app:layout_constraintEnd_toStartOf="@+id/ib_previous"
+        app:layout_constraintStart_toEndOf="@+id/ib_previous"
+        app:layout_constraintTop_toTopOf="@+id/ib_previous" />
 
     <ImageButton
-        android:id="@+id/imageButton2"
+        android:id="@+id/ib_next"
         android:layout_width="wrap_content"
-        android:layout_height="25dp"
-        android:layout_marginStart="16dp"
+        android:layout_height="15dp"
         android:backgroundTint="@color/white"
         android:contentDescription="@string/right_arrow_button"
         app:layout_constraintStart_toEndOf="@+id/tv_select_task_date"
-        app:layout_constraintTop_toTopOf="@+id/imageView2"
+        app:layout_constraintTop_toTopOf="@+id/ib_previous"
         app:srcCompat="@drawable/right_arrow" />
 
     <ToggleButton
         android:id="@+id/toggleButton"
         android:layout_width="wrap_content"
-        android:layout_height="30dp"
-        android:layout_marginStart="13dp"
+        android:layout_height="35dp"
         android:backgroundTint="@color/white"
+        android:gravity="center_horizontal"
         android:textAllCaps="false"
         android:textColor="@color/light_gray"
         android:textOff="@string/toggle_button_off"
         android:textOn="@string/toggle_button_on"
         android:textSize="9sp"
-        android:gravity="center_horizontal"
         app:layout_constraintEnd_toStartOf="@+id/guideline2"
-        app:layout_constraintStart_toEndOf="@+id/imageButton2"
-        app:layout_constraintTop_toTopOf="@+id/imageView2" />
+        app:layout_constraintTop_toTopOf="@+id/tv_select_task_date" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_activity_task"
@@ -86,7 +83,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/toggleButton"
         app:layout_constraintStart_toStartOf="@+id/guideline"
-        app:layout_constraintTop_toBottomOf="@+id/imageView2"
+        app:layout_constraintTop_toBottomOf="@+id/ib_previous"
         tools:listitem="@layout/tasks_item" />
 
 
@@ -95,8 +92,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="20dp"
-        app:backgroundTint="@color/light_gray"
         android:clickable="true"
+        app:backgroundTint="@color/light_gray"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/guideline2"
         app:srcCompat="@drawable/ic_baseline_add_24" />
