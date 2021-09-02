@@ -9,11 +9,14 @@ import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import android.widget.DatePicker
+import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.core.view.GravityCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.calendarprojectteamlinkot.R
 import com.example.calendarprojectteamlinkot.adapters.TaskListItemsAdapter
+import com.example.calendarprojectteamlinkot.databinding.ActivityTaskBinding
+import com.example.calendarprojectteamlinkot.models.Login
 import com.example.calendarprojectteamlinkot.models.Task
 import com.example.calendarprojectteamlinkot.repository.ApiClass
 import com.example.calendarprojectteamlinkot.utils.Constants
@@ -29,6 +32,7 @@ import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
@@ -52,15 +56,47 @@ class MainActivity : BaseActivity(),
     var savedHour = 0
     var savedMinute = 0
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         init()
-        ApiClass().showAllTask(this)
-        //ApiClass().myTask(this)
+
+        ApiClass().myTask(this)
+
+        toggleButton!!.setOnCheckedChangeListener { _, isChecked ->
+            if(isChecked) {
+                ApiClass().showAllTask(this)
+            } else {
+                ApiClass().myTask(this)
+            }
+        }
+
+        val calendar = Calendar.getInstance()
+        val currentDate = SimpleDateFormat("EEE, MMM d, yyyy")
+
+        val tvSelectTaskDate: String = currentDate.format(calendar.time)
+
+        tv_select_task_date.text = tvSelectTaskDate
+
+        ib_next.setOnClickListener {
+            calendar.add(Calendar.DAY_OF_MONTH, 1)
+
+            val tvSelectTaskDate: String = currentDate.format(calendar.time)
+
+            tv_select_task_date.text = tvSelectTaskDate
+        }
+
+        ib_previous.setOnClickListener {
 
 
+            calendar.add(Calendar.DAY_OF_MONTH, -1)
+
+            val tvSelectTaskDate: String = currentDate.format(calendar.time)
+
+            tv_select_task_date.text = tvSelectTaskDate
+        }
     }
 
     private fun init(){
@@ -128,19 +164,11 @@ class MainActivity : BaseActivity(),
     }
 
     override fun onDateSet(view: DatePicker?, year: Int, month: Int, dayOfMonth: Int) {
-        savedDay = dayOfMonth
+       savedDay = dayOfMonth
         savedMonth = month
         savedYear = year
 
-        val simpledateformat1 = SimpleDateFormat("yyyy-MM-dd")
-        val newDate1 = Calendar.getInstance()
-        newDate1[savedYear, savedMonth] = savedDay
-        val selectedDate1: String = simpledateformat1.format(newDate1.time)
-
-        val displayDate = "$savedYear-$savedMonth-$savedDay"
-        Log.i("happy", selectedDate1)
-
-        val simpledateformat = SimpleDateFormat("EEEE, d MMMM, yyyy")
+        val simpledateformat = SimpleDateFormat("EEE, MMM d, yyyy")
         val newDate = Calendar.getInstance()
         newDate[savedYear, savedMonth] = savedDay
 
@@ -148,6 +176,21 @@ class MainActivity : BaseActivity(),
 
         tv_select_task_date.text = selectedDate
 
+        ib_next.setOnClickListener {
+            newDate.add(Calendar.DAY_OF_MONTH, 1)
+
+            val tvSelectTaskDate: String = simpledateformat.format(newDate.time)
+
+            tv_select_task_date.text = tvSelectTaskDate
+        }
+
+        ib_previous.setOnClickListener {
+            newDate.add(Calendar.DAY_OF_MONTH, -1)
+
+            val tvSelectTaskDate: String = simpledateformat.format(newDate.time)
+
+            tv_select_task_date.text = tvSelectTaskDate
+        }
     }
 
 

@@ -93,9 +93,9 @@ class RegisterActivity : BaseActivity() {
 
     private fun signUpPassword(){
         password= et_password_register.text.toString().trim{ it <= ' '}
-        val confirmpassowrd: String = et_confirmpassword_register.text.toString().trim{ it <= ' '}
+        val confirmPassword: String = et_confirmpassword_register.text.toString().trim{ it <= ' '}
 
-        if(validatePassword(password, confirmpassowrd))
+        if(validatePassword(password, confirmPassword))
         {
             //Register from api then catch token
             ApiClass().registerUsernameAndPasswordFromApi(this,username,password)
@@ -103,17 +103,17 @@ class RegisterActivity : BaseActivity() {
     }
 
 
-    private fun validatePassword(password: String, confirmpassowrd: String,): Boolean {
+    private fun validatePassword(password: String, confirmPassword: String,): Boolean {
         return when{
-            !TextUtils.equals(password,confirmpassowrd)->{
+            !TextUtils.equals(password,confirmPassword)->{
                 showErrorSnackBar("Password and confirm password did not match")
                 false
             }
             TextUtils.isEmpty(password)->{
-                showErrorSnackBar("Please enter an confirmpassowrd")
+                showErrorSnackBar("Please enter a confirm password")
                 false
             }
-            TextUtils.isEmpty(confirmpassowrd)->{
+            TextUtils.isEmpty(confirmPassword)->{
                 showErrorSnackBar("Please enter a password")
                 false
             }else->{
