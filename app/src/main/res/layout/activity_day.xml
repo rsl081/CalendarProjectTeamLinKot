@@ -68,7 +68,7 @@
                 app:layout_constraintTop_toTopOf="@+id/circleImageView" />
 
             <TextView
-                android:id="@+id/textView10"
+                android:id="@+id/tv_num_of_task_activityday"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
@@ -86,6 +86,16 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="24dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@+id/guideline7"
+        app:layout_constraintEnd_toStartOf="@+id/guideline5"
+        app:layout_constraintStart_toStartOf="@+id/guideline4"
+        app:layout_constraintTop_toBottomOf="@+id/cardView" />
+    <CalendarView
+        android:id="@+id/calendarView2"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:visibility="visible"
         app:layout_constraintBottom_toTopOf="@+id/guideline7"
         app:layout_constraintEnd_toStartOf="@+id/guideline5"
         app:layout_constraintStart_toStartOf="@+id/guideline4"
@@ -97,5 +107,6 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintGuide_end="20dp" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

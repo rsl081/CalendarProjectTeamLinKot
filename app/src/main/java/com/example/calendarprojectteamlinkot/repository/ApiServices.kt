@@ -11,10 +11,11 @@ import retrofit2.http.*
 
 
 interface ApiServices {
-
-
+    @Headers("Content-Type: application/json")
     @GET("tasks")
-    fun getTask(): Call<List<Task>>
+    fun getTask(
+        @Header("Authorization") auth: String,
+        @Query("MyTasks") myTask: Boolean): Call<List<Task>>
 
     @Headers("Content-Type: application/json")
     @POST("Account/login")
@@ -23,6 +24,10 @@ interface ApiServices {
     @Headers("Accept: application/json")
     @POST("Account/register")
     open fun register(@Body register: Register): Call<User>
+
+    @Headers("Content-Type: application/json")
+    @GET("Account")
+    fun getCurrentUser(@Header("Authorization") auth: String): Call<User>
 
 
 }
