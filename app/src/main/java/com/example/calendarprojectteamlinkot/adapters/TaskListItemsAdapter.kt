@@ -14,7 +14,8 @@ import kotlinx.android.synthetic.main.activity_day.*
 import kotlinx.android.synthetic.main.item_task.view.*
 
 class TaskListItemsAdapter(private val context: Context,
-                           private var list: List<Task>):
+                           private var list: List<Task>
+):
     RecyclerView.Adapter<RecyclerView.ViewHolder>(){
 
     private var onClickListener: OnClickListener? = null
@@ -33,16 +34,17 @@ class TaskListItemsAdapter(private val context: Context,
         val model = list[position]
 
         if(holder is MyViewHolder){
-            val name = model.assignee
-            ApiClass().getCurrentUser{
-                if(it == name?.username){
-                    //green mismo pero yung lahat dapat walang kulay
-                    holder.itemView.tv_item_task.visibility = View.VISIBLE
-                    holder.itemView.tv_item_task.text = model.name
-                }else{
-                    holder.itemView.tv_item_task.visibility = View.GONE
-                }
-            }
+            //val name = model.assignee
+            holder.itemView.tv_item_task.text = model.name
+//            ApiClass().getCurrentUser{
+//                if(it == name?.username){
+//                    //green mismo pero yung lahat dapat walang kulay
+//                    holder.itemView.tv_item_task.visibility = View.VISIBLE
+//                    holder.itemView.tv_item_task.text = model.name
+//                }else{
+//                    holder.itemView.tv_item_task.visibility = View.GONE
+//                }
+//            }
 
 
         }

@@ -14,11 +14,8 @@ import androidx.core.view.GravityCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.calendarprojectteamlinkot.R
 import com.example.calendarprojectteamlinkot.adapters.TaskListItemsAdapter
-import com.example.calendarprojectteamlinkot.models.Login
 import com.example.calendarprojectteamlinkot.models.Task
-import com.example.calendarprojectteamlinkot.models.User
 import com.example.calendarprojectteamlinkot.repository.ApiClass
-import com.example.calendarprojectteamlinkot.repository.ApiServices
 import com.example.calendarprojectteamlinkot.utils.Constants
 import com.google.android.material.navigation.NavigationView
 import com.google.gson.Gson
@@ -60,80 +57,9 @@ class MainActivity : BaseActivity(),
         setContentView(R.layout.activity_main)
 
         init()
+        ApiClass().showAllTask(this)
+        //ApiClass().myTask(this)
 
-        Constants.MSHAREDPREFERENCES = getSharedPreferences(Constants.PREFERENCE_NAME, Context.MODE_PRIVATE)
-
-        val builder = Retrofit.Builder()
-            .baseUrl(Constants.BASE_URL)
-            .addConverterFactory(GsonConverterFactory.create())
-
-        val retrofit = builder.build()
-
-        val services = retrofit.create(ApiServices::class.java)
-
-        val msharedToken = Constants.MSHAREDPREFERENCES.getString(Constants.TOKEN_USER_MODEL, "")
-
-        val loginResponseCall: Call<List<Task>>? =
-            ApiClass().getUserServiceHeader()?.getTask("Bearer "+msharedToken!!, true)
-
-        loginResponseCall?.enqueue(object: Callback<List<Task>> {
-            @RequiresApi(Build.VERSION_CODES.N)
-            override fun onResponse(call: Call<List<Task>>, response: Response<List<Task>>) {
-                if(response.isSuccessful) {
-
-                    val task = response.body()
-                    Log.i("MyTask1", task.toString())
-                    var adapter: List<Task>
-                    if (task != null) {
-
-//                        for(t in task){
-//                            val qwe = t.assignee
-//                            val name = qwe?.username
-//                            if(username?.equals(name)!!){
-//
-//                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-//
-//                                    val parsedDate = LocalDateTime.parse(t.date, DateTimeFormatter.ISO_DATE_TIME)
-//                                    val formattedDate = parsedDate.format(DateTimeFormatter.ofPattern("EEEE, d MMMM, yyyy"))
-//
-//                                    val sdf = format(formattedDate)
-//                                    Log.i("MyTask1", sdf)
-//
-//                                } else {
-//                                    TODO("VERSION.SDK_INT < O")
-//                                }
-//
-//                            }
-//                        }
-
-                        rv_activity_task.layoutManager = LinearLayoutManager(this@MainActivity)
-                        rv_activity_task.setHasFixedSize(true)
-
-                        val adapter = TaskListItemsAdapter(this@MainActivity,
-                            task)
-
-                        rv_activity_task.adapter= adapter
-                    }
-                }else{
-                    val rc =  response.code()
-                    when(rc){
-                        400->{
-                            Log.e("Error 400", "Bad Request")
-                        }
-                        404-> {
-                            Log.e("Error 404", "Not Found")
-                        }else ->{
-                        Log.e("Error", "Generic Error" + rc)
-                    }
-                    }
-                }
-            }
-
-            override fun onFailure(call: Call<List<Task>>, t: Throwable) {
-                Log.e("Errorrrrr", t!!.message.toString())
-                //hideProgressDialog()
-            }
-        })
 
     }
 
@@ -146,7 +72,10 @@ class MainActivity : BaseActivity(),
         ApiClass().getCurrentUser{
             tv_name_activtyday.text = "Hi! $it"
         }
-       // tv_num_of_task_activityday.text = "You have ${ApiClass().countTaskOfCurrentUser()} tasks today"
+
+        ApiClass().countTaskOfCurrentUser{
+            tv_num_of_task_activityday.text = "You have $it tasks today"
+        }
 
         nav_view.setNavigationItemSelectedListener(this)
 
@@ -202,6 +131,14 @@ class MainActivity : BaseActivity(),
         savedDay = dayOfMonth
         savedMonth = month
         savedYear = year
+
+        val simpledateformat1 = SimpleDateFormat("yyyy-MM-dd")
+        val newDate1 = Calendar.getInstance()
+        newDate1[savedYear, savedMonth] = savedDay
+        val selectedDate1: String = simpledateformat1.format(newDate1.time)
+
+        val displayDate = "$savedYear-$savedMonth-$savedDay"
+        Log.i("happy", selectedDate1)
 
         val simpledateformat = SimpleDateFormat("EEEE, d MMMM, yyyy")
         val newDate = Calendar.getInstance()

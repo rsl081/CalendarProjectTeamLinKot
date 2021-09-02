@@ -4,14 +4,18 @@ import android.content.Context
 import android.os.Build
 import android.util.Log
 import androidx.annotation.RequiresApi
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.calendarprojectteamlinkot.adapters.TaskListItemsAdapter
 import com.example.calendarprojectteamlinkot.models.Login
 import com.example.calendarprojectteamlinkot.models.Register
 import com.example.calendarprojectteamlinkot.models.Task
 import com.example.calendarprojectteamlinkot.models.User
 import com.example.calendarprojectteamlinkot.utils.Constants
+import com.example.calendarprojectteamlinkot.view.MainActivity
 import com.example.calendarprojectteamlinkot.view.RegisterActivity
 import com.example.calendarprojectteamlinkot.view.SignInActivity
 import com.google.gson.Gson
+import kotlinx.android.synthetic.main.activity_task.*
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.Request
@@ -194,74 +198,241 @@ class ApiClass: Interceptor {
         })
     }//end of getCurrentUser
 
-    fun countTaskOfCurrentUser() : Int
+    fun countTaskOfCurrentUser(userCallback: (Int?) -> Unit)
     {
         var ctr = 0
-//        val builder = Retrofit.Builder()
-//            .baseUrl(Constants.BASE_URL)
-//            .addConverterFactory(GsonConverterFactory.create())
-//
-//        val retrofit = builder.build()
-//
-//        val services = retrofit.create(ApiServices::class.java)
-//
-//        val loginResponseCall = services.getTask()
-//
-//        loginResponseCall.enqueue(object: Callback<List<Task>> {
-//            @RequiresApi(Build.VERSION_CODES.N)
-//            override fun onResponse(call: Call<List<Task>>, response: Response<List<Task>>) {
-//                if(response.isSuccessful) {
-//
-//                    val task = response.body()
-//                    if (task != null) {
-//
-//                        for(t in task){
-//                            val qwe = t.assignee
-//                            val name = qwe?.username
-////                            if(getCurrentUser() == name){
-////                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-////
-////                                    val parsedDate = LocalDateTime.parse(t.date, DateTimeFormatter.ISO_DATE_TIME)
-////                                    val formattedDate = parsedDate.format(DateTimeFormatter.ofPattern("EEEE, d MMMM, yyyy"))
-////
-////                                    val sdf = format(formattedDate)
-////                                    Log.i("MyTask1", sdf)
-////
-////                                } else {
-////                                    TODO("VERSION.SDK_INT < O")
-////                                }
-////                                ctr++
-////                                Log.i("ctrs", ctr.toString())
-////                            }
-//                        }
-//                    }
-//                }else{
-//                    val rc =  response.code()
-//                    when(rc){
-//                        400->{
-//                            Log.e("Error 400", "Bad Request")
-//                        }
-//                        404-> {
-//                            Log.e("Error 404", "Not Found")
-//                        }else ->{
-//                        Log.e("Error", "Generic Error" + rc)
-//                    }
-//                    }
-//                }
-//            }
-//
-//            override fun onFailure(call: Call<List<Task>>, t: Throwable) {
-//                Log.e("Errorrrrr", t!!.message.toString())
-//                //hideProgressDialog()
-//            }
-//        })
+        if(Constants.MSHAREDPREFERENCES.contains(Constants.TOKEN_USER_MODEL)) {
+            val msharedToken =
+                Constants.MSHAREDPREFERENCES.getString(Constants.TOKEN_USER_MODEL, "")
 
-        return ctr
+            val loginResponseCall: Call<List<Task>>? =
+                ApiClass().getUserServiceHeader()?.getTask("Bearer " + msharedToken!!, true, false)
+
+            loginResponseCall?.enqueue(object : Callback<List<Task>> {
+                @RequiresApi(Build.VERSION_CODES.N)
+                override fun onResponse(call: Call<List<Task>>, response: Response<List<Task>>) {
+                    if (response.isSuccessful) {
+                        ctr++
+                        userCallback(ctr)
+                    } else {
+                        val rc = response.code()
+                        Log.e("Error", "Error " + rc)
+                    }
+                }
+
+                override fun onFailure(call: Call<List<Task>>, t: Throwable) {
+                    Log.e("Errorrrrr", t!!.message.toString())
+                }
+            })
+        }
+    }// end of countTaskOfCurrentUser
+
+    fun getMyTaskByDate(activity: MainActivity, selectedDate: String){
+        if(Constants.MSHAREDPREFERENCES.contains(Constants.TOKEN_USER_MODEL)){
+            Constants.MSHAREDPREFERENCES = activity.getSharedPreferences(Constants.PREFERENCE_NAME, Context.MODE_PRIVATE)
+
+            val msharedToken = Constants.MSHAREDPREFERENCES.getString(Constants.TOKEN_USER_MODEL, "")
+
+            val loginResponseCall: Call<List<Task>>? =
+                ApiClass().getUserServiceHeader()?.getMyTaskByDate("Bearer "+msharedToken!!, true, selectedDate)
+
+            loginResponseCall?.enqueue(object: Callback<List<Task>> {
+                @RequiresApi(Build.VERSION_CODES.N)
+                override fun onResponse(call: Call<List<Task>>, response: Response<List<Task>>) {
+                    if(response.isSuccessful) {
+
+                        val task = response.body()
+                        Log.i("MyTask2", task.toString())
+
+                        activity.rv_activity_task.layoutManager = LinearLayoutManager(activity)
+                        activity.rv_activity_task.setHasFixedSize(true)
+
+                        val adapter = task?.let { TaskListItemsAdapter(activity, it) }
+
+                        activity.rv_activity_task.adapter= adapter
+                    }else{
+                        val rc =  response.code()
+                        when(rc){
+                            400->{
+                                Log.e("Error 400", "Bad Request")
+                            }
+                            404-> {
+                                Log.e("Error 404", "Not Found")
+                            }else ->{
+                            Log.e("Error", "Generic Error" + rc)
+                        }
+                        }
+                    }
+                }
+
+                override fun onFailure(call: Call<List<Task>>, t: Throwable) {
+                    Log.e("Errorrrrr", t!!.message.toString())
+                    //hideProgressDialog()
+                }
+            })
+        }
     }
 
-    fun showAllTask()
-    {
+    fun getAllTaskByDate(activity: MainActivity, selectedDate: String){
+        if(Constants.MSHAREDPREFERENCES.contains(Constants.TOKEN_USER_MODEL)){
+            Constants.MSHAREDPREFERENCES = activity.getSharedPreferences(Constants.PREFERENCE_NAME, Context.MODE_PRIVATE)
 
+            val msharedToken = Constants.MSHAREDPREFERENCES.getString(Constants.TOKEN_USER_MODEL, "")
+
+            val loginResponseCall: Call<List<Task>>? =
+                ApiClass().getUserServiceHeader()?.getAllTaskByDate("Bearer "+msharedToken!!,selectedDate)
+
+            loginResponseCall?.enqueue(object: Callback<List<Task>> {
+                @RequiresApi(Build.VERSION_CODES.N)
+                override fun onResponse(call: Call<List<Task>>, response: Response<List<Task>>) {
+                    if(response.isSuccessful) {
+
+                        val task = response.body()
+                        Log.i("MyTask2", task.toString())
+
+                        activity.rv_activity_task.layoutManager = LinearLayoutManager(activity)
+                        activity.rv_activity_task.setHasFixedSize(true)
+
+                        val adapter = task?.let { TaskListItemsAdapter(activity, it) }
+
+                        activity.rv_activity_task.adapter= adapter
+                    }else{
+                        val rc =  response.code()
+                        when(rc){
+                            400->{
+                                Log.e("Error 400", "Bad Request")
+                            }
+                            404-> {
+                                Log.e("Error 404", "Not Found")
+                            }else ->{
+                            Log.e("Error", "Generic Error" + rc)
+                        }
+                        }
+                    }
+                }
+
+                override fun onFailure(call: Call<List<Task>>, t: Throwable) {
+                    Log.e("Errorrrrr", t!!.message.toString())
+                    //hideProgressDialog()
+                }
+            })
+        }
+    }//end getAllTaskByDate
+
+    fun myTask(activity: MainActivity){
+        if(Constants.MSHAREDPREFERENCES.contains(Constants.TOKEN_USER_MODEL)){
+            Constants.MSHAREDPREFERENCES = activity.getSharedPreferences(Constants.PREFERENCE_NAME, Context.MODE_PRIVATE)
+
+            val builder = Retrofit.Builder()
+                .baseUrl(Constants.BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+
+            val msharedToken = Constants.MSHAREDPREFERENCES.getString(Constants.TOKEN_USER_MODEL, "")
+
+            val loginResponseCall: Call<List<Task>>? =
+                ApiClass().getUserServiceHeader()?.getTask("Bearer "+msharedToken!!, true,false)
+
+            loginResponseCall?.enqueue(object: Callback<List<Task>> {
+                @RequiresApi(Build.VERSION_CODES.N)
+                override fun onResponse(call: Call<List<Task>>, response: Response<List<Task>>) {
+                    if(response.isSuccessful) {
+
+                        val task = response.body()
+                        Log.i("MyTask1", task.toString())
+                        var adapter: List<Task>
+                        if (task != null) {
+                            activity.rv_activity_task.layoutManager = LinearLayoutManager(activity)
+                            activity.rv_activity_task.setHasFixedSize(true)
+
+                            val adapter = TaskListItemsAdapter(activity,task)
+
+                            activity.rv_activity_task.adapter= adapter
+                        }
+                    }else{
+                        val rc =  response.code()
+                        when(rc){
+                            400->{
+                                Log.e("Error 400", "Bad Request")
+                            }
+                            404-> {
+                                Log.e("Error 404", "Not Found")
+                            }else ->{
+                            Log.e("Error", "Generic Error" + rc)
+                        }
+                        }
+                    }
+                }
+
+                override fun onFailure(call: Call<List<Task>>, t: Throwable) {
+                    Log.e("Errorrrrr", t!!.message.toString())
+                    //hideProgressDialog()
+                }
+            })
+        }
+    }
+
+    fun showAllTask(activity: MainActivity)
+    {
+        if(Constants.MSHAREDPREFERENCES.contains(Constants.TOKEN_USER_MODEL)){
+            Constants.MSHAREDPREFERENCES = activity.getSharedPreferences(Constants.PREFERENCE_NAME, Context.MODE_PRIVATE)
+
+            val builder = Retrofit.Builder()
+                .baseUrl(Constants.BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+
+            val retrofit = builder.build()
+
+            val services = retrofit.create(ApiServices::class.java)
+
+            val msharedToken = Constants.MSHAREDPREFERENCES.getString(Constants.TOKEN_USER_MODEL, "")
+
+            val loginResponseCall: Call<List<Task>>? =
+                ApiClass().getUserServiceHeader()?.getTask("Bearer "+msharedToken!!, false,true)
+
+            loginResponseCall?.enqueue(object: Callback<List<Task>> {
+                @RequiresApi(Build.VERSION_CODES.N)
+                override fun onResponse(call: Call<List<Task>>, response: Response<List<Task>>) {
+                    if(response.isSuccessful) {
+
+                        val task = response.body()
+                        Log.i("MyTask1", task.toString())
+                        var adapter: List<Task>
+                        if (task != null) {
+//                                    val parsedDate = LocalDateTime.parse(t.date, DateTimeFormatter.ISO_DATE_TIME)
+//                                    val formattedDate = parsedDate.format(DateTimeFormatter.ofPattern("EEEE, d MMMM, yyyy"))
+//
+//                                    val sdf = format(formattedDate)
+//                                    Log.i("MyTask1", sdf)
+
+                            activity.rv_activity_task.layoutManager = LinearLayoutManager(activity)
+                            activity.rv_activity_task.setHasFixedSize(true)
+
+                            val adapter = TaskListItemsAdapter(activity,
+                                task)
+
+                            activity.rv_activity_task.adapter= adapter
+                        }
+                    }else{
+                        val rc =  response.code()
+                        when(rc){
+                            400->{
+                                Log.e("Error 400", "Bad Request")
+                            }
+                            404-> {
+                                Log.e("Error 404", "Not Found")
+                            }else ->{
+                            Log.e("Error", "Generic Error" + rc)
+                        }
+                        }
+                    }
+                }
+
+                override fun onFailure(call: Call<List<Task>>, t: Throwable) {
+                    Log.e("Errorrrrr", t!!.message.toString())
+                    //hideProgressDialog()
+                }
+            })
+        }
     }
 
     fun createTasK()
