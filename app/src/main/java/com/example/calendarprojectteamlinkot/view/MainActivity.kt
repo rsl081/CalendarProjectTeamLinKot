@@ -18,9 +18,7 @@ import com.example.calendarprojectteamlinkot.adapters.TaskListItemsAdapter
 import com.example.calendarprojectteamlinkot.databinding.ActivityTaskBinding
 import com.example.calendarprojectteamlinkot.models.Login
 import com.example.calendarprojectteamlinkot.models.Task
-import com.example.calendarprojectteamlinkot.models.User
 import com.example.calendarprojectteamlinkot.repository.ApiClass
-import com.example.calendarprojectteamlinkot.repository.ApiServices
 import com.example.calendarprojectteamlinkot.utils.Constants
 import com.google.android.material.navigation.NavigationView
 import com.google.gson.Gson
@@ -110,7 +108,10 @@ class MainActivity : BaseActivity(),
         ApiClass().getCurrentUser{
             tv_name_activtyday.text = "Hi! $it"
         }
-       // tv_num_of_task_activityday.text = "You have ${ApiClass().countTaskOfCurrentUser()} tasks today"
+
+        ApiClass().countTaskOfCurrentUser{
+            tv_num_of_task_activityday.text = "You have $it tasks today"
+        }
 
         nav_view.setNavigationItemSelectedListener(this)
 
@@ -163,7 +164,7 @@ class MainActivity : BaseActivity(),
     }
 
     override fun onDateSet(view: DatePicker?, year: Int, month: Int, dayOfMonth: Int) {
-        savedDay = dayOfMonth
+       savedDay = dayOfMonth
         savedMonth = month
         savedYear = year
 
@@ -174,6 +175,22 @@ class MainActivity : BaseActivity(),
         val selectedDate: String = simpledateformat.format(newDate.time)
 
         tv_select_task_date.text = selectedDate
+
+        ib_next.setOnClickListener {
+            newDate.add(Calendar.DAY_OF_MONTH, 1)
+
+            val tvSelectTaskDate: String = simpledateformat.format(newDate.time)
+
+            tv_select_task_date.text = tvSelectTaskDate
+        }
+
+        ib_previous.setOnClickListener {
+            newDate.add(Calendar.DAY_OF_MONTH, -1)
+
+            val tvSelectTaskDate: String = simpledateformat.format(newDate.time)
+
+            tv_select_task_date.text = tvSelectTaskDate
+        }
     }
 
 

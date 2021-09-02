@@ -13,7 +13,8 @@ import com.example.calendarprojectteamlinkot.repository.ApiClass
 import com.example.calendarprojectteamlinkot.utils.Constants
 import kotlinx.android.synthetic.main.activity_day.*
 class TaskListItemsAdapter(private val context: Context,
-                           private var list: List<Task>):
+                           private var list: List<Task>
+):
     RecyclerView.Adapter<RecyclerView.ViewHolder>(){
 
     private var onClickListener: OnClickListener? = null
@@ -37,6 +38,7 @@ class TaskListItemsAdapter(private val context: Context,
 
         if(holder is MyViewHolder){
             val name = model.assignee
+
 //            ApiClass().getCurrentUser{
 //                if(it == name?.username){
 //                    //green mismo pero yung lahat dapat walang kulay
