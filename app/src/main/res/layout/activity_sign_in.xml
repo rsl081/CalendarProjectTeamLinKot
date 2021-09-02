@@ -135,6 +135,7 @@
         android:layout_marginEnd="24dp"
         android:backgroundTint="@color/light_gray"
         android:text="@string/sign_in_btn_sign_in"
+        android:textColor="@color/white"
         app:layout_constraintEnd_toStartOf="@+id/guideline2"
         app:layout_constraintStart_toStartOf="@+id/guideline"
         app:layout_constraintTop_toBottomOf="@+id/button" />

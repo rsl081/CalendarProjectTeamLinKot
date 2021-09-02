@@ -9,4 +9,5 @@ data class Task (
     var date: String?,
     val dateCreated: String?,
     val isCompleted: Boolean?,
+    var expand : Boolean = false
 )
