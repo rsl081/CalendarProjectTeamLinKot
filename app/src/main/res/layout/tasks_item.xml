@@ -16,7 +16,7 @@
 
         <!--Checkbox for task completed-->
         <CheckBox
-            android:id="@+id/checkBox2"
+            android:id="@+id/cb_task_item"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:gravity="center"
@@ -33,7 +33,7 @@
             android:text="Task Name"
             android:textColor="@color/black"
             android:textSize="20sp"
-            app:layout_constraintStart_toEndOf="@+id/checkBox2"
+            app:layout_constraintStart_toEndOf="@+id/cb_task_item"
             app:layout_constraintTop_toTopOf="parent" />
 
         <!--This is the layout "expanded_view" we will
@@ -45,7 +45,7 @@
             android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/checkBox2"
+            app:layout_constraintStart_toEndOf="@+id/cb_task_item"
             app:layout_constraintTop_toBottomOf="@id/tv_task_name">
 
             <!--It has a text view which we will use in our case as
