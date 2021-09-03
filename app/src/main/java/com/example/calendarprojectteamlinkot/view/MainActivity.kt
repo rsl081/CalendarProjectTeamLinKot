@@ -81,8 +81,8 @@ class MainActivity : BaseActivity(),
                             403-> {
                                 Log.e("Error 403", "Not Found" + rc)
                             }else ->{
-                            Log.e("Error", "Generic Error" + rc)
-                        }
+                                Log.e("Error", "Happy Generic Error" + rc)
+                            }
                         }
                     }
                 }
