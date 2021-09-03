@@ -1,10 +1,7 @@
 package com.example.calendarprojectteamlinkot.repository
 
 
-import com.example.calendarprojectteamlinkot.models.Login
-import com.example.calendarprojectteamlinkot.models.Register
-import com.example.calendarprojectteamlinkot.models.Task
-import com.example.calendarprojectteamlinkot.models.User
+import com.example.calendarprojectteamlinkot.models.*
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.http.*
@@ -57,10 +54,8 @@ interface ApiServices {
     @POST("tasks")
     fun createTask(
         @Header("Authorization") auth: String,
-        @Query("name") name: String,
-        @Query("description") description: String,
-        @Query("assignee") user: User,
-        @Query("date") date: String,
+        @Body createTask: CreateTask
     ): Call<Task>
+
 
 }

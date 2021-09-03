@@ -3,6 +3,7 @@ package com.example.calendarprojectteamlinkot.repository
 import android.content.Context
 import android.os.Build
 import android.util.Log
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.calendarprojectteamlinkot.adapters.TaskListItemsAdapter
@@ -20,6 +21,7 @@ import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.logging.HttpLoggingInterceptor
+import org.json.JSONObject
 import retrofit2.*
 import retrofit2.converter.gson.GsonConverterFactory
 
@@ -141,7 +143,17 @@ class ApiClass: Interceptor {
                     val rc =  response.code()
                     when(rc){
                         400->{
-                            Log.e("Error 400", "Bad Connection Username taken")
+                            val qwe =  response.errorBody()?.charStream()?.readText()
+                            val jsonObject = JSONObject(qwe!!.trim())
+                            var message = jsonObject.getJSONArray("errors")
+
+                            Log.e("ErrorRegister", message.get(1) as String)
+
+                            for(i in 0 until message.length()){
+                                Toast.makeText(activity, message.get(i) as String, Toast.LENGTH_SHORT).show();
+                            }
+
+
                         }
                         404-> {
                             Log.e("Error 404", "Not Found")
@@ -153,7 +165,7 @@ class ApiClass: Interceptor {
             }
 
             override fun onFailure(call: Call<User>, t: Throwable) {
-                Log.e("Error", t!!.message.toString())
+                Log.e("Error1", t!!.message.toString())
                 //hideProgressDialog()
             }
         })
