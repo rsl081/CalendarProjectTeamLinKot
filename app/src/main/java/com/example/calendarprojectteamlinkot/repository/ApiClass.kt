@@ -210,21 +210,20 @@ class ApiClass: Interceptor {
         })
     }//end of getCurrentUser
 
-    fun countTaskOfCurrentUser(userCallback: (Int?) -> Unit)
+    fun countTaskOfCurrentUser(userCallback: (Int?) -> Unit, selectedDate: String)
     {
-        var ctr = 0
         if(Constants.MSHAREDPREFERENCES.contains(Constants.TOKEN_USER_MODEL)) {
             val msharedToken =
                 Constants.MSHAREDPREFERENCES.getString(Constants.TOKEN_USER_MODEL, "")
 
             val loginResponseCall: Call<List<Task>>? =
-                ApiClass().getUserServiceHeader()?.getTask("Bearer " + msharedToken!!, true, false)
+                ApiClass().getUserServiceHeader()?.getTask("Bearer " + msharedToken!!, true, false,selectedDate)
 
             loginResponseCall?.enqueue(object : Callback<List<Task>> {
                 @RequiresApi(Build.VERSION_CODES.N)
                 override fun onResponse(call: Call<List<Task>>, response: Response<List<Task>>) {
                     if (response.isSuccessful) {
-                        ctr++
+                        val ctr = response.body()?.size
                         userCallback(ctr)
                     } else {
                         val rc = response.code()
@@ -252,7 +251,7 @@ class ApiClass: Interceptor {
                 @RequiresApi(Build.VERSION_CODES.N)
                 override fun onResponse(call: Call<List<Task>>, response: Response<List<Task>>) {
                     if(response.isSuccessful) {
-
+                        activity.hideProgressDialog()
                         val task = response.body()
                         Log.i("MyTask2", task.toString())
 
@@ -298,7 +297,7 @@ class ApiClass: Interceptor {
                 @RequiresApi(Build.VERSION_CODES.N)
                 override fun onResponse(call: Call<List<Task>>, response: Response<List<Task>>) {
                     if(response.isSuccessful) {
-
+                        activity.hideProgressDialog()
                         val task = response.body()
                         Log.i("MyTask2", task.toString())
 
@@ -312,7 +311,7 @@ class ApiClass: Interceptor {
                         val rc =  response.code()
                         when(rc){
                             400->{
-                                Log.e("Error 400", "Bad Request")
+                                Log.e("Error 400", "Bad Request getAllTaskByDate")
                             }
                             404-> {
                                 Log.e("Error 404", "Not Found")
@@ -331,7 +330,7 @@ class ApiClass: Interceptor {
         }
     }//end getAllTaskByDate
 
-    fun myTask(activity: MainActivity){
+    fun myTask(activity: MainActivity, selectedDate: String){
         if(Constants.MSHAREDPREFERENCES.contains(Constants.TOKEN_USER_MODEL)){
             Constants.MSHAREDPREFERENCES = activity.getSharedPreferences(Constants.PREFERENCE_NAME, Context.MODE_PRIVATE)
 
@@ -342,7 +341,7 @@ class ApiClass: Interceptor {
             val msharedToken = Constants.MSHAREDPREFERENCES.getString(Constants.TOKEN_USER_MODEL, "")
 
             val loginResponseCall: Call<List<Task>>? =
-                ApiClass().getUserServiceHeader()?.getTask("Bearer "+msharedToken!!, true,false)
+                ApiClass().getUserServiceHeader()?.getTask("Bearer "+msharedToken!!, true,false,selectedDate)
 
             loginResponseCall?.enqueue(object: Callback<List<Task>> {
                 @RequiresApi(Build.VERSION_CODES.N)
@@ -364,7 +363,7 @@ class ApiClass: Interceptor {
                         val rc =  response.code()
                         when(rc){
                             400->{
-                                Log.e("Error 400", "Bad Request")
+                                Log.e("Error 400 myTask", "Bad Request")
                             }
                             404-> {
                                 Log.e("Error 404", "Not Found")
@@ -383,7 +382,7 @@ class ApiClass: Interceptor {
         }
     }
 
-    fun showAllTask(activity: MainActivity)
+    fun showAllTask(activity: MainActivity, selectedDate: String)
     {
         if(Constants.MSHAREDPREFERENCES.contains(Constants.TOKEN_USER_MODEL)){
             Constants.MSHAREDPREFERENCES = activity.getSharedPreferences(Constants.PREFERENCE_NAME, Context.MODE_PRIVATE)
@@ -399,7 +398,7 @@ class ApiClass: Interceptor {
             val msharedToken = Constants.MSHAREDPREFERENCES.getString(Constants.TOKEN_USER_MODEL, "")
 
             val loginResponseCall: Call<List<Task>>? =
-                ApiClass().getUserServiceHeader()?.getTask("Bearer "+msharedToken!!, false,true)
+                ApiClass().getUserServiceHeader()?.getTask("Bearer "+msharedToken!!, false,true,selectedDate)
 
             loginResponseCall?.enqueue(object: Callback<List<Task>> {
                 @RequiresApi(Build.VERSION_CODES.N)
@@ -422,13 +421,13 @@ class ApiClass: Interceptor {
                             val adapter = TaskListItemsAdapter(activity,
                                 task)
 
-                            activity.rv_activity_task.adapter= adapter
+                            activity.rv_activity_task.adapter = adapter
                         }
                     }else{
                         val rc =  response.code()
                         when(rc){
                             400->{
-                                Log.e("Error 400", "Bad Request")
+                                Log.e("Error 400 showAllTask", "Bad Request")
                             }
                             404-> {
                                 Log.e("Error 404", "Not Found")

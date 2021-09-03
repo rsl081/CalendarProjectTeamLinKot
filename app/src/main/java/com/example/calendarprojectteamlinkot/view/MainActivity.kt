@@ -3,13 +3,18 @@ package com.example.calendarprojectteamlinkot.view
 import android.app.DatePickerDialog
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import android.widget.DatePicker
+import androidx.annotation.RequiresApi
 import androidx.core.view.GravityCompat
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.calendarprojectteamlinkot.R
+import com.example.calendarprojectteamlinkot.adapters.TaskListItemsAdapter
+import com.example.calendarprojectteamlinkot.models.Task
 import com.example.calendarprojectteamlinkot.repository.ApiClass
 import com.example.calendarprojectteamlinkot.utils.Constants
 import com.google.android.material.navigation.NavigationView
@@ -17,6 +22,9 @@ import kotlinx.android.synthetic.main.activity_day.*
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_task.*
 import kotlinx.android.synthetic.main.app_bar_main.*
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -35,69 +43,55 @@ class MainActivity : BaseActivity(),
     var savedDay = 0
     var savedMonth = 0
     var savedYear = 0
-    var savedHour = 0
-    var savedMinute = 0
 
     var isToggle: Boolean = false
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        getDateCalendar()
+
         init()
 
-        ApiClass().myTask(this)
+        if(Constants.MSHAREDPREFERENCES.contains(Constants.TOKEN_USER_MODEL)){
+            Constants.MSHAREDPREFERENCES = getSharedPreferences(Constants.PREFERENCE_NAME, Context.MODE_PRIVATE)
 
-        toggleButton!!.setOnCheckedChangeListener { _, isChecked ->
-            if(isChecked) {
-                ApiClass().showAllTask(this)
-                isToggle = !isToggle
-            } else {
-                ApiClass().myTask(this)
-                isToggle = !isToggle
-            }
+            val msharedToken = Constants.MSHAREDPREFERENCES.getString(Constants.TOKEN_USER_MODEL, "")
+
+//            val loginResponseCall: Call<Task>? =
+//                ApiClass().getUserServiceHeader()?.toggleTaskComplete("Bearer "+msharedToken!!,"1ca4451e-2869-48f0-9b25-4e53a18053f6")
+            val loginResponseCall: Call<Task>? =
+                ApiClass().getUserServiceHeader()?.toggleTaskComplete("Bearer "+msharedToken!!,"25dab184-7acb-40a2-9e00-ec897792f223")
+
+
+            loginResponseCall?.enqueue(object: Callback<Task> {
+                @RequiresApi(Build.VERSION_CODES.N)
+                override fun onResponse(call: Call<Task>, response: Response<Task>) {
+
+                    if(response.isSuccessful) {
+
+
+                    }else{
+                        val rc =  response.code()
+                        when(rc){
+                            400->{
+                                Log.e("Error 400 showAllTask", "Bad Request")
+                            }
+                            403-> {
+                                Log.e("Error 403", "Not Found" + rc)
+                            }else ->{
+                            Log.e("Error", "Generic Error" + rc)
+                        }
+                        }
+                    }
+                }
+                override fun onFailure(call: Call<Task>, t: Throwable) {
+                    Log.e("Errorrrrr", t!!.message.toString())
+                }
+            })
         }
 
-        val calendar = Calendar.getInstance()
-        val currentDate0 = SimpleDateFormat("EEE, MMM d, yyyy")
-        val currentDate1 = SimpleDateFormat("yyyy-MM-dd")
-
-        val tvSelectTaskDate: String = currentDate0.format(calendar.time)
-
-        tv_select_task_date.text = tvSelectTaskDate
-
-        ib_next.setOnClickListener {
-            calendar.add(Calendar.DAY_OF_MONTH, 1)
-
-            val tvSelectTaskDate: String = currentDate0.format(calendar.time)
-            val tvSelectTaskDate1: String = currentDate1.format(calendar.time)
-
-            tv_select_task_date.text = tvSelectTaskDate
-
-            if(isToggle){
-                ApiClass().getAllTaskByDate(this, tvSelectTaskDate1)
-            }else{
-                ApiClass().getMyTaskByDate(this, tvSelectTaskDate1)
-            }
-        }
-
-        ib_previous.setOnClickListener {
-
-
-            calendar.add(Calendar.DAY_OF_MONTH, -1)
-
-            val tvSelectTaskDate: String = currentDate0.format(calendar.time)
-            val tvSelectTaskDate1: String = currentDate1.format(calendar.time)
-
-            tv_select_task_date.text = tvSelectTaskDate
-
-            if(isToggle){
-                ApiClass().getAllTaskByDate(this, tvSelectTaskDate1)
-            }else{
-                ApiClass().getMyTaskByDate(this, tvSelectTaskDate1)
-            }
-        }
     }
 
     private fun init(){
@@ -106,13 +100,18 @@ class MainActivity : BaseActivity(),
 
         setupActionBar(this, toolbar_main_activity)
 
+        tv_select_task_date.text = displayCurrentDate()
+
+        ApiClass().myTask(this,showDate(year,month,day))
+        Log.i("datess", "date $year,$month,$day")
+
         ApiClass().getCurrentUser{
             tv_name_activtyday.text = "Hi! $it"
         }
 
-        ApiClass().countTaskOfCurrentUser{
+        ApiClass().countTaskOfCurrentUser({
             tv_num_of_task_activityday.text = "You have $it tasks today"
-        }
+        },displayCurrentDate())
 
         nav_view.setNavigationItemSelectedListener(this)
 
@@ -126,9 +125,44 @@ class MainActivity : BaseActivity(),
             getDateCalendar()
             DatePickerDialog(this, this,year,month,day).show()
         }
-    }
 
+        toggleButton!!.setOnCheckedChangeListener { _, isChecked ->
+            if(isChecked) {
+                ApiClass().showAllTask(this, showDate(year,month,day))
+                isToggle = !isToggle
+            } else {
+                ApiClass().myTask(this, showDate(year,month,day))
+                isToggle = !isToggle
+            }
+        }
 
+        ib_next.setOnClickListener {
+
+            tv_select_task_date.text = dayOfMonth(savedYear,savedMonth,++savedDay)
+
+            if(isToggle){
+                showProgressDialog(resources.getString(R.string.please_wait))
+                ApiClass().getAllTaskByDate(this, showDate(year,month,++day))
+            }else{
+                showProgressDialog(resources.getString(R.string.please_wait))
+                ApiClass().getMyTaskByDate(this, showDate(year,month,++day))
+            }
+        }
+
+        ib_previous.setOnClickListener {
+
+            tv_select_task_date.text = dayOfMonth(savedYear,savedMonth,--savedDay)
+
+            if(isToggle){
+                showProgressDialog(resources.getString(R.string.please_wait))
+                ApiClass().getAllTaskByDate(this, showDate(year,month,--day))
+            }else{
+                showProgressDialog(resources.getString(R.string.please_wait))
+                ApiClass().getMyTaskByDate(this, showDate(year,month,--day))
+            }
+        }
+
+    }//end of init
 
 
     override fun onBackPressed() {
@@ -160,14 +194,23 @@ class MainActivity : BaseActivity(),
         day = cal.get(Calendar.DAY_OF_MONTH)
         month = cal.get(Calendar.MONTH)
         year = cal.get(Calendar.YEAR)
+
+        savedDay = cal.get(Calendar.DAY_OF_MONTH)
+        savedMonth = cal.get(Calendar.MONTH)
+        savedYear = cal.get(Calendar.YEAR)
 //        hour = cal.get(Calendar.HOUR)
 //        minute = cal.get(Calendar.HOUR)
     }
 
+
     override fun onDateSet(view: DatePicker?, year: Int, month: Int, dayOfMonth: Int) {
-       savedDay = dayOfMonth
+        savedDay = dayOfMonth
         savedMonth = month
         savedYear = year
+
+        this.day = dayOfMonth
+        this.month = month
+        this.year = year
 
         val simpledateformat0 = SimpleDateFormat("EEE, MMM d, yyyy")
         val simpledateformat1 = SimpleDateFormat("yyyy-MM-dd")
@@ -178,40 +221,16 @@ class MainActivity : BaseActivity(),
         val selectedDate0: String = simpledateformat0.format(newDate.time)
         val selectedDate1: String = simpledateformat1.format(newDate.time)
 
-        Log.i("checkedToggle", selectedDate1.toString())
+        //Yung pag click ng date okay naaaaaaaaaaaaaaaaaaaaaaaaa
         if(isToggle){
+            showProgressDialog(resources.getString(R.string.please_wait))
             ApiClass().getAllTaskByDate(this, selectedDate1)
         }else{
+            showProgressDialog(resources.getString(R.string.please_wait))
             ApiClass().getMyTaskByDate(this, selectedDate1)
         }
 
         tv_select_task_date.text = selectedDate0
 
-        ib_next.setOnClickListener {
-            newDate.add(Calendar.DAY_OF_MONTH, 1)
-
-            val tvSelectTaskDate: String = simpledateformat0.format(newDate.time)
-
-            tv_select_task_date.text = tvSelectTaskDate
-            if(isToggle){
-                ApiClass().getAllTaskByDate(this, selectedDate1)
-            }else{
-                ApiClass().getMyTaskByDate(this, selectedDate1)
-            }
-
-        }
-
-        ib_previous.setOnClickListener {
-            newDate.add(Calendar.DAY_OF_MONTH, -1)
-
-            val tvSelectTaskDate: String = simpledateformat0.format(newDate.time)
-
-            tv_select_task_date.text = tvSelectTaskDate
-            if(isToggle){
-                ApiClass().getAllTaskByDate(this, selectedDate1)
-            }else{
-                ApiClass().getMyTaskByDate(this, selectedDate1)
-            }
-        }
     }
 }
