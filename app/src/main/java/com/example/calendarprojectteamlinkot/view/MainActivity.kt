@@ -98,6 +98,11 @@ class MainActivity : BaseActivity(),
                 ApiClass().getMyTaskByDate(this, tvSelectTaskDate1)
             }
         }
+
+        fab_create_task.setOnClickListener {
+            val intent = Intent(this, CreateTaskActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     private fun init(){
