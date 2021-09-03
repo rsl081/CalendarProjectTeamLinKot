@@ -12,8 +12,6 @@ import androidx.core.view.GravityCompat
 import com.example.calendarprojectteamlinkot.R
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.activity_task.*
-import kotlinx.android.synthetic.main.app_bar_main.*
 import kotlinx.android.synthetic.main.dialog_progress.*
 import java.text.DateFormat
 import java.text.SimpleDateFormat
@@ -85,15 +83,44 @@ open class BaseActivity : AppCompatActivity() {
         context.setSupportActionBar(toolbar)
         toolbar.setNavigationIcon(R.drawable.ic_baseline_menu_24)
 
-        val calendar = Calendar.getInstance()
-        val currentDate = DateFormat.getDateInstance(DateFormat.FULL).format(calendar.time)
+
 
         val dateToday = findViewById<TextView>(R.id.date_today)
-        dateToday.text = currentDate
+        dateToday.text = displayCurrentDate()
 
         toolbar.setNavigationOnClickListener {
             toggleDrawer()
         }
+
     }
+
+    fun displayCurrentDate(): String {
+        val sdf = SimpleDateFormat("EEE, MMM d, yyyy")
+        val calendar = Calendar.getInstance()
+        val currentDate: String = sdf.format(calendar.time)
+
+        return currentDate
+    }
+
+    fun showDate(year: Int, month: Int, day: Int): String {
+        val sdf = SimpleDateFormat("yyyy-MM-dd")
+        val calendar = Calendar.getInstance()
+        calendar[year, month] = day
+        val currentDate: String = sdf.format(calendar.time)
+
+        return currentDate
+    }
+
+    fun dayOfMonth(year: Int, month: Int, day: Int): String {
+        val sdf = SimpleDateFormat("EEE, MMM d, yyyy")
+        val calendar = Calendar.getInstance()
+        calendar[year, month] = day
+        val currentDate: String = sdf.format(calendar.time)
+
+        return currentDate
+    }
+
+
+
 
 }

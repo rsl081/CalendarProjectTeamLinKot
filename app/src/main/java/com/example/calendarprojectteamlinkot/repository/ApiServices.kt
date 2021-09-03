@@ -32,7 +32,8 @@ interface ApiServices {
     fun getTask(
         @Header("Authorization") auth: String,
         @Query("MyTasks") myTask: Boolean,
-        @Query("ShowAll") showAll: Boolean
+        @Query("ShowAll") showAll: Boolean,
+        @Query("Date") myDateTask: String,
     ): Call<List<Task>>
 
     @Headers("Content-Type: application/json")
@@ -55,6 +56,13 @@ interface ApiServices {
     fun createTask(
         @Header("Authorization") auth: String,
         @Body createTask: CreateTask
+    ): Call<Task>
+
+    @Headers("Content-Type: application/json")
+    @POST("tasks/{id}/toggle")
+    fun toggleTaskComplete(
+        @Header("Authorization") auth: String,
+        @Path("id") id: String,
     ): Call<Task>
 
 
