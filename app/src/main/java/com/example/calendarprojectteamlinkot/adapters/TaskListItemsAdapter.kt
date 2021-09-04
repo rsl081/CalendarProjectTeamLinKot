@@ -43,7 +43,7 @@ class TaskListItemsAdapter(private val context: Context,
 
                 holder.itemView.tv_task_name.text = model.name
                 model.id?.let { Log.i("idtaskss", it) }
-                holder.itemView.tv_description.text = model.isCompleted.toString()
+                holder.itemView.tv_description.text = model.date
                 holder.itemView.tv_username.text = name?.username
                 holder.itemView.expanded_view.visibility = if (model.expand) View.VISIBLE else View.GONE
                 holder.itemView.card_layout.setOnClickListener {

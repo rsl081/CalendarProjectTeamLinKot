@@ -7,11 +7,9 @@ import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.calendarprojectteamlinkot.adapters.TaskListItemsAdapter
-import com.example.calendarprojectteamlinkot.models.Login
-import com.example.calendarprojectteamlinkot.models.Register
-import com.example.calendarprojectteamlinkot.models.Task
-import com.example.calendarprojectteamlinkot.models.User
+import com.example.calendarprojectteamlinkot.models.*
 import com.example.calendarprojectteamlinkot.utils.Constants
+import com.example.calendarprojectteamlinkot.view.CreateTaskActivity
 import com.example.calendarprojectteamlinkot.view.MainActivity
 import com.example.calendarprojectteamlinkot.view.RegisterActivity
 import com.example.calendarprojectteamlinkot.view.SignInActivity
@@ -330,13 +328,9 @@ class ApiClass: Interceptor {
         }
     }//end getAllTaskByDate
 
-    fun myTask(activity: MainActivity, selectedDate: String){
+    fun myTask(activity: MainActivity, selectedDate: String) {
         if(Constants.MSHAREDPREFERENCES.contains(Constants.TOKEN_USER_MODEL)){
             Constants.MSHAREDPREFERENCES = activity.getSharedPreferences(Constants.PREFERENCE_NAME, Context.MODE_PRIVATE)
-
-            val builder = Retrofit.Builder()
-                .baseUrl(Constants.BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())
 
             val msharedToken = Constants.MSHAREDPREFERENCES.getString(Constants.TOKEN_USER_MODEL, "")
 
@@ -386,14 +380,6 @@ class ApiClass: Interceptor {
     {
         if(Constants.MSHAREDPREFERENCES.contains(Constants.TOKEN_USER_MODEL)){
             Constants.MSHAREDPREFERENCES = activity.getSharedPreferences(Constants.PREFERENCE_NAME, Context.MODE_PRIVATE)
-
-            val builder = Retrofit.Builder()
-                .baseUrl(Constants.BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())
-
-            val retrofit = builder.build()
-
-            val services = retrofit.create(ApiServices::class.java)
 
             val msharedToken = Constants.MSHAREDPREFERENCES.getString(Constants.TOKEN_USER_MODEL, "")
 
@@ -446,10 +432,45 @@ class ApiClass: Interceptor {
         }
     }
 
-
-    fun createTasK()
+    fun createTasK(activity: CreateTaskActivity, createdTask: CreateTask)
     {
-        //User only to
+        if(Constants.MSHAREDPREFERENCES.contains(Constants.TOKEN_USER_MODEL)) {
+            val msharedToken =
+                Constants.MSHAREDPREFERENCES.getString(Constants.TOKEN_USER_MODEL, "")
+
+            val createTaskResponseCall: Call<Task> =
+                ApiClass().getUserServiceHeader()?.createTask("Bearer $msharedToken", createdTask)!!
+
+            createTaskResponseCall.enqueue(object : Callback<Task> {
+                @RequiresApi(Build.VERSION_CODES.N)
+                override fun onResponse(call: Call<Task>, response: Response<Task>) {
+                    if (response.isSuccessful) {
+                    } else {
+                        val rc = response.code()
+                        when (rc) {
+                            400 -> {
+                                val qwe = response.errorBody()?.charStream()?.readText()
+                                val jsonObject = JSONObject(qwe!!.trim())
+                                var message = jsonObject.getJSONArray("errors")
+                                for (i in 0 until message.length()) {
+                                }
+                            }
+                            404 -> {
+                                Log.e("Error 400", "Not Found")
+                            }
+                            else -> {
+                                Log.e("Error", "Generic Error" + rc)
+                            }
+                        }
+                    }
+                }
+
+                override fun onFailure(call: Call<Task>, t: Throwable) {
+                    Log.e("Error1", t!!.message.toString())
+                    activity.hideProgressDialog()
+                }
+            })
+        }
     }
 
     fun signOut()

@@ -1,93 +1,102 @@
 package com.example.calendarprojectteamlinkot.view
 
+import android.app.DatePickerDialog
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.widget.EditText
-import android.widget.Toast
+import android.widget.DatePicker
 import androidx.annotation.RequiresApi
 import com.example.calendarprojectteamlinkot.R
 import com.example.calendarprojectteamlinkot.models.CreateTask
 import com.example.calendarprojectteamlinkot.models.Task
 import com.example.calendarprojectteamlinkot.models.User
 import com.example.calendarprojectteamlinkot.repository.ApiClass
-import com.example.calendarprojectteamlinkot.repository.ApiServices
-import com.example.calendarprojectteamlinkot.utils.Constants
-import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_create_task.*
-import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
+import java.text.SimpleDateFormat
+import java.util.*
 
-class CreateTaskActivity : AppCompatActivity() {
+class CreateTaskActivity : BaseActivity(), DatePickerDialog.OnDateSetListener {
 
     var etName: String = ""
     var etDescription: String = ""
     var etDate: String = ""
     var etAssignee: String = ""
 
+    var day = 0
+    var month = 0
+    var year = 0
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_task)
+
+        val loginResponseCall: Call<List<User>>? =
+            ApiClass().getUserServiceHeader()?.getAllUser()
+
+        loginResponseCall?.enqueue(object : Callback<List<User>> {
+            @RequiresApi(Build.VERSION_CODES.N)
+            override fun onResponse(call: Call<List<User>>, response: Response<List<User>>) {
+                if (response.isSuccessful) {
+//                    val ctr = response.body()?
+//                    for(happy in ctr){
+//                        c
+//                    }
+
+                } else {
+                    val rc = response.code()
+                    Log.e("Error", "Error " + rc)
+                }
+            }
+
+            override fun onFailure(call: Call<List<User>>, t: Throwable) {
+                Log.e("Errorrrrr", t!!.message.toString())
+            }
+        })
 
         btn_create.setOnClickListener{
             etName = et_task_name.text.toString()
             etDescription = et_task_description.text.toString()
             etAssignee = et_task_assignee.text.toString()
-            etDate = et_task_date.text.toString()
+
+
+
             val usr = User("genesis")
 
-            val createdtask = CreateTask(etName, etDescription, usr, etDate)
-
-            val msharedToken = Constants.MSHAREDPREFERENCES.getString(Constants.TOKEN_USER_MODEL, "")
-
-            Log.e("Error 400", createdtask.toString())
-
-            val createTaskResponseCall: Call<Task> =
-                ApiClass().getUserServiceHeader()?.createTask("Bearer $msharedToken", createdtask)!!
-
-
-            createTaskResponseCall.enqueue(object: Callback<Task> {
-                @RequiresApi(Build.VERSION_CODES.N)
-                override fun onResponse(call: Call<Task>, response: Response<Task>) {
-                    if(response.isSuccessful) {
-
-                    }else{
-                        val rc =  response.code()
-                        when(rc){
-                            400->{
-                                val qwe =  response.errorBody()?.charStream()?.readText()
-                                val jsonObject = JSONObject(qwe!!.trim())
-                                var message = jsonObject.getJSONArray("errors")
-
-
-                                for(i in 0 until message.length()){
-                                }
-
-
-                            }
-                            404-> {
-                                Log.e("Error 400", "Not Found")
-                            }else ->{
-                            Log.e("Error", "Generic Error" + rc)
-                        }
-                        }
-                    }
-                }
-
-                override fun onFailure(call: Call<Task>, t: Throwable) {
-                    Log.e("Error1", t!!.message.toString())
-                    //hideProgressDialog()
-                }
-            })
             Log.i("CreateTask", "$etName, $etDescription, $etAssignee, $etDate")
+
+            val createTask = CreateTask(etName,etDescription,usr,etDate)
+
+            ApiClass().createTasK(this, createTask)
         }
 
+        et_task_date.setOnClickListener {
+            getDateCalendar()
+            DatePickerDialog(this, this,year,month,day).show()
+        }
 
+    }
 
+    private fun getDateCalendar(){
+        val cal: Calendar = Calendar.getInstance()
+        day = cal.get(Calendar.DAY_OF_MONTH)
+        month = cal.get(Calendar.MONTH)
+        year = cal.get(Calendar.YEAR)
+    }
+
+    override fun onDateSet(view: DatePicker?, year: Int, month: Int, dayOfMonth: Int) {
+        this.day = dayOfMonth
+        this.month = month
+        this.year = year
+
+        val sdf = SimpleDateFormat("yyyy-MM-dd")
+        val newDate = Calendar.getInstance()
+        newDate[year, month] = day
+
+        val selectedDate: String = sdf.format(newDate.time)
+
+        et_task_date.setText(selectedDate)
     }
 }

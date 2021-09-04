@@ -61,6 +61,7 @@ class MainActivity : BaseActivity(),
 
 //            val loginResponseCall: Call<Task>? =
 //                ApiClass().getUserServiceHeader()?.toggleTaskComplete("Bearer "+msharedToken!!,"1ca4451e-2869-48f0-9b25-4e53a18053f6")
+
             val loginResponseCall: Call<Task>? =
                 ApiClass().getUserServiceHeader()?.toggleTaskComplete("Bearer "+msharedToken!!,"25dab184-7acb-40a2-9e00-ec897792f223")
 
@@ -160,6 +161,11 @@ class MainActivity : BaseActivity(),
                 showProgressDialog(resources.getString(R.string.please_wait))
                 ApiClass().getMyTaskByDate(this, showDate(year,month,--day))
             }
+        }
+
+        fab_create_task.setOnClickListener {
+            val intent = Intent(this, CreateTaskActivity::class.java)
+            startActivity(intent)
         }
 
     }//end of init
