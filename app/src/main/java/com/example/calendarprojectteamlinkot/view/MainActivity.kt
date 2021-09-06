@@ -111,11 +111,11 @@ class MainActivity : BaseActivity(),
         Log.i("datess", "date $year,$month,$day")
 
         ApiClass().getCurrentUser{
-            tv_name_activtyday.text = "Hi! $it"
+            tv_name_activity_day.text = "Hi! $it"
         }
 
         ApiClass().countTaskOfCurrentUser({
-            tv_num_of_task_activityday.text = "You have $it tasks today"
+            tv_num_of_task_activity_day.text = "You have $it tasks today"
         },displayCurrentDate())
 
         nav_view.setNavigationItemSelectedListener(this)
@@ -131,7 +131,7 @@ class MainActivity : BaseActivity(),
             DatePickerDialog(this, this,year,month,day).show()
         }
 
-        toggleButton!!.setOnCheckedChangeListener { _, isChecked ->
+        tb_my_task_show_all!!.setOnCheckedChangeListener { _, isChecked ->
             if(isChecked) {
                 ApiClass().showAllTask(this, showDate(year,month,day))
                 isToggle = !isToggle

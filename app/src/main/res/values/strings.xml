@@ -1,9 +1,10 @@
 <resources>
+    <!--SplashActivity-->
     <string name="app_name">MeTaskProject</string>
     <string name="str_metask">MeTask</string>
     <string name="str_app">App</string>
 
-    <!--Sign In-->
+    <!--SignInActivity-->
     <string name="sign_in_pls_login_to_continue">Please login to continue</string>
     <string name="sign_in_username">Username</string>
     <string name="sign_in_password">Password</string>
@@ -12,44 +13,57 @@
     <string name="sign_in_no_account">Don\'t have an account?</string>
     <string name="sign_in_register">Register</string>
 
-    <!--Content Descriptions-->
-    <string name="menu_button">Menu Button</string>
+    <!--ContentDescriptions-->
+    <string name="menu_button">Menu</string>
     <string name="date_today">Date Today</string>
     <string name="task_view">Task View</string>
     <string name="calendar_view">Calendar View</string>
     <string name="display_picture">Display Picture</string>
     <string name="log_out_button">Log Out</string>
 
-    <!--Day View-->
+    <!--DayActivity-->
     <string name="card_view_greeting_morning">Good morning!</string>
     <string name="card_view_greeting_afternoon">Good afternoon!</string>
     <string name="card_view_greeting_evening">Good evening!</string>
-    <string name="card_view_number_of_tasks">You have 4 tasks today</string>
+    <string name="card_view_number_of_tasks">You have n tasks today</string>
     <string name="tasks">Tasks</string>
     <string name="task">Task</string>
 
-    <!--Task View-->
+    <!--TaskActivity-->
     <string name="selected_task_date">Selected Task Date</string>
     <string name="toggle_button_on">Show All</string>
     <string name="toggle_button_off">My Tasks</string>
-    <string name="left_arrow_button">Left Arrow Button</string>
-    <string name="right_arrow_button">Right Arrow Button</string>
+    <string name="left_arrow_button">Previous Day</string>
+    <string name="right_arrow_button">Next Day</string>
     <string name="edit">Edit</string>
     <string name="delete">Delete</string>
+    <string name="fab_create">Create Task</string>
 
-    <!--Base Activity-->
+    <!--BaseActivity-->
     <string name="please_click_back_again_to_exit">Please click back again to exit.</string>
     <string name="please_wait">Please Wait&#8230;</string>
 
-    <!--Side Bar-->
+    <!--SideBar-->
     <string name="empty_string"> </string>
 
-    <!--Create Task-->
-    <string-array name="assignee">
-        <item>Russel</item>
-        <item>Hanz</item>
-        <item>Raph</item>
-    </string-array>
+    <!--CreateTaskActivity-->
+    <string name="back_button">Back</string>
+    <string name="toolbar_create_task">Create Task</string>
+    <string name="cv_edit_text_task_name">Task Name</string>
+    <string name="cv_description">Description</string>
+    <string name="cv_date">Date</string>
+    <string name="cv_assignee">Assignee</string>
+    <string name="btn_create">Create</string>
+    <string name="cancel">Cancel</string>
 
+    <!--AppBar-->
+    <string name="current_date">Current Date</string>
+
+    <!--DropDownItems-->
+    <string name="dd_username">Username</string>
+
+    <!--TaskItems-->
+    <string name="ti_task_name">Task Name</string>
+    <string name="ti_description">Description</string>
 
 </resources>
