@@ -9,6 +9,7 @@ import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import android.widget.DatePicker
+import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.core.view.GravityCompat
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -54,6 +55,9 @@ class MainActivity : BaseActivity(),
 
         init()
 
+        val dateToday = findViewById<TextView>(R.id.date_today)
+        dateToday.text = displayCurrentDate()
+
         if(Constants.MSHAREDPREFERENCES.contains(Constants.TOKEN_USER_MODEL)){
             Constants.MSHAREDPREFERENCES = getSharedPreferences(Constants.PREFERENCE_NAME, Context.MODE_PRIVATE)
 
@@ -63,7 +67,7 @@ class MainActivity : BaseActivity(),
 //                ApiClass().getUserServiceHeader()?.toggleTaskComplete("Bearer "+msharedToken!!,"1ca4451e-2869-48f0-9b25-4e53a18053f6")
 
             val loginResponseCall: Call<Task>? =
-                ApiClass().getUserServiceHeader()?.toggleTaskComplete("Bearer "+msharedToken!!,"25dab184-7acb-40a2-9e00-ec897792f223")
+                ApiClass().getUserServiceHeader()?.toggleTaskComplete("Bearer "+msharedToken!!,"dbc260bd-a7ef-4836-96a4-54627f815f1e")
 
 
             loginResponseCall?.enqueue(object: Callback<Task> {

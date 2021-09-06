@@ -44,5 +44,12 @@
     <!--Side Bar-->
     <string name="empty_string"> </string>
 
+    <!--Create Task-->
+    <string-array name="assignee">
+        <item>Russel</item>
+        <item>Hanz</item>
+        <item>Raph</item>
+    </string-array>
+
 
 </resources>

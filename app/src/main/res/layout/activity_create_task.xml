@@ -22,7 +22,6 @@
             android:layout_height="wrap_content"
             android:text="Back"
             android:gravity="center_vertical"
-            android:drawableLeft="@drawable/ic_baseline_arrow_back_24"
             android:drawablePadding="10dp"
             android:textColor="@color/light_gray" />
 
@@ -95,12 +94,12 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/et_task_description" />
 
-            <EditText
-                android:id="@+id/et_task_assignee"
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
                 android:layout_width="0dp"
+                android:hint="assignee"
                 android:layout_height="wrap_content"
-                android:hint="Assignee"
-                android:drawableLeft="@drawable/ic_baseline_person_outline_24"
+                app:startIconDrawable="@drawable/ic_baseline_person_outline_24"
                 android:drawablePadding="10dp"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="20dp"
@@ -109,7 +108,16 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/et_task_date" />
+                app:layout_constraintTop_toBottomOf="@+id/et_task_date">
+
+                <AutoCompleteTextView
+                    android:id="@+id/autoComplete_create_task"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:inputType="none" />
+
+            </com.google.android.material.textfield.TextInputLayout>
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -126,7 +134,7 @@
         android:textAllCaps="false"
         android:textColor="@color/white"
         android:textSize="18sp"
-        app:layout_constraintEnd_toStartOf="@+id/textView6"
+        app:layout_constraintEnd_toStartOf="@+id/tv_cancel_button"
         app:layout_constraintStart_toStartOf="@+id/guideline"
         app:layout_constraintTop_toBottomOf="@+id/createTaskCardView" />
 
@@ -159,7 +167,7 @@
         app:layout_constraintGuide_end="20dp" />
 
     <TextView
-        android:id="@+id/textView6"
+        android:id="@+id/tv_cancel_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="40dp"

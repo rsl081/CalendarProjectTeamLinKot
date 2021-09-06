@@ -3,9 +3,14 @@ package com.example.calendarprojectteamlinkot.view
 import android.app.DatePickerDialog
 import android.os.Build
 import android.os.Bundle
+import android.text.TextUtils
 import android.util.Log
+import android.widget.ArrayAdapter
 import android.widget.DatePicker
+import android.widget.TextView
 import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import com.example.calendarprojectteamlinkot.R
 import com.example.calendarprojectteamlinkot.models.CreateTask
 import com.example.calendarprojectteamlinkot.models.Task
@@ -17,6 +22,7 @@ import retrofit2.Callback
 import retrofit2.Response
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.collections.ArrayList
 
 class CreateTaskActivity : BaseActivity(), DatePickerDialog.OnDateSetListener {
 
@@ -33,51 +39,68 @@ class CreateTaskActivity : BaseActivity(), DatePickerDialog.OnDateSetListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_task)
 
-        val loginResponseCall: Call<List<User>>? =
-            ApiClass().getUserServiceHeader()?.getAllUser()
+        init()
+    }
 
-        loginResponseCall?.enqueue(object : Callback<List<User>> {
-            @RequiresApi(Build.VERSION_CODES.N)
-            override fun onResponse(call: Call<List<User>>, response: Response<List<User>>) {
-                if (response.isSuccessful) {
-//                    val ctr = response.body()?
-//                    for(happy in ctr){
-//                        c
-//                    }
+    private fun init(){
 
-                } else {
-                    val rc = response.code()
-                    Log.e("Error", "Error " + rc)
-                }
-            }
+        setupActionBar()
 
-            override fun onFailure(call: Call<List<User>>, t: Throwable) {
-                Log.e("Errorrrrr", t!!.message.toString())
-            }
-        })
+        ApiClass().getAllUser(this)
 
         btn_create.setOnClickListener{
             etName = et_task_name.text.toString()
             etDescription = et_task_description.text.toString()
-            etAssignee = et_task_assignee.text.toString()
+            etDate = et_task_date.text.toString()
+            etAssignee = autoComplete_create_task.text.toString()
+            val usr = User(etAssignee)
+            if(validateForm(etName,etDescription,etDate,etAssignee)){
+                val createTask = CreateTask(etName,etDescription,usr,etDate)
 
+                ApiClass().createTasK(this, createTask)
+            }
+        }
 
-
-            val usr = User("genesis")
-
-            Log.i("CreateTask", "$etName, $etDescription, $etAssignee, $etDate")
-
-            val createTask = CreateTask(etName,etDescription,usr,etDate)
-
-            ApiClass().createTasK(this, createTask)
+        tv_cancel_button.setOnClickListener {
+            onBackPressed()
         }
 
         et_task_date.setOnClickListener {
             getDateCalendar()
             DatePickerDialog(this, this,year,month,day).show()
         }
-
     }
+
+    fun setupActionBar(){
+        setSupportActionBar(toolbar_CreateTask)
+        toolbar_CreateTask.setNavigationIcon(R.drawable.ic_baseline_arrow_back_24)
+
+        toolbar_CreateTask.setNavigationOnClickListener {
+            onBackPressed()
+        }
+    }
+
+    private fun validateForm(name: String, description: String, date: String, assignee: String): Boolean {
+        return when{
+            TextUtils.isEmpty(name)->{
+                showErrorSnackBar("Please enter a name")
+                false
+            }
+            TextUtils.isEmpty(description)->{
+                showErrorSnackBar("Please enter a description")
+                false
+            }TextUtils.isEmpty(date)->{
+                showErrorSnackBar("Please enter a date")
+                false
+            }TextUtils.isEmpty(assignee)->{
+                showErrorSnackBar("Please enter a assignee")
+                false
+            }else->{
+                true
+            }
+        }
+    }//end of validateForm
+
 
     private fun getDateCalendar(){
         val cal: Calendar = Calendar.getInstance()
