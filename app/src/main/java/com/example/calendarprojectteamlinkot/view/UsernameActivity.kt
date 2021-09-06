@@ -9,7 +9,7 @@ import kotlinx.android.synthetic.main.activity_username.*
 class UsernameActivity: AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_username)
 
         btn_confirm.setOnClickListener {
             val intent = Intent(this, PasswordActivity::class.java)

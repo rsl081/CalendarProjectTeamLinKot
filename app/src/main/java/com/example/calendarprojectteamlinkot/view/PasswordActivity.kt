@@ -12,7 +12,7 @@ class PasswordActivity: AppCompatActivity() {
         setContentView(R.layout.activity_password)
 
         btn_back.setOnClickListener {
-            val intent = Intent(this, MainActivity::class.java)
+            val intent = Intent(this, UsernameActivity::class.java)
 
             startActivity(intent)
             overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right)
