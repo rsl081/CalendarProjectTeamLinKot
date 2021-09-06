@@ -77,7 +77,7 @@ class CreateTaskActivity : BaseActivity(), DatePickerDialog.OnDateSetListener {
         setSupportActionBar(tb_create_task)
         tb_create_task.setNavigationIcon(R.drawable.ic_baseline_arrow_back_24)
 
-        toolbar_CreateTask.setNavigationOnClickListener {
+        tb_create_task.setNavigationOnClickListener {
             startActivity(Intent(this, MainActivity::class.java))
             finish()
         }
