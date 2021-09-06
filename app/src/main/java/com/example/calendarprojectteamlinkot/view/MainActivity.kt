@@ -3,19 +3,18 @@ package com.example.calendarprojectteamlinkot.view
 import android.app.DatePickerDialog
 import android.content.Context
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import android.widget.DatePicker
 import android.widget.TextView
-import androidx.annotation.RequiresApi
+import android.widget.Toast
 import androidx.core.view.GravityCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.calendarprojectteamlinkot.R
 import com.example.calendarprojectteamlinkot.adapters.TaskListItemsAdapter
-import com.example.calendarprojectteamlinkot.models.Task
 import com.example.calendarprojectteamlinkot.repository.ApiClass
 import com.example.calendarprojectteamlinkot.utils.Constants
 import com.google.android.material.navigation.NavigationView
@@ -23,9 +22,6 @@ import kotlinx.android.synthetic.main.activity_day.*
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_task.*
 import kotlinx.android.synthetic.main.app_bar_main.*
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -47,6 +43,8 @@ class MainActivity : BaseActivity(),
 
     var isToggle: Boolean = false
 
+    lateinit var mHandler: Handler
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -58,46 +56,27 @@ class MainActivity : BaseActivity(),
         val dateToday = findViewById<TextView>(R.id.date_today)
         dateToday.text = displayCurrentDate()
 
-        if(Constants.MSHAREDPREFERENCES.contains(Constants.TOKEN_USER_MODEL)){
-            Constants.MSHAREDPREFERENCES = getSharedPreferences(Constants.PREFERENCE_NAME, Context.MODE_PRIVATE)
-
-            val msharedToken = Constants.MSHAREDPREFERENCES.getString(Constants.TOKEN_USER_MODEL, "")
-
-//            val loginResponseCall: Call<Task>? =
-//                ApiClass().getUserServiceHeader()?.toggleTaskComplete("Bearer "+msharedToken!!,"1ca4451e-2869-48f0-9b25-4e53a18053f6")
-
-            val loginResponseCall: Call<Task>? =
-                ApiClass().getUserServiceHeader()?.toggleTaskComplete("Bearer "+msharedToken!!,"dbc260bd-a7ef-4836-96a4-54627f815f1e")
-
-
-            loginResponseCall?.enqueue(object: Callback<Task> {
-                @RequiresApi(Build.VERSION_CODES.N)
-                override fun onResponse(call: Call<Task>, response: Response<Task>) {
-
-                    if(response.isSuccessful) {
-
-
-                    }else{
-                        val rc =  response.code()
-                        when(rc){
-                            400->{
-                                Log.e("Error 400 showAllTask", "Bad Request")
-                            }
-                            403-> {
-                                Log.e("Error 403", "Not Found" + rc)
-                            }else ->{
-                                Log.e("Error", "Happy Generic Error" + rc)
-                            }
-                        }
-                    }
-                }
-                override fun onFailure(call: Call<Task>, t: Throwable) {
-                    Log.e("Errorrrrr", t!!.message.toString())
-                }
-            })
-        }
+//        this.mHandler = Handler()
+//
+//        this.mHandler.postDelayed(m_Runnable, 5000)
 
     }
+//
+//    private val m_Runnable: Runnable = object : Runnable {
+//        override fun run() {
+//            ApiClass().countTaskOfCurrentUser({
+//                tv_num_of_task_activityday.text = "You have $it tasks today"
+//            },displayCurrentDate())
+//            this@MainActivity.mHandler.postDelayed(this, 5000)
+//        }
+//    } //runnable
+
+//    override fun onPause() {
+//        super.onPause()
+//        mHandler.removeCallbacks(m_Runnable)
+//        finish()
+//    }
+
 
     private fun init(){
 
@@ -174,7 +153,6 @@ class MainActivity : BaseActivity(),
 
     }//end of init
 
-
     override fun onBackPressed() {
         if(drawer_layout.isDrawerOpen(GravityCompat.START)){
             drawer_layout.closeDrawer(GravityCompat.START)
@@ -243,4 +221,5 @@ class MainActivity : BaseActivity(),
         tv_select_task_date.text = selectedDate0
 
     }
+
 }
