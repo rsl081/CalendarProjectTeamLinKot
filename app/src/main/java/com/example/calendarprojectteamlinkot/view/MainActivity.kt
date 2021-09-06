@@ -10,6 +10,7 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.DatePicker
 import android.widget.TextView
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.core.view.GravityCompat
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -18,7 +19,10 @@ import com.example.calendarprojectteamlinkot.adapters.TaskListItemsAdapter
 import com.example.calendarprojectteamlinkot.models.Task
 import com.example.calendarprojectteamlinkot.repository.ApiClass
 import com.example.calendarprojectteamlinkot.utils.Constants
+import com.example.calendarprojectteamlinkot.utils.MyFirebaseMessagingService
+import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.material.navigation.NavigationView
+import com.google.firebase.messaging.FirebaseMessaging
 import kotlinx.android.synthetic.main.activity_day.*
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_task.*
@@ -29,6 +33,7 @@ import retrofit2.Response
 import java.text.SimpleDateFormat
 import java.util.*
 
+private const val TAG = "MainActivity"
 
 class MainActivity : BaseActivity(),
     NavigationView.OnNavigationItemSelectedListener, DatePickerDialog.OnDateSetListener {
@@ -55,6 +60,20 @@ class MainActivity : BaseActivity(),
 
         init()
 
+        // FCM token setup
+        FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
+            if (!task.isSuccessful) {
+                Log.w(TAG, "Fetching FCM registration token failed", task.exception)
+                return@OnCompleteListener
+            }
+
+            // Get new FCM registration token
+            val token = task.result
+
+            Log.d(TAG + "Token", token.toString())
+            Toast.makeText(baseContext, token, Toast.LENGTH_SHORT).show()
+        })
+
         val dateToday = findViewById<TextView>(R.id.date_today)
         dateToday.text = displayCurrentDate()
 
@@ -75,7 +94,6 @@ class MainActivity : BaseActivity(),
                 override fun onResponse(call: Call<Task>, response: Response<Task>) {
 
                     if(response.isSuccessful) {
-
 
                     }else{
                         val rc =  response.code()

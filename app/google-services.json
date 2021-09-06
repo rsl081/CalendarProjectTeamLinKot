@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "173866722260",
+    "project_id": "metask-notification",
+    "storage_bucket": "metask-notification.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:173866722260:android:64f093bacc9dc550d4ec41",
+        "android_client_info": {
+          "package_name": "com.example.calendarprojectteamlinkot"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "173866722260-2cdf6vok5u6qa5o58rje4fkhjvd9u3l6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC0bROuWYtuYIbgaSRPZ2V_MX-RNq0P2DU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "173866722260-2cdf6vok5u6qa5o58rje4fkhjvd9u3l6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
