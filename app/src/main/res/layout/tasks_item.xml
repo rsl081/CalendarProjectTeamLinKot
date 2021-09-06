@@ -6,39 +6,32 @@
     android:id="@+id/card_layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginStart="5dp"
-    android:layout_marginEnd="5dp"
-    android:layout_marginBottom="10dp">
+    android:layout_marginBottom="@dimen/ti_margin">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <!--Checkbox for task completed-->
         <CheckBox
             android:id="@+id/cb_task_item"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:layout_marginLeft="20dp"
+            android:layout_marginStart="@dimen/ti_margin2"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <!--Text view for showing the task name-->
         <TextView
             android:id="@+id/tv_task_name"
             android:layout_width="wrap_content"
-            android:layout_height="40dp"
-            android:layout_marginTop="10dp"
-            android:text="Task Name"
+            android:layout_height="@dimen/ti_height"
+            android:layout_marginTop="@dimen/ti_margin"
+            android:text="@string/ti_task_name"
             android:textColor="@color/black"
-            android:textSize="20sp"
+            android:textSize="@dimen/ti_text_size2"
             app:layout_constraintStart_toEndOf="@+id/cb_task_item"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <!--This is the layout "expanded_view" we will
-            hide initially and show as expanded
-            layout when user clicks on any of the item-->
         <RelativeLayout
             android:id="@+id/expanded_view"
             android:layout_width="0dp"
@@ -48,53 +41,52 @@
             app:layout_constraintStart_toEndOf="@+id/cb_task_item"
             app:layout_constraintTop_toBottomOf="@id/tv_task_name">
 
-            <!--It has a text view which we will use in our case as
-                a description text for the tasks-->
             <TextView
                 android:id="@+id/tv_description"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
-                android:layout_marginEnd="10dp"
-                android:layout_marginBottom="10dp"
-                android:text="Description Text"
-                android:textSize="12sp" />
+                android:layout_marginEnd="@dimen/ti_margin"
+                android:layout_marginBottom="@dimen/ti_margin"
+                android:text="@string/ti_description"
+                android:textSize="@dimen/ti_text_size" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
-                android:layout_marginTop="70dp"
-                android:layout_marginEnd="0dp"
-                android:layout_marginBottom="20dp"
+                android:layout_marginTop="@dimen/ti_margin3"
+                android:layout_marginEnd="@dimen/ti_margin"
+                android:layout_marginBottom="@dimen/ti_margin2"
                 android:orientation="horizontal">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:drawableLeft="@drawable/edit_pencil"
-                    android:drawablePadding="5dp"
+                    app:drawableLeftCompat="@drawable/edit_pencil"
+                    android:drawablePadding="@dimen/ti_drawable_padding"
                     android:text="@string/edit" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
-                    android:drawableLeft="@drawable/trash_icon"
-                    android:drawablePadding="5dp"
+                    android:layout_marginStart="@dimen/ti_margin2"
+                    app:drawableLeftCompat="@drawable/trash_icon"
+                    android:drawablePadding="@dimen/ti_drawable_padding"
                     android:text="@string/delete" />
 
                 <TextView
                     android:id="@+id/tv_username"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="10dp"
-                    android:gravity="right"
+                    android:layout_marginEnd="@dimen/ti_margin"
+                    android:gravity="end"
                     android:text="@string/sign_in_username"
                     android:textStyle="bold"
                     />
 
             </LinearLayout>
+
         </RelativeLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

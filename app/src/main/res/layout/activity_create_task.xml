@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,43 +8,41 @@
     tools:context=".view.CreateTaskActivity">
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar_CreateTask"
+        android:id="@+id/tb_create_task"
         android:layout_width="match_parent"
         android:layout_height="?android:attr/actionBarSize"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="25dp"
-        app:layout_constraintEnd_toStartOf="@+id/guideline2"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/guideline"
-        app:layout_constraintTop_toTopOf="@+id/guideline3">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Back"
             android:gravity="center_vertical"
-            android:drawablePadding="10dp"
+            android:text="@string/back_button"
             android:textColor="@color/light_gray" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="right"
-            android:text="Create Task"
+            android:layout_marginEnd="@dimen/ct_margin2"
+            android:gravity="end"
+            android:text="@string/toolbar_create_task"
             android:textColor="@color/light_gray"
-            android:textSize="22sp" />
+            android:textSize="@dimen/tb_text_size" />
 
     </androidx.appcompat.widget.Toolbar>
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/createTaskCardView"
+        android:id="@+id/cv_create_task"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:cardCornerRadius="20dp"
-        android:elevation="20dp"
-        app:layout_constraintEnd_toStartOf="@+id/guideline2"
-        app:layout_constraintStart_toStartOf="@+id/guideline"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar_CreateTask">
+        android:layout_marginTop="@dimen/ct_margin2"
+        app:cardCornerRadius="@dimen/ct_corner_radius"
+        app:cardElevation="@dimen/ct_elevation"
+        app:layout_constraintEnd_toStartOf="@+id/guideline_right"
+        app:layout_constraintStart_toStartOf="@+id/guideline_left"
+        app:layout_constraintTop_toBottomOf="@+id/tb_create_task">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -52,13 +51,13 @@
             <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/et_task_name"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:hint="Name"
-                android:drawableLeft="@drawable/ic_baseline_edit_24"
-                android:drawablePadding="10dp"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="30dp"
-                android:layout_marginEnd="20dp"
+                android:layout_height="@dimen/layout_height"
+                android:hint="@string/cv_edit_text_task_name"
+                android:drawableStart="@drawable/ic_baseline_edit_24"
+                android:drawablePadding="@dimen/ct_drawable_padding"
+                android:layout_marginStart="@dimen/ct_margin2"
+                android:layout_marginTop="@dimen/ct_margin1"
+                android:layout_marginEnd="@dimen/ct_margin2"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -66,30 +65,30 @@
             <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/et_task_description"
                 android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="20dp"
-                android:drawableLeft="@drawable/ic_baseline_edit_24"
-                android:drawablePadding="10dp"
-                android:hint="Description"
+                android:layout_height="@dimen/layout_height2"
+                android:layout_marginStart="@dimen/ct_margin2"
+                android:layout_marginTop="@dimen/ct_margin2"
+                android:layout_marginEnd="@dimen/ct_margin2"
+                android:drawableStart="@drawable/ic_baseline_edit_24"
+                android:drawablePadding="@dimen/drawable_padding"
+                android:hint="@string/cv_description"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/et_task_name"
-                app:layout_constraintVertical_weight="1" />
+                app:layout_constraintTop_toBottomOf="@id/et_task_name" />
 
             <EditText
                 android:id="@+id/et_task_date"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:hint="Date"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginEnd="20dp"
+                android:layout_height="@dimen/layout_height"
+                android:hint="@string/cv_date"
+                android:layout_marginStart="@dimen/ct_margin2"
+                android:layout_marginTop="@dimen/ct_margin2"
+                android:layout_marginEnd="@dimen/ct_margin2"
                 android:focusable="false"
-                android:drawableLeft="@drawable/ic_baseline_date_range_24"
-                android:drawablePadding="10dp"
+                android:autofillHints="false"
+                android:inputType="date"
+                android:drawableStart="@drawable/ic_baseline_date_range_24"
+                android:drawablePadding="@dimen/drawable_padding"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/et_task_description" />
@@ -97,87 +96,82 @@
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
                 android:layout_width="0dp"
-                android:hint="assignee"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/layout_height"
                 app:startIconDrawable="@drawable/ic_baseline_person_outline_24"
-                android:drawablePadding="10dp"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginEnd="20dp"
-                android:layout_marginBottom="50dp"
+                android:drawablePadding="@dimen/drawable_padding"
+                android:hint="@string/cv_assignee"
+                android:textColorHint="@color/light_gray"
+                android:layout_marginStart="@dimen/ct_margin2"
+                android:layout_marginTop="@dimen/ct_margin2"
+                android:layout_marginEnd="@dimen/ct_margin2"
+                android:layout_marginBottom="@dimen/ct_margin3"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/et_task_date">
 
                 <AutoCompleteTextView
-                    android:id="@+id/autoComplete_create_task"
+                    android:id="@+id/ac_assignee"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:inputType="none" />
+                    android:layout_height="@dimen/layout_height"
+                    android:inputType="none"
+                    tools:ignore="TextContrastCheck,TouchTargetSizeCheck" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
-
         </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.cardview.widget.CardView>
 
+    </androidx.cardview.widget.CardView>
 
     <Button
         android:id="@+id/btn_create"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:backgroundTint="#83D475"
-        android:text="Create"
+        android:layout_height="@dimen/layout_height"
+        android:layout_marginTop="@dimen/ct_margin2"
+        android:backgroundTint="@color/gradiant_green"
+        android:text="@string/btn_create"
+        android:textSize="@dimen/btn_text_size"
         android:textAllCaps="false"
         android:textColor="@color/white"
-        android:textSize="18sp"
         app:layout_constraintEnd_toStartOf="@+id/tv_cancel_button"
-        app:layout_constraintStart_toStartOf="@+id/guideline"
-        app:layout_constraintTop_toBottomOf="@+id/createTaskCardView" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_begin="20dp" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_end="20dp" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_begin="20dp" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_end="20dp" />
+        app:layout_constraintStart_toStartOf="@+id/guideline_left"
+        app:layout_constraintTop_toBottomOf="@+id/cv_create_task"
+        tools:ignore="TextContrastCheck" />
 
     <TextView
         android:id="@+id/tv_cancel_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="40dp"
-        android:layout_marginEnd="30dp"
-        android:text="Cancel"
-        android:textSize="18sp"
+        android:layout_marginStart="@dimen/ct_margin3"
+        android:layout_marginEnd="@dimen/ct_margin2"
+        android:text="@string/cancel"
+        android:textSize="@dimen/btn_text_size"
         app:layout_constraintBottom_toBottomOf="@+id/btn_create"
-        app:layout_constraintEnd_toStartOf="@+id/guideline2"
+        app:layout_constraintEnd_toStartOf="@+id/guideline_right"
         app:layout_constraintStart_toEndOf="@+id/btn_create"
         app:layout_constraintTop_toTopOf="@+id/btn_create" />
 
+    <!--Guidelines-->
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_left"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="@dimen/ct_margin2" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_right"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_end="@dimen/ct_margin2" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_top"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="@dimen/ct_margin2"
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -35,7 +35,7 @@ class SignInActivity : BaseActivity() {
             finish()
         }
 
-        btnSignIn.setOnClickListener {
+        btn_sign_in.setOnClickListener {
             signInRegisteredUser()
         }
 
@@ -49,7 +49,7 @@ class SignInActivity : BaseActivity() {
     private fun signInRegisteredUser()
     {
         val email: String = et_username_signIn.text.toString().trim{ it <= ' '}
-        val password: String = et_password_signIn.text.toString().trim{ it <= ' '}
+        val password: String = et_password_sign_in.text.toString().trim{ it <= ' '}
 
         if(validateForm(email, password))
         {
