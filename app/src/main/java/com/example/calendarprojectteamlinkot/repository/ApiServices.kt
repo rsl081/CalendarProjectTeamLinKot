@@ -65,5 +65,20 @@ interface ApiServices {
         @Path("id") id: String,
     ): Call<Task>
 
+    @Headers("Content-Type: application/json")
+    @DELETE("tasks/{id}")
+    fun deleteTask(
+        @Header("Authorization") auth: String,
+        @Path("id") id: String,
+    ): Call<Task>
+
+    @Headers("Content-Type: application/json")
+    @PUT("tasks/{id}")
+    fun editTask(
+        @Header("Authorization") auth: String,
+        @Path("id") id: String,
+        @Body createTask: CreateTask
+    ): Call<Task>
+
 
 }
