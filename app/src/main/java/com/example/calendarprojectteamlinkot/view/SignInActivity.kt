@@ -40,7 +40,7 @@ class SignInActivity : BaseActivity() {
         }
 
         tv_register.setOnClickListener {
-            startActivity(Intent(this, RegisterActivity::class.java))
+            startActivity(Intent(this, UsernameActivity::class.java))
         }
 
     }
