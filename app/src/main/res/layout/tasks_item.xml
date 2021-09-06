@@ -68,6 +68,7 @@
                     android:text="@string/edit" />
 
                 <TextView
+                    android:id="@+id/delete_tasks_item"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/ti_margin2"

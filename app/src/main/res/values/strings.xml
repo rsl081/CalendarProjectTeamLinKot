@@ -25,7 +25,7 @@
     <string name="card_view_greeting_morning">Good morning!</string>
     <string name="card_view_greeting_afternoon">Good afternoon!</string>
     <string name="card_view_greeting_evening">Good evening!</string>
-    <string name="card_view_number_of_tasks">You have n tasks today</string>
+    <string name="card_view_number_of_tasks">You have 0 tasks today</string>
     <string name="tasks">Tasks</string>
     <string name="task">Task</string>
 

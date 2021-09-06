@@ -1,6 +1,7 @@
 package com.example.calendarprojectteamlinkot.view
 
 import android.app.DatePickerDialog
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.text.TextUtils
@@ -17,6 +18,7 @@ import com.example.calendarprojectteamlinkot.models.Task
 import com.example.calendarprojectteamlinkot.models.User
 import com.example.calendarprojectteamlinkot.repository.ApiClass
 import kotlinx.android.synthetic.main.activity_create_task.*
+import kotlinx.android.synthetic.main.activity_day.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -75,8 +77,9 @@ class CreateTaskActivity : BaseActivity(), DatePickerDialog.OnDateSetListener {
         setSupportActionBar(tb_create_task)
         tb_create_task.setNavigationIcon(R.drawable.ic_baseline_arrow_back_24)
 
-        tb_create_task.setNavigationOnClickListener {
-            onBackPressed()
+        toolbar_CreateTask.setNavigationOnClickListener {
+            startActivity(Intent(this, MainActivity::class.java))
+            finish()
         }
     }
 
@@ -122,4 +125,5 @@ class CreateTaskActivity : BaseActivity(), DatePickerDialog.OnDateSetListener {
 
         et_task_date.setText(selectedDate)
     }
+
 }

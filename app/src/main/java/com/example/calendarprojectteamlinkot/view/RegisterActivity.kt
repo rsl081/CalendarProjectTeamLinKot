@@ -126,6 +126,7 @@ class RegisterActivity : BaseActivity() {
     fun proceedToNextAct(){
         val intent = Intent(this, MainActivity::class.java)
         startActivity(intent)
+        finish()
     }
 
 
