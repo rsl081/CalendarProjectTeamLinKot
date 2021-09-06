@@ -1,14 +1,20 @@
 package com.example.calendarprojectteamlinkot.adapters
 
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.example.calendarprojectteamlinkot.R
+import com.example.calendarprojectteamlinkot.models.CreateTask
+import com.example.calendarprojectteamlinkot.models.EditTask
 import com.example.calendarprojectteamlinkot.models.Task
+import com.example.calendarprojectteamlinkot.models.User
 import com.example.calendarprojectteamlinkot.repository.ApiClass
+import com.example.calendarprojectteamlinkot.utils.Constants
+import com.example.calendarprojectteamlinkot.view.CreateTaskActivity
 import kotlinx.android.synthetic.main.tasks_item.view.*
 
 class TaskListItemsAdapter(private val context: Context,
@@ -70,6 +76,17 @@ class TaskListItemsAdapter(private val context: Context,
                 if(createdBy.username.equals(user?.username)){
                     ApiClass().deleteTask(context, model.id)
                     deleteItem(position)
+                }else{
+                    Toast.makeText(context, "Only the task creator can delete this", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            holder.itemView.edit_tasks_item.setOnClickListener {
+                if(createdBy.username.equals(user?.username)){
+                    val editTask = EditTask(model.id, model.name, model.description,User(user?.username,null,null),model.date)
+                    val intent = Intent(Intent(context, CreateTaskActivity::class.java))
+                    intent.putExtra(Constants.TASK_DETAIL, editTask)
+                    context.startActivity(intent)
                 }else{
                     Toast.makeText(context, "Only the task creator can delete this", Toast.LENGTH_SHORT).show();
                 }

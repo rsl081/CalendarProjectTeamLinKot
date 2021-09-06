@@ -77,7 +77,7 @@ interface ApiServices {
     fun editTask(
         @Header("Authorization") auth: String,
         @Path("id") id: String,
-        @Body createTask: CreateTask
+        @Body createTask: EditTask
     ): Call<Task>
 
 

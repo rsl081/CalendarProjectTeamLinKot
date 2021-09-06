@@ -580,9 +580,9 @@ class ApiClass: Interceptor {
         }
     }
 
-    fun editTask(context: Context, id: String?, editTask: CreateTask){
+    fun editTask(activity: CreateTaskActivity, id: String?, editTask: EditTask){
         if(Constants.MSHAREDPREFERENCES.contains(Constants.TOKEN_USER_MODEL)){
-            Constants.MSHAREDPREFERENCES = context.getSharedPreferences(Constants.PREFERENCE_NAME, Context.MODE_PRIVATE)
+            Constants.MSHAREDPREFERENCES = activity.getSharedPreferences(Constants.PREFERENCE_NAME, Context.MODE_PRIVATE)
 
             val msharedToken = Constants.MSHAREDPREFERENCES.getString(Constants.TOKEN_USER_MODEL, "")
 
@@ -596,6 +596,9 @@ class ApiClass: Interceptor {
                 override fun onResponse(call: Call<Task>, response: Response<Task>) {
                     if(response.isSuccessful) {
                         val task = response.body()
+                        activity.startActivity(Intent(activity, MainActivity::class.java))
+                        activity.finish()
+
                     }else{
                         val rc =  response.code()
                         when(rc){
