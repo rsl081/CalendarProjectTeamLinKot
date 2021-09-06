@@ -31,8 +31,8 @@ class SplashActivity : AppCompatActivity()
 
     override fun onStart() {
         super.onStart()
-        ivLogo.startAnimation(animation)
-        tvAppName.startAnimation(animation)
-        tvApp.startAnimation(animation)
+        iv_logo.startAnimation(animation)
+        tv_app_name.startAnimation(animation)
+        tv_app.startAnimation(animation)
     }
 }

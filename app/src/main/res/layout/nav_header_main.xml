@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/height_of_nav_main"
+    android:layout_height="@dimen/height_of_nav_bar"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/dark_gray"
     android:gravity="bottom"

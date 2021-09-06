@@ -272,7 +272,7 @@ class ApiClass: Interceptor {
                             Log.i("AccountList", happy.username!!)
                         }
                         val arrayApadter = ArrayAdapter(activitiy, R.layout.dropdown_item_create_task, assignee)
-                        activitiy.autoComplete_create_task.setAdapter(arrayApadter)
+                        activitiy.ac_assignee.setAdapter(arrayApadter)
                     }
 
                 } else {

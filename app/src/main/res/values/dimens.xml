@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
+    <!--SplashActivity-->
+    <dimen name="spl_size">200dp</dimen>
+    <dimen name="spl_margin">8dp</dimen>
+    <dimen name="spl_margin2">32dp</dimen>
+    <dimen name="spl_margin3">200dp</dimen>
+
+
     <!--BaseActivity-->
     <dimen name="progress_dialog_content_padding">10dp</dimen>
     <dimen name="progress_bar_size">50dp</dimen>
@@ -9,10 +16,74 @@
     <!--NavBar-->
     <dimen name="nav_image_size">80dp</dimen>
     <dimen name="nav_content_marginStartEnd">16dp</dimen>
-    <dimen name="height_of_nav_main">100dp</dimen>
+    <dimen name="height_of_nav_bar">100dp</dimen>
     <dimen name="nav_content_margin_top">5dp</dimen>
     <dimen name="nav_content_margin_bottom">10dp</dimen>
     <dimen name="nav_user_name_text_size">18sp</dimen>
     <dimen name="nav_image_circular_border_width">1dp</dimen>
+
+    <!--CreateTaskActivity-->
+    <dimen name="tb_text_size">22sp</dimen>
+    <dimen name="ct_corner_radius">20dp</dimen>
+    <dimen name="ct_elevation">20dp</dimen>
+    <dimen name="ct_drawable_padding">10dp</dimen>
+    <dimen name="ct_margin1">30dp</dimen>
+    <dimen name="ct_margin2">20dp</dimen>
+    <dimen name="ct_margin3">40dp</dimen>
+    <dimen name="layout_height">50dp</dimen>
+    <dimen name="layout_height2">100dp</dimen>
+    <dimen name="drawable_padding">10dp</dimen>
+    <dimen name="btn_text_size">18sp</dimen>
+
+    <!--DayActivity-->
+    <dimen name="dv_margin">40dp</dimen>
+    <dimen name="dv_margin2">20dp</dimen>
+    <dimen name="dv_margin3">8dp</dimen>
+    <dimen name="dv_margin4">16dp</dimen>
+    <dimen name="dv_corner">20dp</dimen>
+    <dimen name="dv_elevation">20dp</dimen>
+    <dimen name="dv_text_size">24sp</dimen>
+
+    <!--DrawerMain-->
+    <dimen name="nav_drawer_width">100dp</dimen>
+    <dimen name="dm_icon_size">60dp</dimen>
+    <dimen name="dm_icon_padding">30dp</dimen>
+
+    <!--SignIn-->
+    <dimen name="si_margin">8dp</dimen>
+    <dimen name="si_margin2">24dp</dimen>
+    <dimen name="si_margin3">40dp</dimen>
+    <dimen name="si_icon_size">150dp</dimen>
+    <dimen name="si_padding">8dp</dimen>
+    <dimen name="si_padding2">10dp</dimen>
+    <dimen name="si_text_size">40sp</dimen>
+    <dimen name="si_btn_size">70dp</dimen>
+    <dimen name="si_guideline">25dp</dimen>
+    <dimen name="si_guideline2">50dp</dimen>
+
+    <!--TaskActivity-->
+    <dimen name="ta_btn_size">50dp</dimen>
+    <dimen name="ta_margin">10dp</dimen>
+    <dimen name="ta_margin2">40dp</dimen>
+    <dimen name="ta_btn_size2">25dp</dimen>
+    <dimen name="ta_guideline">20dp</dimen>
+    <dimen name="ta_text_size">12sp</dimen>
+    <dimen name="ta_text_size2">16sp</dimen>
+    
+    <!--AppBar-->
+    <dimen name="ab_elevation">0dp</dimen>
+    <dimen name="ab_margin">20dp</dimen>
+
+    <!--DropDown-->
+    <dimen name="dd_padding">14dp</dimen>
+
+    <!--TaskItems-->
+    <dimen name="ti_margin">10dp</dimen>
+    <dimen name="ti_margin2">20dp</dimen>
+    <dimen name="ti_margin3">70dp</dimen>
+    <dimen name="ti_height">40dp</dimen>
+    <dimen name="ti_text_size">12sp</dimen>
+    <dimen name="ti_text_size2">20sp</dimen>
+    <dimen name="ti_drawable_padding">5dp</dimen>
 
 </resources>

@@ -54,7 +54,7 @@ class CreateTaskActivity : BaseActivity(), DatePickerDialog.OnDateSetListener {
             etName = et_task_name.text.toString()
             etDescription = et_task_description.text.toString()
             etDate = et_task_date.text.toString()
-            etAssignee = autoComplete_create_task.text.toString()
+            etAssignee = ac_assignee.text.toString()
             val usr = User(etAssignee)
             if(validateForm(etName,etDescription,etDate,etAssignee)){
                 val createTask = CreateTask(etName,etDescription,usr,etDate)
@@ -74,8 +74,8 @@ class CreateTaskActivity : BaseActivity(), DatePickerDialog.OnDateSetListener {
     }
 
     fun setupActionBar(){
-        setSupportActionBar(toolbar_CreateTask)
-        toolbar_CreateTask.setNavigationIcon(R.drawable.ic_baseline_arrow_back_24)
+        setSupportActionBar(tb_create_task)
+        tb_create_task.setNavigationIcon(R.drawable.ic_baseline_arrow_back_24)
 
         toolbar_CreateTask.setNavigationOnClickListener {
             startActivity(Intent(this, MainActivity::class.java))
