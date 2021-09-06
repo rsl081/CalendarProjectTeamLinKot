@@ -27,7 +27,6 @@ open class BaseActivity : AppCompatActivity() {
         setContentView(R.layout.activity_base)
     }
 
-
     fun showProgressDialog(text: String)
     {
         mProgressDialog = Dialog(this)
@@ -43,10 +42,6 @@ open class BaseActivity : AppCompatActivity() {
     {
         mProgressDialog.dismiss()
     }
-
-//    fun getCurrentUserID(): String{
-//        return FirebaseAuth.getInstance().currentUser!!.uid
-//    }
 
     fun doubleBackToExit(){
         if(doubleBackToExitPressedOnce){
@@ -83,15 +78,9 @@ open class BaseActivity : AppCompatActivity() {
         context.setSupportActionBar(toolbar)
         toolbar.setNavigationIcon(R.drawable.ic_baseline_menu_24)
 
-
-
-        val dateToday = findViewById<TextView>(R.id.date_today)
-        dateToday.text = displayCurrentDate()
-
         toolbar.setNavigationOnClickListener {
             toggleDrawer()
         }
-
     }
 
     fun displayCurrentDate(): String {

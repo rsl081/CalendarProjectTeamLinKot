@@ -1,11 +1,14 @@
 package com.example.calendarprojectteamlinkot.repository
 
 import android.content.Context
+import android.content.Intent
 import android.os.Build
 import android.util.Log
+import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.calendarprojectteamlinkot.R
 import com.example.calendarprojectteamlinkot.adapters.TaskListItemsAdapter
 import com.example.calendarprojectteamlinkot.models.*
 import com.example.calendarprojectteamlinkot.utils.Constants
@@ -14,6 +17,7 @@ import com.example.calendarprojectteamlinkot.view.MainActivity
 import com.example.calendarprojectteamlinkot.view.RegisterActivity
 import com.example.calendarprojectteamlinkot.view.SignInActivity
 import com.google.gson.Gson
+import kotlinx.android.synthetic.main.activity_create_task.*
 import kotlinx.android.synthetic.main.activity_task.*
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
@@ -236,6 +240,39 @@ class ApiClass: Interceptor {
         }
     }// end of countTaskOfCurrentUser
 
+    fun getAllUser(activitiy: CreateTaskActivity){
+        val assignee: ArrayList<String> = ArrayList<String>()
+
+        val loginResponseCall: Call<List<User>>? =
+            ApiClass().getUserServiceHeader()?.getAllUser()
+
+        loginResponseCall?.enqueue(object : Callback<List<User>> {
+            @RequiresApi(Build.VERSION_CODES.N)
+            override fun onResponse(call: Call<List<User>>, response: Response<List<User>>) {
+                if (response.isSuccessful) {
+                    val ctr = response.body()
+
+                    if (ctr != null) {
+                        for(happy in ctr){
+                            happy.username?.let { assignee.add(it) }
+                            Log.i("AccountList", happy.username!!)
+                        }
+                        val arrayApadter = ArrayAdapter(activitiy, R.layout.dropdown_item_create_task, assignee)
+                        activitiy.autoComplete_create_task.setAdapter(arrayApadter)
+                    }
+
+                } else {
+                    val rc = response.code()
+                    Log.e("Error", "Error " + rc)
+                }
+            }
+
+            override fun onFailure(call: Call<List<User>>, t: Throwable) {
+                Log.e("Errorrrrr", t!!.message.toString())
+            }
+        })
+    }//end of getAllUser
+
     fun getMyTaskByDate(activity: MainActivity, selectedDate: String){
         if(Constants.MSHAREDPREFERENCES.contains(Constants.TOKEN_USER_MODEL)){
             Constants.MSHAREDPREFERENCES = activity.getSharedPreferences(Constants.PREFERENCE_NAME, Context.MODE_PRIVATE)
@@ -445,6 +482,10 @@ class ApiClass: Interceptor {
                 @RequiresApi(Build.VERSION_CODES.N)
                 override fun onResponse(call: Call<Task>, response: Response<Task>) {
                     if (response.isSuccessful) {
+                        val rc = response.body()
+                        Log.i("Createtask", rc.toString())
+                        activity.startActivity(Intent(activity, MainActivity::class.java))
+                        activity.finish()
                     } else {
                         val rc = response.code()
                         when (rc) {
@@ -456,10 +497,10 @@ class ApiClass: Interceptor {
                                 }
                             }
                             404 -> {
-                                Log.e("Error 400", "Not Found")
+                                Log.e("Error 404", "Create task")
                             }
                             else -> {
-                                Log.e("Error", "Generic Error" + rc)
+                                Log.e("Error", "Create task" + rc)
                             }
                         }
                     }
