@@ -56,26 +56,26 @@ class MainActivity : BaseActivity(),
         val dateToday = findViewById<TextView>(R.id.date_today)
         dateToday.text = displayCurrentDate()
 
-//        this.mHandler = Handler()
-//
-//        this.mHandler.postDelayed(m_Runnable, 5000)
+        this.mHandler = Handler()
+
+        this.mHandler.postDelayed(m_Runnable, 5000)
 
     }
-//
-//    private val m_Runnable: Runnable = object : Runnable {
-//        override fun run() {
-//            ApiClass().countTaskOfCurrentUser({
-//                tv_num_of_task_activityday.text = "You have $it tasks today"
-//            },displayCurrentDate())
-//            this@MainActivity.mHandler.postDelayed(this, 5000)
-//        }
-//    } //runnable
 
-//    override fun onPause() {
-//        super.onPause()
-//        mHandler.removeCallbacks(m_Runnable)
-//        finish()
-//    }
+    private val m_Runnable: Runnable = object : Runnable {
+        override fun run() {
+            ApiClass().countTaskOfCurrentUser({
+                tv_num_of_task_activity_day.text = "You have $it tasks today"
+            },displayCurrentDate())
+            this@MainActivity.mHandler.postDelayed(this, 5000)
+        }
+    } //runnable
+
+    override fun onPause() {
+        super.onPause()
+        mHandler.removeCallbacks(m_Runnable)
+        finish()
+    }
 
 
     private fun init(){
@@ -93,9 +93,9 @@ class MainActivity : BaseActivity(),
             tv_name_activity_day.text = "Hi! $it"
         }
 
-        ApiClass().countTaskOfCurrentUser({
-            tv_num_of_task_activity_day.text = "You have $it tasks today"
-        },displayCurrentDate())
+//        ApiClass().countTaskOfCurrentUser({
+//            tv_num_of_task_activity_day.text = "You have $it tasks today"
+//        },displayCurrentDate())
 
         nav_view.setNavigationItemSelectedListener(this)
 

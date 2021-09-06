@@ -18,29 +18,12 @@ object Constants {
     val assignee: String = ""
     val createdBy: String = ""
 
+    const val TASK_DETAIL: String = "task_detail"
+
     const val TOKEN_USER_MODEL = "token_user_model"
     lateinit var MSHAREDPREFERENCES: SharedPreferences
     const val PREFERENCE_NAME = "MeTaskAppPreference"
 
     private var retrofit: Retrofit? = null
-
-    val retrofitInstance: Retrofit?
-        get() {
-            if (retrofit == null) {
-                var client = OkHttpClient.Builder()
-                    .addInterceptor(OAuthInterceptor())
-                    //.readTimeout(45,TimeUnit.SECONDS)
-                    //.writeTimeout(45,TimeUnit.SECONDS)
-                    .build()
-
-                retrofit = Retrofit.Builder()
-                    .baseUrl(BASE_URL)
-                    .client(client)
-                    .addConverterFactory(GsonConverterFactory.create())
-                    .build()
-
-            }
-            return retrofit
-        }
 
 }

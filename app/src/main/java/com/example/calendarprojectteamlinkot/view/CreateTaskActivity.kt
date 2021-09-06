@@ -2,29 +2,18 @@ package com.example.calendarprojectteamlinkot.view
 
 import android.app.DatePickerDialog
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
 import android.text.TextUtils
-import android.util.Log
-import android.widget.ArrayAdapter
 import android.widget.DatePicker
-import android.widget.TextView
-import androidx.annotation.RequiresApi
-import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
 import com.example.calendarprojectteamlinkot.R
 import com.example.calendarprojectteamlinkot.models.CreateTask
-import com.example.calendarprojectteamlinkot.models.Task
+import com.example.calendarprojectteamlinkot.models.EditTask
 import com.example.calendarprojectteamlinkot.models.User
 import com.example.calendarprojectteamlinkot.repository.ApiClass
+import com.example.calendarprojectteamlinkot.utils.Constants
 import kotlinx.android.synthetic.main.activity_create_task.*
-import kotlinx.android.synthetic.main.activity_day.*
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.collections.ArrayList
 
 class CreateTaskActivity : BaseActivity(), DatePickerDialog.OnDateSetListener {
 
@@ -42,7 +31,11 @@ class CreateTaskActivity : BaseActivity(), DatePickerDialog.OnDateSetListener {
         setContentView(R.layout.activity_create_task)
 
         init()
+
+
+
     }
+
 
     private fun init(){
 
@@ -50,18 +43,43 @@ class CreateTaskActivity : BaseActivity(), DatePickerDialog.OnDateSetListener {
 
         ApiClass().getAllUser(this)
 
-        btn_create.setOnClickListener{
-            etName = et_task_name.text.toString()
-            etDescription = et_task_description.text.toString()
-            etDate = et_task_date.text.toString()
-            etAssignee = ac_assignee.text.toString()
-            val usr = User(etAssignee)
-            if(validateForm(etName,etDescription,etDate,etAssignee)){
-                val createTask = CreateTask(etName,etDescription,usr,etDate)
+        if(intent.hasExtra(Constants.TASK_DETAIL)){
+            val editTask = intent.getParcelableExtra<EditTask>(Constants.TASK_DETAIL)
+            val username = editTask?.assignee
+            et_task_name.setText(editTask?.name)
+            et_task_description.setText(editTask?.description)
+            et_task_date.setText(editTask?.date)
+            ac_assignee.setText(username?.username)
 
-                ApiClass().createTasK(this, createTask)
+            btn_create.setOnClickListener{
+                etName = et_task_name.text.toString()
+                etDescription = et_task_description.text.toString()
+                etDate = et_task_date.text.toString()
+                etAssignee = ac_assignee.text.toString()
+                val usr = User(etAssignee)
+                if(validateForm(etName,etDescription,etDate,etAssignee)){
+                    val editTask = EditTask(editTask?.id,etName,etDescription,usr,etDate)
+
+                    ApiClass().editTask(this, editTask?.id, editTask)
+                }
+            }
+
+        }else{
+            btn_create.setOnClickListener{
+                etName = et_task_name.text.toString()
+                etDescription = et_task_description.text.toString()
+                etDate = et_task_date.text.toString()
+                etAssignee = ac_assignee.text.toString()
+                val usr = User(etAssignee)
+                if(validateForm(etName,etDescription,etDate,etAssignee)){
+                    val createTask = CreateTask(etName,etDescription,usr,etDate)
+
+                    ApiClass().createTasK(this, createTask)
+                }
             }
         }
+
+
 
         tv_cancel_button.setOnClickListener {
             onBackPressed()
