@@ -54,7 +54,7 @@ class RegisterActivity : BaseActivity() {
             signUpUsername()
         }
 
-        btn_submit.setOnClickListener {
+        btn_Submit.setOnClickListener {
             signUpPassword()
         }
     }
@@ -107,7 +107,6 @@ class RegisterActivity : BaseActivity() {
         }
     }
 
-
     private fun validatePassword(password: String, confirmPassword: String,): Boolean {
         return when{
             !TextUtils.equals(password,confirmPassword)->{
@@ -132,11 +131,11 @@ class RegisterActivity : BaseActivity() {
     }//end of validateForm
 
 
-    fun proceedToNextAct(){
-        val intent = Intent(this, MainActivity::class.java)
-        startActivity(intent)
-        finish()
-    }
+//    fun proceedToNextAct(){
+//        val intent = Intent(this, MainActivity::class.java)
+//        startActivity(intent)
+//        finish()
+//    }
 
 
 }

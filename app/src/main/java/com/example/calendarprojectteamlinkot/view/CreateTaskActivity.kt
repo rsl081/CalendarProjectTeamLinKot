@@ -31,11 +31,7 @@ class CreateTaskActivity : BaseActivity(), DatePickerDialog.OnDateSetListener {
         setContentView(R.layout.activity_create_task)
 
         init()
-
-
-
     }
-
 
     private fun init(){
 
@@ -79,8 +75,6 @@ class CreateTaskActivity : BaseActivity(), DatePickerDialog.OnDateSetListener {
             }
         }
 
-
-
         tv_cancel_button.setOnClickListener {
             onBackPressed()
         }
@@ -121,7 +115,6 @@ class CreateTaskActivity : BaseActivity(), DatePickerDialog.OnDateSetListener {
             }
         }
     }//end of validateForm
-
 
     private fun getDateCalendar(){
         val cal: Calendar = Calendar.getInstance()

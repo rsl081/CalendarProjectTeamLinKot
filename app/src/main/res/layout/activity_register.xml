@@ -159,7 +159,7 @@
         app:layout_constraintTop_toBottomOf="@+id/toolbar_register_activity">
 
         <Button
-            android:id="@+id/btn_submit"
+            android:id="@+id/btn_Submit"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"

@@ -1,6 +1,7 @@
 package com.example.calendarprojectteamlinkot.view
 
 import android.app.Dialog
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
@@ -107,6 +108,12 @@ open class BaseActivity : AppCompatActivity() {
         val currentDate: String = sdf.format(calendar.time)
 
         return currentDate
+    }
+
+    fun proceedToNextAct(){
+        val intent = Intent(this, MainActivity::class.java)
+        startActivity(intent)
+        finish()
     }
 
 
