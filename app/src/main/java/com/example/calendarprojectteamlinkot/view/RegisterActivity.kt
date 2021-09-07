@@ -123,7 +123,6 @@ class RegisterActivity : BaseActivity() {
                 false
             }
             !Pattern.matches(pattern_password.toString(), password) || !Pattern.matches(pattern_password.toString(), confirmPassword) ->{
-                showErrorSnackBar("Please enter a mali ihh")
                 Toast.makeText(this, "must not be empty\nmust contain at least eight characters long\nmust contain uppercase and lowercase letters and a number", Toast.LENGTH_SHORT).show()
                 false
             }else->{
