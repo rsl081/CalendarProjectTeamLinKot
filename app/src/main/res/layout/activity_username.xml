@@ -22,7 +22,7 @@
             android:layout_height="match_parent">
 
             <TextView
-                android:id="@+id/btn_cancel"
+                android:id="@+id/btn_cancel_username"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
@@ -88,10 +88,11 @@
                 app:layout_constraintTop_toBottomOf="@+id/tv_insert_username">
 
                 <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/et_password"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                tools:ignore="TextContrastCheck" />
+                    android:id="@+id/et_username"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:singleLine="true"
+                    tools:ignore="TextContrastCheck" />
 
             </com.google.android.material.textfield.TextInputLayout>
 

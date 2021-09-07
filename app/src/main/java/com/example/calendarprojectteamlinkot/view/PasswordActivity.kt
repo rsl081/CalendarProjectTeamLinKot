@@ -17,5 +17,11 @@ class PasswordActivity: AppCompatActivity() {
             startActivity(intent)
             overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right)
         }
+
+        btn_cancel_password.setOnClickListener {
+            val intent = Intent(this, SignInActivity::class.java)
+
+            startActivity(intent)
+        }
     }
 }
