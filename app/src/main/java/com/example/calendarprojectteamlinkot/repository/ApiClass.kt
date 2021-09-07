@@ -28,6 +28,9 @@ import okhttp3.logging.HttpLoggingInterceptor
 import org.json.JSONObject
 import retrofit2.*
 import retrofit2.converter.gson.GsonConverterFactory
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 class ApiClass: Interceptor {
@@ -154,7 +157,7 @@ class ApiClass: Interceptor {
                             Log.e("ErrorRegister", message.get(1) as String)
 
                             for(i in 0 until message.length()){
-                                Toast.makeText(activity, message.get(i) as String, Toast.LENGTH_SHORT).show();
+                                Toast.makeText(activity, message.get(i) as String, Toast.LENGTH_SHORT).show()
                             }
 
 
@@ -657,6 +660,15 @@ class ApiClass: Interceptor {
                 }
             })
         }
+    }
+
+    fun diplayCurrentDate(year: Int, month: Int, day: Int): String {
+        val sdf = SimpleDateFormat("yyyy-MM-dd")
+        val calendar = Calendar.getInstance()
+        calendar[year, month] = day
+        val currentDate: String = sdf.format(calendar.time)
+
+        return currentDate
     }
 
     fun signOut()
