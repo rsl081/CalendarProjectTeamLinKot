@@ -66,4 +66,18 @@
     <string name="ti_task_name">Task Name</string>
     <string name="ti_description">Description</string>
 
+    <!--Register-->
+    <string name="reg_cancel">Cancel</string>
+    <string name="reg_sign_up">Sign Up</string>
+    <string name="reg_text_username">Please enter a username.</string>
+    <string name="reg_username">Username</string>
+    <string name="reg_username_taken">Username already taken</string>
+    <string name="reg_next">Next</string>
+    <string name="reg_text_password">Please enter a password.</string>
+    <string name="reg_input_password">Password</string>
+    <string name="reg_confirm_password">Confirm Password</string>
+    <string name="reg_password_match">Password does not match</string>
+    <string name="reg_back">Back</string>
+    <string name="reg_submit">Submit</string>
+
 </resources>

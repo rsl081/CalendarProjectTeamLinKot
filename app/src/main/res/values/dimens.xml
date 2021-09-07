@@ -6,7 +6,6 @@
     <dimen name="spl_margin2">32dp</dimen>
     <dimen name="spl_margin3">200dp</dimen>
 
-
     <!--BaseActivity-->
     <dimen name="progress_dialog_content_padding">10dp</dimen>
     <dimen name="progress_bar_size">50dp</dimen>
@@ -85,5 +84,16 @@
     <dimen name="ti_text_size">12sp</dimen>
     <dimen name="ti_text_size2">20sp</dimen>
     <dimen name="ti_drawable_padding">5dp</dimen>
+
+    <!--Register-->
+    <dimen name="reg_guidelines">20dp</dimen>
+    <dimen name="reg_margin">10dp</dimen>
+    <dimen name="reg_margin2">20dp</dimen>
+    <dimen name="reg_margin3">30dp</dimen>
+    <dimen name="reg_text_size">22sp</dimen>
+    <dimen name="reg_corner">20dp</dimen>
+    <dimen name="reg_elevation">20dp</dimen>
+    <dimen name="reg_padding">20dp</dimen>
+    <dimen name="reg_drawable_padding">10dp</dimen>
 
 </resources>
