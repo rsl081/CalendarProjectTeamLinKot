@@ -2,6 +2,7 @@ package com.example.calendarprojectteamlinkot.adapters
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -56,6 +57,8 @@ class TaskListItemsAdapter(private val context: Context,
                     holder.itemView.cb_task_item.isEnabled = false
                     holder.itemView.cb_task_item.alpha = 0.10F
                     //model.id?.let { Log.i("idtaskss", it) }
+                }else{
+                    holder.itemView.card_layout.setBackgroundColor(Color.parseColor("#C5E8B7"))
                 }
             }
 
