@@ -11,13 +11,17 @@ import android.view.View
 import android.widget.DatePicker
 import android.widget.TextView
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.core.view.GravityCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.calendarprojectteamlinkot.R
 import com.example.calendarprojectteamlinkot.adapters.TaskListItemsAdapter
 import com.example.calendarprojectteamlinkot.repository.ApiClass
 import com.example.calendarprojectteamlinkot.utils.Constants
+import com.example.calendarprojectteamlinkot.utils.MyFirebaseMessagingService
+import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.material.navigation.NavigationView
+import com.google.firebase.messaging.FirebaseMessaging
 import kotlinx.android.synthetic.main.activity_day.*
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_task.*
@@ -25,6 +29,7 @@ import kotlinx.android.synthetic.main.app_bar_main.*
 import java.text.SimpleDateFormat
 import java.util.*
 
+private const val TAG = "MainActivity"
 
 class MainActivity : BaseActivity(),
     NavigationView.OnNavigationItemSelectedListener, DatePickerDialog.OnDateSetListener {
@@ -53,19 +58,38 @@ class MainActivity : BaseActivity(),
 
         init()
 
+        // FCM token setup
+        FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
+            if (!task.isSuccessful) {
+                Log.w(TAG, "Fetching FCM registration token failed", task.exception)
+                return@OnCompleteListener
+            }
+
+            // Get new FCM registration token
+            val token = task.result
+
+            Log.d(TAG + "Token", token.toString())
+            Toast.makeText(baseContext, token, Toast.LENGTH_SHORT).show()
+        })
+
         val dateToday = findViewById<TextView>(R.id.date_today)
         dateToday.text = displayCurrentDate()
 
         this.mHandler = Handler()
 
         this.mHandler.postDelayed(m_Runnable, 5000)
-
     }
 
     private val m_Runnable: Runnable = object : Runnable {
         override fun run() {
             ApiClass().countTaskOfCurrentUser({
-                tv_num_of_task_activity_day.text = "You have $it tasks today"
+                if (it != null) {
+                    if(it <= 1){
+                        tv_num_of_task_activity_day.text = "You have $it task today"
+                    }else{
+                        tv_num_of_task_activity_day.text = "You have $it tasks today"
+                    }
+                }
             },displayCurrentDate())
             this@MainActivity.mHandler.postDelayed(this, 5000)
         }

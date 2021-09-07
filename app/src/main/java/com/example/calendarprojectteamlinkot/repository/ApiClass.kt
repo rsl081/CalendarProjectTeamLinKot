@@ -1,6 +1,5 @@
 package com.example.calendarprojectteamlinkot.repository
 
-import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Build
@@ -26,9 +25,6 @@ import okhttp3.logging.HttpLoggingInterceptor
 import org.json.JSONObject
 import retrofit2.*
 import retrofit2.converter.gson.GsonConverterFactory
-import java.text.SimpleDateFormat
-import java.util.*
-import kotlin.collections.ArrayList
 
 
 class ApiClass: Interceptor {
@@ -153,10 +149,11 @@ class ApiClass: Interceptor {
                             val jsonObject = JSONObject(qwe!!.trim())
                             var message = jsonObject.getJSONArray("errors")
 
-                            Log.e("ErrorRegister", message.get(1) as String)
+
 
                             for(i in 0 until message.length()){
-                                Toast.makeText(activity, message.get(i) as String, Toast.LENGTH_SHORT).show()
+                                Log.e("ErrorRegister", message.get(i) as String)
+                                Toast.makeText(activity, message.get(i) as String, Toast.LENGTH_SHORT).show();
                             }
 
 
@@ -233,15 +230,16 @@ class ApiClass: Interceptor {
                     var ctr = 0
                     if (response.isSuccessful) {
                         val list = response.body()
-                        Log.i("counttask", list.toString())
+
                         if (list != null) {
-                            for(completedTask in list){
-                                if(completedTask.isCompleted == false){
+                            list.map {
+                                if (it.isCompleted == false) {
                                     ctr++
-                                }else{
+                                } else {
                                     ctr = 0
                                 }
                             }
+                            Log.i("counttask", ctr.toString())
                             userCallback(ctr)
                         }
 
@@ -275,12 +273,12 @@ class ApiClass: Interceptor {
                             user.username?.let { assignee.add(it) }
                             Log.i("AccountList", user.username!!)
                         }
-                        when(activity) {
-                            is CreateTaskActivity -> {
-                                val arrayAdapter = ArrayAdapter(activity, R.layout.dropdown_item_create_task, assignee)
-                                activity.ac_assignee.setAdapter(arrayAdapter)
-                            }
-                        }
+                       
+
+                        val arrayAdapter = ArrayAdapter(activity, R.layout.dropdown_item_create_task, assignee)
+                        activity.ac_assignee.setAdapter(arrayAdapter)
+                     
+                        
                     }
 
                 } else {
@@ -665,15 +663,6 @@ class ApiClass: Interceptor {
                 }
             })
         }
-    }
-
-    fun diplayCurrentDate(year: Int, month: Int, day: Int): String {
-        val sdf = SimpleDateFormat("yyyy-MM-dd")
-        val calendar = Calendar.getInstance()
-        calendar[year, month] = day
-        val currentDate: String = sdf.format(calendar.time)
-
-        return currentDate
     }
 
     fun signOut()

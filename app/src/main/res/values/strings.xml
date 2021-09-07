@@ -56,6 +56,9 @@
     <string name="btn_create">Create</string>
     <string name="cancel">Cancel</string>
 
+    <!-- FCM -->
+    <string name="msg_token_fmt"> </string>
+    <string name="default_notification_channel_id" translatable="false">fcm_default_channel</string>
     <!--AppBar-->
     <string name="current_date">Current Date</string>
 
