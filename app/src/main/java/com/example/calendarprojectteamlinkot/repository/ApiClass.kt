@@ -228,15 +228,16 @@ class ApiClass: Interceptor {
                     var ctr = 0
                     if (response.isSuccessful) {
                         val list = response.body()
-                        Log.i("counttask", list.toString())
+
                         if (list != null) {
-                            for(completedTask in list){
-                                if(completedTask.isCompleted == false){
+                            list.map {
+                                if (it.isCompleted == false) {
                                     ctr++
-                                }else{
+                                } else {
                                     ctr = 0
                                 }
                             }
+                            Log.i("counttask", ctr.toString())
                             userCallback(ctr)
                         }
 

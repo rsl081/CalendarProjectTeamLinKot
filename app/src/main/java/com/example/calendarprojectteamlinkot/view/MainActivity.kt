@@ -83,7 +83,13 @@ class MainActivity : BaseActivity(),
     private val m_Runnable: Runnable = object : Runnable {
         override fun run() {
             ApiClass().countTaskOfCurrentUser({
-                tv_num_of_task_activity_day.text = "You have $it tasks today"
+                if (it != null) {
+                    if(it <= 1){
+                        tv_num_of_task_activity_day.text = "You have $it task today"
+                    }else{
+                        tv_num_of_task_activity_day.text = "You have $it tasks today"
+                    }
+                }
             },displayCurrentDate())
             this@MainActivity.mHandler.postDelayed(this, 5000)
         }
