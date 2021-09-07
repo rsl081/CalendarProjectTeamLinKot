@@ -40,7 +40,7 @@ class SignInActivity : BaseActivity() {
         }
 
         tv_register.setOnClickListener {
-            startActivity(Intent(this, RegisterActivity::class.java))
+            startActivity(Intent(this, UsernameActivity::class.java))
         }
 
     }
@@ -57,11 +57,6 @@ class SignInActivity : BaseActivity() {
             ApiClass().signinFromApi(this,email,password)
 
         }
-    }
-
-    fun proceedToNextAct(){
-        val intent = Intent(this, MainActivity::class.java)
-        startActivity(intent)
     }
 
     private fun validateForm(email: String, password: String): Boolean {

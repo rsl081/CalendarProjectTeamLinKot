@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.util.Log
+import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.annotation.RequiresApi
@@ -13,17 +14,14 @@ import com.example.calendarprojectteamlinkot.R
 import com.example.calendarprojectteamlinkot.adapters.TaskListItemsAdapter
 import com.example.calendarprojectteamlinkot.models.*
 import com.example.calendarprojectteamlinkot.utils.Constants
-import com.example.calendarprojectteamlinkot.view.CreateTaskActivity
-import com.example.calendarprojectteamlinkot.view.MainActivity
-import com.example.calendarprojectteamlinkot.view.RegisterActivity
-import com.example.calendarprojectteamlinkot.view.SignInActivity
+import com.example.calendarprojectteamlinkot.view.*
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_create_task.*
 import kotlinx.android.synthetic.main.activity_task.*
+import kotlinx.android.synthetic.main.activity_username.*
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.Request
-import okhttp3.internal.notifyAll
 import okhttp3.logging.HttpLoggingInterceptor
 import org.json.JSONObject
 import retrofit2.*
@@ -95,6 +93,7 @@ class ApiClass: Interceptor {
                     editor.apply()
                     activity.proceedToNextAct()
 
+
                 }else{
                     val rc =  response.code()
                     when(rc){
@@ -105,7 +104,7 @@ class ApiClass: Interceptor {
                             Log.e("Error 404", "Not Found")
                         }else ->{
                             activity.hideProgressDialog()
-                            activity.showErrorSnackBar("Mali pre!")
+                            Toast.makeText(activity, "Wrong username or password", Toast.LENGTH_SHORT).show()
                             Log.e("Error", "Generic Error" + rc)
                         }
                     }
@@ -119,7 +118,7 @@ class ApiClass: Interceptor {
         })
     }
 
-    fun registerUsernameAndPasswordFromApi(activity: RegisterActivity, username: String, password: String)
+    fun registerUsernameAndPasswordFromApi(activity: BaseActivity, username: String, password: String)
     {
         val builder = Retrofit.Builder()
             .baseUrl(Constants.BASE_URL)
@@ -136,15 +135,15 @@ class ApiClass: Interceptor {
             @RequiresApi(Build.VERSION_CODES.N)
             override fun onResponse(call: Call<User>, response: Response<User>) {
                 if(response.isSuccessful) {
-                    val tokenForRegister  = response.body()
+                    val tokenForRegister  = response.body()?.token
 
-                    val tokenResponseJsonString = Gson().toJson(tokenForRegister)
+                    //val tokenResponseJsonString = Gson().toJson(tokenForRegister)
                     val editor = Constants.MSHAREDPREFERENCES.edit()
-                    editor.putString(Constants.TOKEN_USER_MODEL, tokenResponseJsonString)
+                    editor.putString(Constants.TOKEN_USER_MODEL, tokenForRegister.toString())
                     editor.apply()
                     activity.proceedToNextAct()
 
-                    Log.i("Response1", "$tokenResponseJsonString")
+                   // Log.i("Response1", "$tokenResponseJsonString")
 
                 }else{
                     val rc =  response.code()
@@ -159,6 +158,8 @@ class ApiClass: Interceptor {
                             for(i in 0 until message.length()){
                                 Toast.makeText(activity, message.get(i) as String, Toast.LENGTH_SHORT).show()
                             }
+
+
 
 
                         }
@@ -257,7 +258,7 @@ class ApiClass: Interceptor {
         }
     }// end of countTaskOfCurrentUser
 
-    fun getAllUser(activitiy: CreateTaskActivity){
+    fun getAllUser(activity: CreateTaskActivity){
         val assignee: ArrayList<String> = ArrayList<String>()
 
         val loginResponseCall: Call<List<User>>? =
@@ -267,15 +268,19 @@ class ApiClass: Interceptor {
             @RequiresApi(Build.VERSION_CODES.N)
             override fun onResponse(call: Call<List<User>>, response: Response<List<User>>) {
                 if (response.isSuccessful) {
-                    val ctr = response.body()
+                    val users = response.body()
+                    if (users != null) {
+                        for(user in users){
 
-                    if (ctr != null) {
-                        for(happy in ctr){
-                            happy.username?.let { assignee.add(it) }
-                            Log.i("AccountList", happy.username!!)
+                            user.username?.let { assignee.add(it) }
+                            Log.i("AccountList", user.username!!)
                         }
-                        val arrayApadter = ArrayAdapter(activitiy, R.layout.dropdown_item_create_task, assignee)
-                        activitiy.ac_assignee.setAdapter(arrayApadter)
+                        when(activity) {
+                            is CreateTaskActivity -> {
+                                val arrayAdapter = ArrayAdapter(activity, R.layout.dropdown_item_create_task, assignee)
+                                activity.ac_assignee.setAdapter(arrayAdapter)
+                            }
+                        }
                     }
 
                 } else {
