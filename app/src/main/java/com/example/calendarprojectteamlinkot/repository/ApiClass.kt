@@ -1,5 +1,6 @@
 package com.example.calendarprojectteamlinkot.repository
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Build
@@ -22,10 +23,14 @@ import kotlinx.android.synthetic.main.activity_task.*
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.Request
+import okhttp3.internal.notifyAll
 import okhttp3.logging.HttpLoggingInterceptor
 import org.json.JSONObject
 import retrofit2.*
 import retrofit2.converter.gson.GsonConverterFactory
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 class ApiClass: Interceptor {
@@ -152,7 +157,7 @@ class ApiClass: Interceptor {
                             Log.e("ErrorRegister", message.get(1) as String)
 
                             for(i in 0 until message.length()){
-                                Toast.makeText(activity, message.get(i) as String, Toast.LENGTH_SHORT).show();
+                                Toast.makeText(activity, message.get(i) as String, Toast.LENGTH_SHORT).show()
                             }
 
 
@@ -224,9 +229,21 @@ class ApiClass: Interceptor {
             loginResponseCall?.enqueue(object : Callback<List<Task>> {
                 @RequiresApi(Build.VERSION_CODES.N)
                 override fun onResponse(call: Call<List<Task>>, response: Response<List<Task>>) {
+                    var ctr = 0
                     if (response.isSuccessful) {
-                        val ctr = response.body()?.size
-                        userCallback(ctr)
+                        val list = response.body()
+                        Log.i("counttask", list.toString())
+                        if (list != null) {
+                            for(completedTask in list){
+                                if(completedTask.isCompleted == false){
+                                    ctr++
+                                }else{
+                                    ctr = 0
+                                }
+                            }
+                            userCallback(ctr)
+                        }
+
                     } else {
                         val rc = response.code()
                         Log.e("Error", "Error " + rc)
@@ -258,7 +275,7 @@ class ApiClass: Interceptor {
                             Log.i("AccountList", happy.username!!)
                         }
                         val arrayApadter = ArrayAdapter(activitiy, R.layout.dropdown_item_create_task, assignee)
-                        activitiy.autoComplete_create_task.setAdapter(arrayApadter)
+                        activitiy.ac_assignee.setAdapter(arrayApadter)
                     }
 
                 } else {
@@ -272,6 +289,48 @@ class ApiClass: Interceptor {
             }
         })
     }//end of getAllUser
+
+    fun checkTask(context: Context, id: String?){
+        if(Constants.MSHAREDPREFERENCES.contains(Constants.TOKEN_USER_MODEL)){
+            Constants.MSHAREDPREFERENCES = context.getSharedPreferences(Constants.PREFERENCE_NAME, Context.MODE_PRIVATE)
+
+            val msharedToken = Constants.MSHAREDPREFERENCES.getString(Constants.TOKEN_USER_MODEL, "")
+
+            val loginResponseCall: Call<Task>? =
+                id?.let {
+                    ApiClass().getUserServiceHeader()?.toggleTaskComplete("Bearer "+msharedToken!!,
+                        it
+                    )
+                }
+
+
+            loginResponseCall?.enqueue(object: Callback<Task> {
+                @RequiresApi(Build.VERSION_CODES.N)
+                override fun onResponse(call: Call<Task>, response: Response<Task>) {
+
+                    if(response.isSuccessful) {
+
+
+                    }else{
+                        val rc =  response.code()
+                        when(rc){
+                            400->{
+                                Log.e("Error 400 showAllTask", "Bad Request")
+                            }
+                            403-> {
+                                Log.e("Error 403", "Not Found" + rc)
+                            }else ->{
+                            Log.e("Error", "Happy Generic Error" + rc)
+                        }
+                        }
+                    }
+                }
+                override fun onFailure(call: Call<Task>, t: Throwable) {
+                    Log.e("Errorrrrr", t!!.message.toString())
+                }
+            })
+        }
+    }
 
     fun getMyTaskByDate(activity: MainActivity, selectedDate: String){
         if(Constants.MSHAREDPREFERENCES.contains(Constants.TOKEN_USER_MODEL)){
@@ -293,7 +352,9 @@ class ApiClass: Interceptor {
                         activity.rv_activity_task.layoutManager = LinearLayoutManager(activity)
                         activity.rv_activity_task.setHasFixedSize(true)
 
-                        val adapter = task?.let { TaskListItemsAdapter(activity, it) }
+                        val adapter = task?.let { TaskListItemsAdapter(activity,
+                            it as MutableList<Task>
+                        ) }
 
                         activity.rv_activity_task.adapter= adapter
                     }else{
@@ -339,7 +400,9 @@ class ApiClass: Interceptor {
                         activity.rv_activity_task.layoutManager = LinearLayoutManager(activity)
                         activity.rv_activity_task.setHasFixedSize(true)
 
-                        val adapter = task?.let { TaskListItemsAdapter(activity, it) }
+                        val adapter = task?.let { TaskListItemsAdapter(activity,
+                            it as MutableList<Task>
+                        ) }
 
                         activity.rv_activity_task.adapter= adapter
                     }else{
@@ -364,6 +427,7 @@ class ApiClass: Interceptor {
             })
         }
     }//end getAllTaskByDate
+    private var task: List<Task>? = null
 
     fun myTask(activity: MainActivity, selectedDate: String) {
         if(Constants.MSHAREDPREFERENCES.contains(Constants.TOKEN_USER_MODEL)){
@@ -379,16 +443,19 @@ class ApiClass: Interceptor {
                 override fun onResponse(call: Call<List<Task>>, response: Response<List<Task>>) {
                     if(response.isSuccessful) {
 
-                        val task = response.body()
+                        task = response.body()!!
                         Log.i("MyTask1", task.toString())
                         var adapter: List<Task>
                         if (task != null) {
                             activity.rv_activity_task.layoutManager = LinearLayoutManager(activity)
                             activity.rv_activity_task.setHasFixedSize(true)
 
-                            val adapter = TaskListItemsAdapter(activity,task)
+                            val adapter = TaskListItemsAdapter(activity,
+                                task!! as MutableList<Task>
+                            )
 
                             activity.rv_activity_task.adapter= adapter
+
                         }
                     }else{
                         val rc =  response.code()
@@ -442,9 +509,11 @@ class ApiClass: Interceptor {
                             activity.rv_activity_task.setHasFixedSize(true)
 
                             val adapter = TaskListItemsAdapter(activity,
-                                task)
+                                task as MutableList<Task>
+                            )
 
                             activity.rv_activity_task.adapter = adapter
+
                         }
                     }else{
                         val rc =  response.code()
@@ -512,6 +581,94 @@ class ApiClass: Interceptor {
                 }
             })
         }
+    }
+
+    fun editTask(activity: CreateTaskActivity, id: String?, editTask: EditTask){
+        if(Constants.MSHAREDPREFERENCES.contains(Constants.TOKEN_USER_MODEL)){
+            Constants.MSHAREDPREFERENCES = activity.getSharedPreferences(Constants.PREFERENCE_NAME, Context.MODE_PRIVATE)
+
+            val msharedToken = Constants.MSHAREDPREFERENCES.getString(Constants.TOKEN_USER_MODEL, "")
+
+            val loginResponseCall: Call<Task>? =
+                id?.let {
+                    ApiClass().getUserServiceHeader()?.editTask("Bearer "+msharedToken!!, it, editTask)
+                }
+
+            loginResponseCall?.enqueue(object: Callback<Task> {
+                @RequiresApi(Build.VERSION_CODES.N)
+                override fun onResponse(call: Call<Task>, response: Response<Task>) {
+                    if(response.isSuccessful) {
+                        val task = response.body()
+                        activity.startActivity(Intent(activity, MainActivity::class.java))
+                        activity.finish()
+
+                    }else{
+                        val rc =  response.code()
+                        when(rc){
+                            400->{
+                                Log.e("Error 400 showAllTask", "Bad Request")
+                            }
+                            403-> {
+                                Log.e("Error 403", "Not Found" + rc)
+                            }else ->{
+                            Log.e("Error", "Happy Generic Error" + rc)
+                        }
+                        }
+                    }
+                }
+                override fun onFailure(call: Call<Task>, t: Throwable) {
+                    Log.e("Errorrrrr", t!!.message.toString())
+                }
+            })
+        }
+    }
+
+    fun deleteTask(context: Context, id: String?){
+        if(Constants.MSHAREDPREFERENCES.contains(Constants.TOKEN_USER_MODEL)){
+            Constants.MSHAREDPREFERENCES = context.getSharedPreferences(Constants.PREFERENCE_NAME, Context.MODE_PRIVATE)
+
+            val msharedToken = Constants.MSHAREDPREFERENCES.getString(Constants.TOKEN_USER_MODEL, "")
+
+            val loginResponseCall: Call<Task>? =
+                id?.let {
+                    ApiClass().getUserServiceHeader()?.deleteTask("Bearer "+msharedToken!!,
+                        it
+                    )
+                }
+
+            loginResponseCall?.enqueue(object: Callback<Task> {
+                @RequiresApi(Build.VERSION_CODES.N)
+                override fun onResponse(call: Call<Task>, response: Response<Task>) {
+                    if(response.isSuccessful) {
+                        val task = response.body()
+                    }else{
+                        val rc =  response.code()
+                        when(rc){
+                            400->{
+                                Log.e("Error 400 showAllTask", "Bad Request")
+                            }
+                            403-> {
+                                Log.e("Error 403", "Not Found" + rc)
+                            }else ->{
+                                Log.e("Error", "Happy Generic Error" + rc)
+                            }
+                        }
+                    }
+                }
+                override fun onFailure(call: Call<Task>, t: Throwable) {
+                    Log.e("Errorrrrr", t!!.message.toString())
+                }
+            })
+        }
+    }
+
+    fun diplayCurrentDate(year: Int, month: Int, day: Int): String {
+        val sdf = SimpleDateFormat("yyyy-MM-dd")
+        val calendar = Calendar.getInstance()
+        calendar[year, month] = day
+        val currentDate: String = sdf.format(calendar.time)
+
+        return currentDate
     }
 
     fun signOut()

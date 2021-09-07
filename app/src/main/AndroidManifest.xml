@@ -22,12 +22,15 @@
         <activity android:name=".view.RegisterActivity"></activity>
         <activity android:name=".view.BaseActivity" />
         <activity android:name=".view.CreateTaskActivity"/>
-        <activity android:name=".view.SignInActivity">
+        <activity android:name=".view.SignInActivity"
+            android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity android:name=".view.UsernameActivity">
         </activity>
         <activity
             android:name=".view.SplashActivity"
@@ -35,6 +38,8 @@
         <activity
             android:name=".view.MainActivity"
             android:screenOrientation="portrait" />
+
+        <activity android:name=".view.PasswordActivity"/>
 
         <service
             android:name=".utils.MyFirebaseMessagingService"

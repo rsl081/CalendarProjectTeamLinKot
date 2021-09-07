@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,84 +8,63 @@
     tools:context=".view.SignInActivity">
 
     <TextView
-        android:id="@+id/textView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginTop="@dimen/si_margin"
+        android:layout_marginBottom="@dimen/si_margin"
         android:text="@string/str_metask"
-        android:textSize="40sp"
+        android:textSize="@dimen/si_text_size"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/ivAppIcon"
-        app:layout_constraintEnd_toStartOf="@+id/guideline2"
-        app:layout_constraintStart_toEndOf="@+id/ivAppIcon"
-        app:layout_constraintTop_toTopOf="@+id/guideline3" />
+        app:layout_constraintBottom_toBottomOf="@+id/iv_app_icon"
+        app:layout_constraintEnd_toStartOf="@+id/guideline_right"
+        app:layout_constraintStart_toEndOf="@+id/iv_app_icon"
+        app:layout_constraintTop_toTopOf="@+id/guideline_top" />
 
     <ImageView
-        android:id="@+id/ivAppIcon"
-        android:layout_width="149dp"
-        android:layout_height="153dp"
-        android:padding="8dp"
+        android:id="@+id/iv_app_icon"
+        android:layout_width="@dimen/si_icon_size"
+        android:layout_height="@dimen/si_icon_size"
+        android:padding="@dimen/si_padding"
         android:contentDescription="@string/app_name"
-        app:layout_constraintStart_toStartOf="@+id/guideline"
-        app:layout_constraintTop_toTopOf="@+id/guideline3"
+        app:layout_constraintStart_toStartOf="@+id/guideline_left"
+        app:layout_constraintTop_toTopOf="@+id/guideline_top"
         app:srcCompat="@drawable/mdi___calendar_clock" />
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_begin="50dp" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_end="50dp" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_begin="25dp" />
-
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/tv_login_to_continue"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginStart="@dimen/si_margin"
+        android:layout_marginTop="@dimen/si_margin2"
+        android:layout_marginEnd="@dimen/si_margin"
         android:textColor="@color/light_gray"
         android:text="@string/sign_in_pls_login_to_continue"
-        app:layout_constraintEnd_toStartOf="@+id/guideline2"
-        app:layout_constraintStart_toStartOf="@+id/guideline"
-        app:layout_constraintTop_toBottomOf="@+id/ivAppIcon" />
+        app:layout_constraintEnd_toStartOf="@+id/guideline_right"
+        app:layout_constraintStart_toStartOf="@+id/guideline_left"
+        app:layout_constraintTop_toBottomOf="@+id/iv_app_icon" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/usernameInput"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="8dp"
-        app:layout_constraintEnd_toStartOf="@+id/guideline2"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/guideline"
-        app:layout_constraintTop_toBottomOf="@+id/textView2">
+        android:layout_marginStart="@dimen/si_margin"
+        android:layout_marginTop="@dimen/si_margin2"
+        android:layout_marginEnd="@dimen/si_margin"
+        app:layout_constraintEnd_toStartOf="@+id/guideline_right"
+        app:layout_constraintStart_toStartOf="@+id/guideline_left"
+        app:layout_constraintTop_toBottomOf="@+id/tv_login_to_continue">
 
         <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/et_username_signIn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/sign_in_username"
+            android:inputType="text"
+            android:autofillHints="username"
             android:textColor="@color/dark_gray"
             android:textColorHint="@color/light_gray"
-            />
+            tools:ignore="SpeakableTextPresentCheck" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -93,19 +73,19 @@
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="8dp"
-        app:layout_constraintEnd_toStartOf="@+id/guideline2"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/guideline"
+        android:layout_marginStart="@dimen/si_margin"
+        android:layout_marginTop="@dimen/si_margin2"
+        android:layout_marginEnd="@dimen/si_margin"
+        app:layout_constraintEnd_toStartOf="@+id/guideline_right"
+        app:layout_constraintStart_toStartOf="@+id/guideline_left"
         app:layout_constraintTop_toBottomOf="@+id/usernameInput">
 
         <androidx.appcompat.widget.AppCompatEditText
-            android:id="@+id/et_password_signIn"
+            android:id="@+id/et_password_sign_in"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/sign_in_password"
+            android:importantForAccessibility="no"
             android:textColor="@color/dark_gray"
             android:textColorHint="@color/light_gray" />
 
@@ -115,53 +95,73 @@
         android:id="@+id/button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginTop="@dimen/si_margin2"
+        android:layout_marginEnd="@dimen/si_margin"
         android:backgroundTint="@color/white"
-        android:drawablePadding="10dp"
+        android:drawablePadding="@dimen/si_padding2"
         android:textColor="@color/light_gray"
-        android:paddingTop="24dp"
         app:drawableLeftCompat="@drawable/mdi___key"
         android:text="@string/sign_in_forgot_password"
-        app:layout_constraintEnd_toStartOf="@+id/guideline2"
+        app:layout_constraintEnd_toStartOf="@+id/guideline_right"
         app:layout_constraintTop_toBottomOf="@+id/textInputLayout" />
 
     <Button
-        android:id="@+id/btnSignIn"
+        android:id="@+id/btn_sign_in"
         android:layout_width="0dp"
-        android:layout_height="70dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="40dp"
-        android:layout_marginEnd="24dp"
+        android:layout_height="@dimen/si_btn_size"
+        android:layout_marginStart="@dimen/si_margin2"
+        android:layout_marginTop="@dimen/si_margin3"
+        android:layout_marginEnd="@dimen/si_margin2"
         android:backgroundTint="@color/light_gray"
         android:text="@string/sign_in_btn_sign_in"
         android:textColor="@color/white"
-        app:layout_constraintEnd_toStartOf="@+id/guideline2"
-        app:layout_constraintStart_toStartOf="@+id/guideline"
+        app:layout_constraintEnd_toStartOf="@+id/guideline_right"
+        app:layout_constraintStart_toStartOf="@+id/guideline_left"
         app:layout_constraintTop_toBottomOf="@+id/button" />
 
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/tv_no_account"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="40dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginStart="@dimen/si_margin"
+        android:layout_marginTop="@dimen/si_margin3"
+        android:layout_marginEnd="@dimen/si_margin"
         android:text="@string/sign_in_no_account"
-        app:layout_constraintEnd_toStartOf="@+id/guideline2"
-        app:layout_constraintStart_toStartOf="@+id/guideline"
-        app:layout_constraintTop_toBottomOf="@+id/btnSignIn" />
+        app:layout_constraintEnd_toStartOf="@+id/guideline_right"
+        app:layout_constraintStart_toStartOf="@+id/guideline_left"
+        app:layout_constraintTop_toBottomOf="@+id/btn_sign_in" />
 
     <TextView
         android:id="@+id/tv_register"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="22dp"
+        android:layout_marginTop="@dimen/si_margin2"
         android:text="@string/sign_in_register"
         android:textColor="@color/blue"
-        app:layout_constraintEnd_toEndOf="@+id/textView3"
-        app:layout_constraintStart_toStartOf="@+id/textView3"
-        app:layout_constraintTop_toBottomOf="@+id/textView3" />
+        app:layout_constraintEnd_toEndOf="@+id/tv_no_account"
+        app:layout_constraintStart_toStartOf="@+id/tv_no_account"
+        app:layout_constraintTop_toBottomOf="@+id/tv_no_account" />
 
+    <!--Guidelines-->
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_left"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="@dimen/si_guideline" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_right"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_end="@dimen/si_guideline" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_top"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="@dimen/si_guideline2" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
