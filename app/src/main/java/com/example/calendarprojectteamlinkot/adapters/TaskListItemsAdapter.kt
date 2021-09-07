@@ -22,9 +22,6 @@ class TaskListItemsAdapter(private val context: Context,
 ):
     RecyclerView.Adapter<RecyclerView.ViewHolder>(){
 
-
-    private var qwe: List<Task> = mutableListOf<Task>()
-
     private var onClickListener: OnClickListener? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -35,10 +32,6 @@ class TaskListItemsAdapter(private val context: Context,
                 false
             )
         )
-//        val binding = TasksItemBinding.inflate(LayoutInflater.from(parent.context),
-//            parent,
-//            false)
-//        return MyViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
@@ -49,8 +42,8 @@ class TaskListItemsAdapter(private val context: Context,
             val createdBy = model.createdBy
 
                 holder.itemView.tv_task_name.text = model.name
-                holder.itemView.tv_description.text = createdBy.username
-                //holder.itemView.tv_description.text = model.date
+                //holder.itemView.tv_description.text = createdBy.username
+                holder.itemView.tv_description.text = model.date
                 holder.itemView.tv_username.text = user?.username
                 holder.itemView.expanded_view.visibility = if (model.expand) View.VISIBLE else View.GONE
                 holder.itemView.card_layout.setOnClickListener {

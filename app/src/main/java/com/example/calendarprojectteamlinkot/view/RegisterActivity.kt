@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.text.TextUtils
 import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.core.widget.addTextChangedListener
 import com.example.calendarprojectteamlinkot.R
@@ -21,11 +22,15 @@ import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.util.regex.Pattern
 
 class RegisterActivity : BaseActivity() {
 
     var username: String = ""
     var password: String = ""
+
+    val pattern_password = Regex("(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$")
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -115,6 +120,11 @@ class RegisterActivity : BaseActivity() {
             }
             TextUtils.isEmpty(confirmPassword)->{
                 showErrorSnackBar("Please enter a password")
+                false
+            }
+            !Pattern.matches(pattern_password.toString(), password) || !Pattern.matches(pattern_password.toString(), confirmPassword) ->{
+                showErrorSnackBar("Please enter a mali ihh")
+                Toast.makeText(this, "must not be empty\nmust contain at least eight characters long\nmust contain uppercase and lowercase letters and a number", Toast.LENGTH_SHORT).show()
                 false
             }else->{
                 true

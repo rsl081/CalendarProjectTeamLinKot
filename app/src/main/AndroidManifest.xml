@@ -21,8 +21,7 @@
         <activity android:name=".view.RegisterActivity"></activity>
         <activity android:name=".view.BaseActivity" />
         <activity android:name=".view.CreateTaskActivity"/>
-        <activity android:name=".view.SignInActivity">
-            android:name=".view.RegisterPasswordActivity"
+        <activity android:name=".view.SignInActivity"
             android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
