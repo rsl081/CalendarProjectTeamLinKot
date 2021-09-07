@@ -55,8 +55,9 @@ class TaskListItemsAdapter(private val context: Context,
             ApiClass().getCurrentUser {
                 if(it != user?.username){
                     holder.itemView.cb_task_item.isEnabled = false
-                    holder.itemView.cb_task_item.alpha = 0.10F
-                    //model.id?.let { Log.i("idtaskss", it) }
+
+                    holder.itemView.cb_task_item.alpha = 1.0F
+
                 }else{
                     holder.itemView.card_layout.setBackgroundColor(Color.parseColor("#C5E8B7"))
                 }
