@@ -16,6 +16,7 @@ import com.example.calendarprojectteamlinkot.utils.Constants
 import com.example.calendarprojectteamlinkot.view.*
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_create_task.*
+import kotlinx.android.synthetic.main.activity_day.*
 import kotlinx.android.synthetic.main.activity_task.*
 import kotlinx.android.synthetic.main.activity_username.*
 import okhttp3.Interceptor
@@ -332,10 +333,12 @@ class ApiClass: Interceptor {
             val loginResponseCall: Call<List<Task>>? =
                 ApiClass().getUserServiceHeader()?.getMyTaskByDate("Bearer "+msharedToken!!, true, selectedDate)
 
+            activity.refreshLayout.isRefreshing = true
             loginResponseCall?.enqueue(object: Callback<List<Task>> {
                 @RequiresApi(Build.VERSION_CODES.N)
                 override fun onResponse(call: Call<List<Task>>, response: Response<List<Task>>) {
                     if(response.isSuccessful) {
+                        activity.refreshLayout.isRefreshing = false
                         activity.hideProgressDialog()
                         val task = response.body()
                         Log.i("MyTask2", task.toString())
@@ -349,6 +352,7 @@ class ApiClass: Interceptor {
 
                         activity.rv_activity_task.adapter= adapter
                     }else{
+                        activity.refreshLayout.isRefreshing = true
                         val rc =  response.code()
                         when(rc){
                             400->{
@@ -380,10 +384,12 @@ class ApiClass: Interceptor {
             val loginResponseCall: Call<List<Task>>? =
                 ApiClass().getUserServiceHeader()?.getAllTaskByDate("Bearer "+msharedToken!!,selectedDate)
 
+            activity.refreshLayout.isRefreshing = true
             loginResponseCall?.enqueue(object: Callback<List<Task>> {
                 @RequiresApi(Build.VERSION_CODES.N)
                 override fun onResponse(call: Call<List<Task>>, response: Response<List<Task>>) {
                     if(response.isSuccessful) {
+                        activity.refreshLayout.isRefreshing = false
                         activity.hideProgressDialog()
                         val task = response.body()
                         Log.i("MyTask2", task.toString())
@@ -397,6 +403,7 @@ class ApiClass: Interceptor {
 
                         activity.rv_activity_task.adapter= adapter
                     }else{
+                        activity.refreshLayout.isRefreshing = false
                         val rc =  response.code()
                         when(rc){
                             400->{
