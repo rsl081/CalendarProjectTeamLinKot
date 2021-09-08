@@ -95,5 +95,7 @@
     <dimen name="reg_elevation">20dp</dimen>
     <dimen name="reg_padding">20dp</dimen>
     <dimen name="reg_drawable_padding">10dp</dimen>
+    
+    <!--ForgotPass-->
 
 </resources>
