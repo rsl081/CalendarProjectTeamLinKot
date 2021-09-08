@@ -173,40 +173,41 @@ class ApiClass: Interceptor {
 
     fun getCurrentUser(userCallback: (String?) -> Unit)
     {
+        if(Constants.MSHAREDPREFERENCES.contains(Constants.TOKEN_USER_MODEL)) {
+            val msharedToken =
+                Constants.MSHAREDPREFERENCES.getString(Constants.TOKEN_USER_MODEL, "")
 
-        val msharedToken = Constants.MSHAREDPREFERENCES.getString(Constants.TOKEN_USER_MODEL, "")
+            val loginResponseCall: Call<User>? =
+                ApiClass().getUserServiceHeader()?.getCurrentUser("Bearer " + msharedToken!!)
 
-        val loginResponseCall: Call<User>? =
-            ApiClass().getUserServiceHeader()?.getCurrentUser("Bearer "+msharedToken!!)
+            loginResponseCall?.enqueue(object : Callback<User> {
+                @RequiresApi(Build.VERSION_CODES.N)
+                override fun onResponse(call: Call<User>, response: Response<User>) {
+                    if (response.isSuccessful) {
 
-        loginResponseCall?.enqueue(object : Callback<User> {
-            @RequiresApi(Build.VERSION_CODES.N)
-            override fun onResponse(call: Call<User>, response: Response<User>) {
-                if (response.isSuccessful) {
-
-                    val username = response.body()?.username
-                    userCallback(username)
-
-                } else {
-                    val rc = response.code()
-                    when (rc) {
-                        400 -> {
-                            Log.e("Error 400", "Bad Request")
-                        }
-                        404 -> {
-                            Log.e("Error 404", "Not Found")
-                        }
-                        else -> {
-                            Log.e("Error", "Generic Error" + rc)
+                        val username = response.body()?.username
+                        userCallback(username)
+                    } else {
+                        val rc = response.code()
+                        when (rc) {
+                            400 -> {
+                                Log.e("Error 400", "Bad Request")
+                            }
+                            404 -> {
+                                Log.e("Error 404", "Not Found")
+                            }
+                            else -> {
+                                Log.e("Error", "Generic Error" + rc)
+                            }
                         }
                     }
                 }
-            }
 
-            override fun onFailure(call: Call<User>, t: Throwable) {
-                Log.e("Errorrrrr", t!!.message.toString())
-            }
-        })
+                override fun onFailure(call: Call<User>, t: Throwable) {
+                    Log.e("Errorrrrr", t!!.message.toString())
+                }
+            })
+        }
     }//end of getCurrentUser
 
     fun countTaskOfCurrentUser(userCallback: (Int?) -> Unit, selectedDate: String)
@@ -260,6 +261,7 @@ class ApiClass: Interceptor {
             @RequiresApi(Build.VERSION_CODES.N)
             override fun onResponse(call: Call<List<User>>, response: Response<List<User>>) {
                 if (response.isSuccessful) {
+                    activity.hideProgressDialog()
                     val users = response.body()
                     if (users != null) {
                         for(user in users){
@@ -493,7 +495,6 @@ class ApiClass: Interceptor {
                 @RequiresApi(Build.VERSION_CODES.N)
                 override fun onResponse(call: Call<List<Task>>, response: Response<List<Task>>) {
                     if(response.isSuccessful) {
-
                         val task = response.body()
                         Log.i("MyTask1", task.toString())
                         var adapter: List<Task>
