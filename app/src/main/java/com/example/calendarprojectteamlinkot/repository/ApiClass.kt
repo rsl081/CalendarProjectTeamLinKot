@@ -149,16 +149,10 @@ class ApiClass: Interceptor {
                             val jsonObject = JSONObject(qwe!!.trim())
                             var message = jsonObject.getJSONArray("errors")
 
-
-
                             for(i in 0 until message.length()){
                                 Log.e("ErrorRegister", message.get(i) as String)
                                 Toast.makeText(activity, message.get(i) as String, Toast.LENGTH_SHORT).show();
                             }
-
-
-
-
                         }
                         404-> {
                             Log.e("Error 404", "Not Found")
@@ -178,8 +172,7 @@ class ApiClass: Interceptor {
 
     fun getCurrentUser(userCallback: (String?) -> Unit)
     {
-//            val msharedToken = Constants.MSHAREDPREFERENCES.getString(Constants.TOKEN_USER_MODEL,"")
-//                val noQuotes: String? = msharedToken?.replace("^\"|\"$", "")
+
         val msharedToken = Constants.MSHAREDPREFERENCES.getString(Constants.TOKEN_USER_MODEL, "")
 
         val loginResponseCall: Call<User>? =
@@ -273,12 +266,9 @@ class ApiClass: Interceptor {
                             user.username?.let { assignee.add(it) }
                             Log.i("AccountList", user.username!!)
                         }
-                       
 
                         val arrayAdapter = ArrayAdapter(activity, R.layout.dropdown_item_create_task, assignee)
                         activity.ac_assignee.setAdapter(arrayAdapter)
-                     
-                        
                     }
 
                 } else {
@@ -306,13 +296,11 @@ class ApiClass: Interceptor {
                     )
                 }
 
-
             loginResponseCall?.enqueue(object: Callback<Task> {
                 @RequiresApi(Build.VERSION_CODES.N)
                 override fun onResponse(call: Call<Task>, response: Response<Task>) {
 
                     if(response.isSuccessful) {
-
 
                     }else{
                         val rc =  response.code()
@@ -430,6 +418,7 @@ class ApiClass: Interceptor {
             })
         }
     }//end getAllTaskByDate
+
     private var task: List<Task>? = null
 
     fun myTask(activity: MainActivity, selectedDate: String) {
@@ -502,11 +491,6 @@ class ApiClass: Interceptor {
                         Log.i("MyTask1", task.toString())
                         var adapter: List<Task>
                         if (task != null) {
-//                                    val parsedDate = LocalDateTime.parse(t.date, DateTimeFormatter.ISO_DATE_TIME)
-//                                    val formattedDate = parsedDate.format(DateTimeFormatter.ofPattern("EEEE, d MMMM, yyyy"))
-//
-//                                    val sdf = format(formattedDate)
-//                                    Log.i("MyTask1", sdf)
 
                             activity.rv_activity_task.layoutManager = LinearLayoutManager(activity)
                             activity.rv_activity_task.setHasFixedSize(true)
@@ -671,15 +655,9 @@ class ApiClass: Interceptor {
     }
 
     override fun intercept(chain: Interceptor.Chain): okhttp3.Response {
-        // Get reuqest info
-        // Get reuqest info
         val initialReq: Request = chain.request()
-        // Create modified request to return
-        // Create modified request to return
         val modRequest: Request = initialReq
-        // your logic...
 
-        // your logic...
         return chain.proceed(modRequest)
     }
 

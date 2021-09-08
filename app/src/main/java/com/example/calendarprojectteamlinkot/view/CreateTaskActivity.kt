@@ -136,5 +136,4 @@ class CreateTaskActivity : BaseActivity(), DatePickerDialog.OnDateSetListener {
 
         et_task_date.setText(selectedDate)
     }
-
 }

@@ -9,7 +9,6 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.example.calendarprojectteamlinkot.R
-import com.example.calendarprojectteamlinkot.models.CreateTask
 import com.example.calendarprojectteamlinkot.models.EditTask
 import com.example.calendarprojectteamlinkot.models.Task
 import com.example.calendarprojectteamlinkot.models.User
@@ -43,7 +42,6 @@ class TaskListItemsAdapter(private val context: Context,
             val createdBy = model.createdBy
 
                 holder.itemView.tv_task_name.text = model.name
-                //holder.itemView.tv_description.text = createdBy.username
                 holder.itemView.tv_description.text = model.date
                 holder.itemView.tv_username.text = user?.username
                 holder.itemView.expanded_view.visibility = if (model.expand) View.VISIBLE else View.GONE
@@ -88,9 +86,6 @@ class TaskListItemsAdapter(private val context: Context,
                     Toast.makeText(context, "Only the task creator can delete this", Toast.LENGTH_SHORT).show();
                 }
             }
-
-
-
         }
     }
 
@@ -104,7 +99,6 @@ class TaskListItemsAdapter(private val context: Context,
     }
 
     class MyViewHolder(view: View) : RecyclerView.ViewHolder(view)
-//    inner class MyViewHolder(val binding: TasksItemBinding) : RecyclerView.ViewHolder(binding.root)
 
     fun setOnClickListener(onClickListener: OnClickListener){
         this.onClickListener = onClickListener

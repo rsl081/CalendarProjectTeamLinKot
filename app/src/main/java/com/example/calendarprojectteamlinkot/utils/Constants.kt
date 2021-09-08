@@ -25,5 +25,4 @@ object Constants {
     const val PREFERENCE_NAME = "MeTaskAppPreference"
 
     private var retrofit: Retrofit? = null
-
 }

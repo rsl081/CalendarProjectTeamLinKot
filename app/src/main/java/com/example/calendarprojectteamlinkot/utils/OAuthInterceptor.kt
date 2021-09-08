@@ -24,10 +24,7 @@ class OAuthInterceptor : Interceptor {
                     .addHeader("Authorization",finalToken)
                     .build()
             }
-
         }
-
         return chain.proceed(request)
     }
-
 }

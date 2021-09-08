@@ -3,12 +3,8 @@ package com.example.calendarprojectteamlinkot.view
 import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
-import android.view.View
-import androidx.appcompat.app.AppCompatActivity
-import androidx.core.widget.addTextChangedListener
 import com.example.calendarprojectteamlinkot.R
 import com.example.calendarprojectteamlinkot.repository.ApiClass
-import kotlinx.android.synthetic.main.activity_register.*
 import kotlinx.android.synthetic.main.activity_username.*
 import android.app.Activity
 import android.widget.Toast
@@ -27,7 +23,6 @@ class UsernameActivity: BaseActivity() {
     }
 
     private fun init() {
-        tv_username_taken.visibility = View.INVISIBLE
 
         btn_next.setOnClickListener {
             username = et_username.text.toString().trim{ it <= ' '}
