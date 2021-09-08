@@ -78,4 +78,12 @@ interface ApiServices {
         @Path("id") id: String,
         @Body createTask: EditTask
     ): Call<Task>
+
+    @Headers("Content-Type: application/json")
+    @POST("Account/tokens/register")
+    fun token_register(
+        @Header("Authorization") auth: String,
+        @Body token: Notification,
+    ): Call<Task>
+
 }
