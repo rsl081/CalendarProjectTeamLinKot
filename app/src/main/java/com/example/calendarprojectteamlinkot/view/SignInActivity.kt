@@ -42,19 +42,17 @@ class SignInActivity : BaseActivity() {
         tv_register.setOnClickListener {
             startActivity(Intent(this, UsernameActivity::class.java))
         }
-
     }
 
     override fun onResume() {
         Constants.MSHAREDPREFERENCES = getSharedPreferences(Constants.PREFERENCE_NAME, Context.MODE_PRIVATE)
         if(Constants.MSHAREDPREFERENCES.contains(Constants.TOKEN_USER_MODEL)){
-            //if aleady signin punta na agad siya sa main acitivty
+
             startActivity(Intent(this, MainActivity::class.java))
             finish()
         }
         super.onResume()
     }
-
 
     private fun signInRegisteredUser()
     {

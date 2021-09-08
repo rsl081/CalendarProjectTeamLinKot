@@ -101,7 +101,6 @@ class MainActivity : BaseActivity(),
         finish()
     }
 
-
     private fun init(){
 
         Constants.MSHAREDPREFERENCES = getSharedPreferences(Constants.PREFERENCE_NAME, Context.MODE_PRIVATE)
@@ -116,10 +115,6 @@ class MainActivity : BaseActivity(),
         ApiClass().getCurrentUser{
             tv_name_activity_day.text = "Hi! $it"
         }
-
-//        ApiClass().countTaskOfCurrentUser({
-//            tv_num_of_task_activity_day.text = "You have $it tasks today"
-//        },displayCurrentDate())
 
         nav_view.setNavigationItemSelectedListener(this)
 
@@ -197,7 +192,6 @@ class MainActivity : BaseActivity(),
 
             tv_select_task_date.text = selectedDate
         }
-
     }//end of init
 
     override fun onBackPressed() {
@@ -233,10 +227,7 @@ class MainActivity : BaseActivity(),
         savedDay = cal.get(Calendar.DAY_OF_MONTH)
         savedMonth = cal.get(Calendar.MONTH)
         savedYear = cal.get(Calendar.YEAR)
-//        hour = cal.get(Calendar.HOUR)
-//        minute = cal.get(Calendar.HOUR)
     }
-
 
     override fun onDateSet(view: DatePicker?, year: Int, month: Int, dayOfMonth: Int) {
         savedDay = dayOfMonth
@@ -256,7 +247,6 @@ class MainActivity : BaseActivity(),
         val selectedDate0: String = simpledateformat0.format(newDate.time)
         val selectedDate1: String = simpledateformat1.format(newDate.time)
 
-        //Yung pag click ng date okay naaaaaaaaaaaaaaaaaaaaaaaaa
         if(isToggle){
             showProgressDialog(resources.getString(R.string.please_wait))
             ApiClass().getAllTaskByDate(this, selectedDate1)

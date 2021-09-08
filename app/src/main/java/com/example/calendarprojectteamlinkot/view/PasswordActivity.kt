@@ -6,13 +6,10 @@ import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.example.calendarprojectteamlinkot.R
 import kotlinx.android.synthetic.main.activity_password.*
-import android.app.Activity
-import android.text.Editable
 import android.text.TextUtils
 import android.widget.Toast
 import com.example.calendarprojectteamlinkot.repository.ApiClass
 import com.example.calendarprojectteamlinkot.utils.Constants
-import kotlinx.android.synthetic.main.activity_register.*
 import kotlinx.android.synthetic.main.activity_username.*
 import java.util.regex.Pattern
 
@@ -22,7 +19,6 @@ class PasswordActivity: BaseActivity() {
     var password: String = ""
     var confirmPassword: String = ""
     val pattern_password = Regex("(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$")
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -62,6 +58,8 @@ class PasswordActivity: BaseActivity() {
         {
             //Register from api then catch token
             ApiClass().registerUsernameAndPasswordFromApi(this, username, password)
+        } else if (password != confirmPassword) {
+            Toast.makeText(this, "Password does not match", Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -88,5 +86,4 @@ class PasswordActivity: BaseActivity() {
             }
         }
     }//end of validateForm
-
 }

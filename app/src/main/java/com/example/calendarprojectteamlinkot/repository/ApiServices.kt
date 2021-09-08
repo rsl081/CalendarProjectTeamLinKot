@@ -17,7 +17,6 @@ interface ApiServices {
     @POST("Account/register")
     open fun register(@Body register: Register): Call<User>
 
-
     //User
     @Headers("Content-Type: application/json")
     @GET("Account")
@@ -79,6 +78,4 @@ interface ApiServices {
         @Path("id") id: String,
         @Body createTask: EditTask
     ): Call<Task>
-
-
 }
