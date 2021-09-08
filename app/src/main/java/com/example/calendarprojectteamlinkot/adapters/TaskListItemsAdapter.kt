@@ -47,7 +47,8 @@ class TaskListItemsAdapter(private val context: Context,
                 holder.itemView.expanded_view.visibility = if (model.expand) View.VISIBLE else View.GONE
                 holder.itemView.card_layout.setOnClickListener {
                     model.expand = !model.expand
-                    notifyDataSetChanged()
+                    notifyItemChanged(position)
+                    //notifyDataSetChanged()
                 }
 
             ApiClass().getCurrentUser {
@@ -56,7 +57,7 @@ class TaskListItemsAdapter(private val context: Context,
 
                     holder.itemView.cb_task_item.alpha = 1.0F
 
-                }else{
+                }else {
                     holder.itemView.card_layout.setBackgroundColor(Color.parseColor("#C5E8B7"))
                 }
             }
