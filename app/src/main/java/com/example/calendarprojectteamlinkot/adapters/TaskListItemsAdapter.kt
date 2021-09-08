@@ -15,6 +15,7 @@ import com.example.calendarprojectteamlinkot.models.User
 import com.example.calendarprojectteamlinkot.repository.ApiClass
 import com.example.calendarprojectteamlinkot.utils.Constants
 import com.example.calendarprojectteamlinkot.view.CreateTaskActivity
+import com.example.calendarprojectteamlinkot.view.MainActivity
 import kotlinx.android.synthetic.main.tasks_item.view.*
 
 class TaskListItemsAdapter(private val context: Context,
@@ -32,23 +33,25 @@ class TaskListItemsAdapter(private val context: Context,
                 false
             )
         )
+
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+
         val model = list[position]
 
         if(holder is MyViewHolder){
             val user = model.assignee
             val createdBy = model.createdBy
 
-                holder.itemView.tv_task_name.text = model.name
-                holder.itemView.tv_description.text = model.date
-                holder.itemView.tv_username.text = user?.username
-                holder.itemView.expanded_view.visibility = if (model.expand) View.VISIBLE else View.GONE
-                holder.itemView.card_layout.setOnClickListener {
-                    model.expand = !model.expand
-                    notifyItemChanged(position)
-                }
+            holder.itemView.tv_task_name.text = model.name
+            holder.itemView.tv_description.text = model.description
+            holder.itemView.tv_username.text = user?.username
+            holder.itemView.expanded_view.visibility = if (model.expand) View.VISIBLE else View.GONE
+            holder.itemView.card_layout.setOnClickListener {
+                model.expand = !model.expand
+                notifyItemChanged(position)
+            }
 
             ApiClass().getCurrentUser {
                 if(it != user?.username){
@@ -56,17 +59,16 @@ class TaskListItemsAdapter(private val context: Context,
 
                     holder.itemView.cb_task_item.alpha = 1.0F
 
-                }else {
+                } else {
                     holder.itemView.card_layout.setBackgroundColor(Color.parseColor("#C5E8B7"))
                 }
             }
-
+            holder.itemView.card_layout.setBackgroundColor(Color.parseColor("#FFFFFFFF"))
             holder.itemView.cb_task_item.isChecked = list[position].isCompleted == true
 
             holder.itemView.cb_task_item.setOnClickListener {
                 ApiClass().checkTask(context, model.id)
             }
-
             holder.itemView.delete_tasks_item.setOnClickListener {
                 if(createdBy.username.equals(user?.username)){
                     ApiClass().deleteTask(context, model.id)
@@ -75,7 +77,6 @@ class TaskListItemsAdapter(private val context: Context,
                     Toast.makeText(context, "Only the task creator can delete this", Toast.LENGTH_SHORT).show();
                 }
             }
-
             holder.itemView.edit_tasks_item.setOnClickListener {
                 if(createdBy.username.equals(user?.username)){
                     val editTask = EditTask(model.id, model.name, model.description,User(user?.username,null,null),model.date)
