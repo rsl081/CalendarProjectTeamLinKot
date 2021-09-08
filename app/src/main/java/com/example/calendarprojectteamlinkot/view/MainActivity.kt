@@ -3,6 +3,7 @@ package com.example.calendarprojectteamlinkot.view
 import android.app.DatePickerDialog
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
@@ -17,6 +18,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.calendarprojectteamlinkot.R
 import com.example.calendarprojectteamlinkot.adapters.TaskListItemsAdapter
+import com.example.calendarprojectteamlinkot.models.Notification
+import com.example.calendarprojectteamlinkot.models.Task
 import com.example.calendarprojectteamlinkot.repository.ApiClass
 import com.example.calendarprojectteamlinkot.utils.Constants
 import com.example.calendarprojectteamlinkot.utils.MyFirebaseMessagingService
@@ -27,6 +30,9 @@ import kotlinx.android.synthetic.main.activity_day.*
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_task.*
 import kotlinx.android.synthetic.main.app_bar_main.*
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -107,6 +113,46 @@ class MainActivity : BaseActivity(),
             val token = task.result
 
             Log.d(TAG + "Token", token.toString())
+
+            if(Constants.MSHAREDPREFERENCES.contains(Constants.TOKEN_USER_MODEL)){
+                Constants.MSHAREDPREFERENCES = getSharedPreferences(Constants.PREFERENCE_NAME, Context.MODE_PRIVATE)
+
+                val msharedToken = Constants.MSHAREDPREFERENCES.getString(Constants.TOKEN_USER_MODEL, "")
+                val notiftoken = Notification(token.toString())
+                val loginResponseCall: Call<Task>? =
+                    notiftoken?.let {
+                        ApiClass().getUserServiceHeader()?.token_register("Bearer "+msharedToken!!,
+                            it
+                        )
+                    }
+
+                loginResponseCall?.enqueue(object: Callback<Task> {
+                    @RequiresApi(Build.VERSION_CODES.N)
+                    override fun onResponse(call: Call<Task>, response: Response<Task>) {
+
+                        if(response.isSuccessful) {
+                            Log.i("Token_Register", "NICEEEEE")
+                        }else{
+                            val rc =  response.code()
+                            when(rc){
+                                400->{
+                                    Log.e("Error 400 showAllTask", "Bad Request")
+                                }
+                                403-> {
+                                    Log.e("Error 403", "Not Found" + rc)
+                                }else ->{
+                                Log.e("Error", "Happy Generic Error" + rc)
+                            }
+                            }
+                        }
+                    }
+                    override fun onFailure(call: Call<Task>, t: Throwable) {
+                        Log.e("Errorrrrr", t!!.message.toString())
+                    }
+                })
+            }
+
+
             //Toast.makeText(baseContext, token, Toast.LENGTH_SHORT).show()
         })
 

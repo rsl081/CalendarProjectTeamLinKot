@@ -21,6 +21,7 @@ object Constants {
     const val TASK_DETAIL: String = "task_detail"
 
     const val TOKEN_USER_MODEL = "token_user_model"
+
     lateinit var MSHAREDPREFERENCES: SharedPreferences
     const val PREFERENCE_NAME = "MeTaskAppPreference"
 
