@@ -14,6 +14,7 @@ import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.core.view.GravityCompat
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.calendarprojectteamlinkot.R
 import com.example.calendarprojectteamlinkot.adapters.TaskListItemsAdapter
 import com.example.calendarprojectteamlinkot.repository.ApiClass
@@ -58,20 +59,6 @@ class MainActivity : BaseActivity(),
 
         init()
 
-        // FCM token setup
-        FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
-            if (!task.isSuccessful) {
-                Log.w(TAG, "Fetching FCM registration token failed", task.exception)
-                return@OnCompleteListener
-            }
-
-            // Get new FCM registration token
-            val token = task.result
-
-            Log.d(TAG + "Token", token.toString())
-            //Toast.makeText(baseContext, token, Toast.LENGTH_SHORT).show()
-        })
-
         val dateToday = findViewById<TextView>(R.id.date_today)
         dateToday.text = displayCurrentDate()
 
@@ -108,6 +95,21 @@ class MainActivity : BaseActivity(),
     }
 
     private fun init(){
+
+        // FCM token setup
+        FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
+            if (!task.isSuccessful) {
+                Log.w(TAG, "Fetching FCM registration token failed", task.exception)
+                return@OnCompleteListener
+            }
+
+            // Get new FCM registration token
+            val token = task.result
+
+            Log.d(TAG + "Token", token.toString())
+            //Toast.makeText(baseContext, token, Toast.LENGTH_SHORT).show()
+        })
+
 
         Constants.MSHAREDPREFERENCES = getSharedPreferences(Constants.PREFERENCE_NAME, Context.MODE_PRIVATE)
 
@@ -176,6 +178,16 @@ class MainActivity : BaseActivity(),
             startActivity(intent)
         }
 
+        refreshLayout.setOnRefreshListener {
+            if(isToggle){
+                showProgressDialog(resources.getString(R.string.please_wait))
+                ApiClass().getAllTaskByDate(this, showDate(year,month,day))
+            }else{
+                showProgressDialog(resources.getString(R.string.please_wait))
+                ApiClass().getMyTaskByDate(this, showDate(year,month,day))
+            }
+        }
+
         calendar_view.setOnDateChangeListener { calendarView, year, month, dayOfMonth ->
 
             val simpledateformat = SimpleDateFormat("yyyy-MM-dd")
@@ -198,6 +210,7 @@ class MainActivity : BaseActivity(),
 
             tv_select_task_date.text = selectedDate
         }
+
     }//end of init
 
     override fun onBackPressed() {

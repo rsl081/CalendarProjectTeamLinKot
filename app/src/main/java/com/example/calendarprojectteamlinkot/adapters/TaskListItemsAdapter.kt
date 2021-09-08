@@ -48,7 +48,6 @@ class TaskListItemsAdapter(private val context: Context,
                 holder.itemView.card_layout.setOnClickListener {
                     model.expand = !model.expand
                     notifyItemChanged(position)
-                    //notifyDataSetChanged()
                 }
 
             ApiClass().getCurrentUser {

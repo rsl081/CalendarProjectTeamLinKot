@@ -54,8 +54,8 @@
         app:layout_constraintEnd_toStartOf="@+id/guideline_right"
         app:layout_constraintTop_toTopOf="@+id/ib_previous" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_activity_task"
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/refreshLayout"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="@dimen/ta_margin"
@@ -63,8 +63,15 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/tb_my_task_show_all"
         app:layout_constraintStart_toStartOf="@+id/guideline_left"
-        app:layout_constraintTop_toBottomOf="@+id/ib_previous"
-        tools:listitem="@layout/tasks_item" />
+        app:layout_constraintTop_toBottomOf="@+id/ib_previous">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_activity_task"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            tools:listitem="@layout/tasks_item" />
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab_create_task"
