@@ -69,7 +69,7 @@ class MainActivity : BaseActivity(),
             val token = task.result
 
             Log.d(TAG + "Token", token.toString())
-            Toast.makeText(baseContext, token, Toast.LENGTH_SHORT).show()
+            //Toast.makeText(baseContext, token, Toast.LENGTH_SHORT).show()
         })
 
         val dateToday = findViewById<TextView>(R.id.date_today)
@@ -167,6 +167,29 @@ class MainActivity : BaseActivity(),
         fab_create_task.setOnClickListener {
             val intent = Intent(this, CreateTaskActivity::class.java)
             startActivity(intent)
+        }
+
+        calendar_view.setOnDateChangeListener { calendarView, year, month, dayOfMonth ->
+
+            val simpledateformat = SimpleDateFormat("yyyy-MM-dd")
+
+            val newDate = Calendar.getInstance()
+            newDate[year, month] = dayOfMonth
+
+            val selectedDate: String = simpledateformat.format(newDate.time)
+
+            activity_day.visibility = View.INVISIBLE
+            activity_task.visibility = View.VISIBLE
+
+            if(isToggle){
+                showProgressDialog(resources.getString(R.string.please_wait))
+                ApiClass().getAllTaskByDate(this, selectedDate)
+            }else{
+                showProgressDialog(resources.getString(R.string.please_wait))
+                ApiClass().getMyTaskByDate(this, selectedDate)
+            }
+
+            tv_select_task_date.text = selectedDate
         }
 
     }//end of init
