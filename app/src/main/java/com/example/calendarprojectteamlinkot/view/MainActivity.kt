@@ -36,17 +36,17 @@ class MainActivity : BaseActivity(),
 
     var username: String? = null
 
-    var day = 0
-    var month = 0
-    var year = 0
-    var hour = 0
-    var minute = 0
+    private var day = 0
+    private var month = 0
+    private var year = 0
+    private var hour = 0
+    private var minute = 0
 
-    var savedDay = 0
-    var savedMonth = 0
-    var savedYear = 0
+    private var savedDay = 0
+    private var savedMonth = 0
+    private var savedYear = 0
 
-    var isToggle: Boolean = false
+    private var isToggle: Boolean = false
 
     lateinit var mHandler: Handler
 
@@ -84,10 +84,16 @@ class MainActivity : BaseActivity(),
         override fun run() {
             ApiClass().countTaskOfCurrentUser({
                 if (it != null) {
-                    if(it <= 1){
-                        tv_num_of_task_activity_day.text = "You have $it task today"
-                    }else{
-                        tv_num_of_task_activity_day.text = "You have $it tasks today"
+                    when (it) {
+                        1 -> {
+                            tv_num_of_task_activity_day.text = "You have $it task for today."
+                        }
+                        0 -> {
+                            tv_num_of_task_activity_day.text = "You have no task for today."
+                        }
+                        else -> {
+                            tv_num_of_task_activity_day.text = "You have $it tasks today."
+                        }
                     }
                 }
             },displayCurrentDate())
@@ -216,7 +222,7 @@ class MainActivity : BaseActivity(),
             }
             R.id.nav_my_tasks -> {
                 activity_day.visibility = View.INVISIBLE
-               activity_task.visibility = View.VISIBLE
+                activity_task.visibility = View.VISIBLE
             }
         }
         drawer_layout.closeDrawer(GravityCompat.START)
