@@ -84,10 +84,16 @@ class MainActivity : BaseActivity(),
         override fun run() {
             ApiClass().countTaskOfCurrentUser({
                 if (it != null) {
-                    if(it <= 1){
-                        tv_num_of_task_activity_day.text = "You have $it task today"
-                    }else{
-                        tv_num_of_task_activity_day.text = "You have $it tasks today"
+                    when {
+                        it <= 1 -> {
+                            tv_num_of_task_activity_day.text = "You have $it task for today"
+                        }
+                        it == 0 -> {
+                            tv_num_of_task_activity_day.text = "You have no task for today"
+                        }
+                        else -> {
+                            tv_num_of_task_activity_day.text = "You have $it tasks today"
+                        }
                     }
                 }
             },displayCurrentDate())
