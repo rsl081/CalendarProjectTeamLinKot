@@ -278,9 +278,12 @@ class MainActivity : BaseActivity(),
                 activity_task.visibility = View.INVISIBLE
                 activity_day.visibility = View.VISIBLE
             }
-            R.id.nav_my_tasks -> {
+            R.id.nav_my_tasks ->{
                 activity_day.visibility = View.INVISIBLE
                 activity_task.visibility = View.VISIBLE
+            }
+            R.id.nav_settings ->{
+                startActivity(Intent(this, ChangePassActivity::class.java))
             }
         }
         drawer_layout.closeDrawer(GravityCompat.START)
