@@ -81,7 +81,7 @@ class ApiClass: Interceptor {
             @RequiresApi(Build.VERSION_CODES.N)
             override fun onResponse(call: Call<User>, response: Response<User>) {
                 if(response.isSuccessful) {
-
+                    activity.hideProgressDialog()
                     val tokenForSignin  = response.body()?.token
 
                     val tokenResponseJsonString = Gson().toJson(tokenForSignin)
@@ -254,36 +254,41 @@ class ApiClass: Interceptor {
     fun getAllUser(activity: CreateTaskActivity){
         val assignee: ArrayList<String> = ArrayList<String>()
 
-        val loginResponseCall: Call<List<User>>? =
-            ApiClass().getUserServiceHeader()?.getAllUser()
+        if(Constants.MSHAREDPREFERENCES.contains(Constants.TOKEN_USER_MODEL)) {
+            val msharedToken =
+                Constants.MSHAREDPREFERENCES.getString(Constants.TOKEN_USER_MODEL, "")
 
-        loginResponseCall?.enqueue(object : Callback<List<User>> {
-            @RequiresApi(Build.VERSION_CODES.N)
-            override fun onResponse(call: Call<List<User>>, response: Response<List<User>>) {
-                if (response.isSuccessful) {
-                    activity.hideProgressDialog()
-                    val users = response.body()
-                    if (users != null) {
-                        for(user in users){
+            val loginResponseCall: Call<List<User>>? =
+                ApiClass().getUserServiceHeader()?.getAllUser("Bearer " + msharedToken!!)
 
-                            user.username?.let { assignee.add(it) }
-                            Log.i("AccountList", user.username!!)
+            loginResponseCall?.enqueue(object : Callback<List<User>> {
+                @RequiresApi(Build.VERSION_CODES.N)
+                override fun onResponse(call: Call<List<User>>, response: Response<List<User>>) {
+                    if (response.isSuccessful) {
+                        val users = response.body()
+                        if (users != null) {
+                            for (user in users) {
+
+                                user.username?.let { assignee.add(it) }
+                                Log.i("AccountList", user.username!!)
+                            }
+
+                            val arrayAdapter =
+                                ArrayAdapter(activity, R.layout.dropdown_item_create_task, assignee)
+                            activity.ac_assignee.setAdapter(arrayAdapter)
                         }
 
-                        val arrayAdapter = ArrayAdapter(activity, R.layout.dropdown_item_create_task, assignee)
-                        activity.ac_assignee.setAdapter(arrayAdapter)
+                    } else {
+                        val rc = response.code()
+                        Log.e("Error", "Error " + rc)
                     }
-
-                } else {
-                    val rc = response.code()
-                    Log.e("Error", "Error " + rc)
                 }
-            }
 
-            override fun onFailure(call: Call<List<User>>, t: Throwable) {
-                Log.e("Errorrrrr", t!!.message.toString())
-            }
-        })
+                override fun onFailure(call: Call<List<User>>, t: Throwable) {
+                    Log.e("Errorrrrr", t!!.message.toString())
+                }
+            })
+        }
     }//end of getAllUser
 
     fun checkTask(context: Context, id: String?){

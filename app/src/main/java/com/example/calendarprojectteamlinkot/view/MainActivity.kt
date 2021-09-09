@@ -237,11 +237,13 @@ class MainActivity : BaseActivity(),
         calendar_view.setOnDateChangeListener { calendarView, year, month, dayOfMonth ->
 
             val simpledateformat = SimpleDateFormat("yyyy-MM-dd")
+            val simpledateformat1 = SimpleDateFormat("EEE, MMM d, yyyy")
 
             val newDate = Calendar.getInstance()
             newDate[year, month] = dayOfMonth
 
             val selectedDate: String = simpledateformat.format(newDate.time)
+            val selectedDate1: String = simpledateformat1.format(newDate.time)
 
             activity_day.visibility = View.INVISIBLE
             activity_task.visibility = View.VISIBLE
@@ -254,7 +256,7 @@ class MainActivity : BaseActivity(),
                 ApiClass().getMyTaskByDate(this, selectedDate)
             }
 
-            tv_select_task_date.text = selectedDate
+            tv_select_task_date.text = selectedDate1
         }
 
     }//end of init
