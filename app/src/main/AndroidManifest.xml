@@ -15,8 +15,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CalendarProjectTeamLinKot"
         android:usesCleartextTraffic="true">
-        <activity android:name=".view.VerificationActivity"></activity>
-        <activity android:name=".view.ForgetPassActivity"></activity>
+        <activity android:name=".view.ChangePassActivity"></activity>
+        <activity android:name=".view.VerificationActivity" />
+        <activity android:name=".view.ForgetPassActivity">
+        </activity>
         <activity
             android:name=".view.TaskActivity"
             android:exported="true" />

@@ -108,4 +108,9 @@
     <dimen name="fp_padding">20dp</dimen>
     <dimen name="fp_guidelines">20dp</dimen>
 
+    <!--ChangePass-->
+    <dimen name="cp_guidelines">20dp</dimen>
+    <dimen name="cp_margin">20dp</dimen>
+    <dimen name="cp_text_size">25sp</dimen>
+
 </resources>

@@ -22,8 +22,9 @@ object Constants {
 
     const val TOKEN_USER_MODEL = "token_user_model"
 
-    lateinit var MSHAREDPREFERENCES: SharedPreferences
-    const val PREFERENCE_NAME = "MeTaskAppPreference"
+    const val TOKEN_NOTIFICATION = "token_notification"
 
-    private var retrofit: Retrofit? = null
+    lateinit var MSHAREDPREFERENCES: SharedPreferences
+
+    const val PREFERENCE_NAME = "MeTaskAppPreference"
 }
