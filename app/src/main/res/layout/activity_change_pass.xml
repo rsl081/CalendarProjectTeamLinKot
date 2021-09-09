@@ -6,43 +6,15 @@
     android:layout_height="match_parent"
     tools:context=".view.ChangePassActivity">
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline_left"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_begin="20dp" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline_right"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_end="20dp" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline_top"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_begin="20dp" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline_bottom"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_end="20dp" />
-
     <TextView
-        android:id="@+id/cp_changePass"
+        android:id="@+id/cp_change_pass"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:layout_marginBottom="20dp"
-        android:text="Change Password"
-        android:textColor="@color/black"
-        android:textSize="25sp"
+        android:layout_marginTop="@dimen/cp_margin2"
+        android:layout_marginBottom="@dimen/cp_margin"
+        android:text="@string/cp_change_password"
+        android:textSize="@dimen/cp_text_size"
+        android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/im_waving"
         app:layout_constraintEnd_toStartOf="@+id/guideline_right"
         app:layout_constraintStart_toStartOf="@+id/guideline_left"
@@ -50,42 +22,38 @@
 
     <ImageView
         android:id="@+id/im_waving"
-        android:layout_width="350dp"
-        android:layout_height="200dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="20dp"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/cp_image_height"
+        android:layout_marginTop="@dimen/cp_margin"
         android:src="@drawable/waving_toast"
+        android:contentDescription="@string/cp_image_description"
         app:layout_constraintEnd_toStartOf="@+id/guideline_right"
         app:layout_constraintStart_toStartOf="@+id/guideline_left"
-        app:layout_constraintTop_toBottomOf="@+id/cp_changePass" />
+        app:layout_constraintTop_toBottomOf="@+id/cp_change_pass"
+        tools:ignore="ImageContrastCheck" />
 
     <TextView
         android:id="@+id/cp_re_create"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="20dp"
+        android:layout_marginTop="@dimen/cp_margin"
+        android:layout_marginStart="@dimen/cp_margin"
+        android:layout_marginEnd="@dimen/cp_margin"
         android:gravity="center"
-        android:text="Please re-create a unique password."
-        android:textColor="@color/black"
-        android:textSize="25sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="@+id/im_waving"
-        app:layout_constraintStart_toStartOf="@+id/im_waving"
+        android:text="@string/cp_please_recreate"
+        android:textSize="@dimen/cp_text_size"
+        app:layout_constraintEnd_toStartOf="@+id/guideline_right"
+        app:layout_constraintStart_toStartOf="@+id/guideline_left"
         app:layout_constraintTop_toBottomOf="@+id/im_waving" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/cp_password"
-        android:layout_width="350dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:hint="Old Password"
+        android:hint="@string/cp_new_password"
         app:endIconMode="password_toggle"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="20dp"
+        android:layout_marginTop="@dimen/cp_margin"
         app:layout_constraintEnd_toEndOf="@id/cp_re_create"
         app:layout_constraintStart_toStartOf="@+id/cp_re_create"
         app:layout_constraintTop_toBottomOf="@+id/cp_re_create">
@@ -93,18 +61,18 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/old_password_change_activity"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:textSize="@dimen/cp_text_size"
+            android:layout_height="wrap_content"
+            tools:ignore="TextContrastCheck" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/cp_confirmPass"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="350dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="20dp"
-        android:hint="New Password"
+        android:layout_marginTop="@dimen/cp_margin"
+        android:hint="@string/cp_confirm_password"
         app:endIconMode="password_toggle"
         app:layout_constraintEnd_toEndOf="@+id/cp_password"
         app:layout_constraintStart_toStartOf="@+id/cp_password"
@@ -113,31 +81,44 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/new_password_channge_passsword"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/cp_text_size"
+            tools:ignore="TextContrastCheck" />
     </com.google.android.material.textfield.TextInputLayout>
-
-    <TextView
-        android:id="@+id/cp_errormsg"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="20dp"
-        android:text="error message goes here."
-        android:textColor="#FF0000"
-        app:layout_constraintStart_toStartOf="@+id/cp_confirmPass"
-        app:layout_constraintTop_toBottomOf="@+id/cp_confirmPass" />
 
     <Button
         android:id="@+id/btn_changePass"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:backgroundTint="#FF5349"
-        android:text="Confirm"
+        android:layout_marginTop="@dimen/cp_margin"
+        android:backgroundTint="@color/light_gray"
+        android:text="@string/cp_confirm_button"
         android:textColor="@color/white"
-        app:layout_constraintEnd_toStartOf="@+id/guideline_right"
-        app:layout_constraintStart_toStartOf="@+id/guideline_left"
-        app:layout_constraintTop_toBottomOf="@+id/cp_errormsg" />
+        android:textAllCaps="false"
+        app:layout_constraintEnd_toEndOf="@+id/cp_confirmPass"
+        app:layout_constraintStart_toStartOf="@+id/cp_confirmPass"
+        app:layout_constraintTop_toBottomOf="@+id/cp_confirmPass" />
 
+    <!--Guidelines-->
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_left"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="@dimen/cp_guidelines" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_right"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_end="@dimen/cp_guidelines" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_top"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="@dimen/cp_guidelines" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
