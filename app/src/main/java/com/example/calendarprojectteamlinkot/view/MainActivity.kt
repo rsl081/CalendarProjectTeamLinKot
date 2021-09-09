@@ -112,10 +112,16 @@ class MainActivity : BaseActivity(),
             // Get new FCM registration token
             val token = task.result
 
+
             Log.d(TAG + "Token", token.toString())
 
             if(Constants.MSHAREDPREFERENCES.contains(Constants.TOKEN_USER_MODEL)){
                 Constants.MSHAREDPREFERENCES = getSharedPreferences(Constants.PREFERENCE_NAME, Context.MODE_PRIVATE)
+
+
+                val editor = Constants.MSHAREDPREFERENCES.edit()
+                editor.putString(Constants.TOKEN_NOTIFICATION, token)
+                editor.apply()
 
                 val msharedToken = Constants.MSHAREDPREFERENCES.getString(Constants.TOKEN_USER_MODEL, "")
                 val notiftoken = Notification(token.toString())
@@ -151,9 +157,6 @@ class MainActivity : BaseActivity(),
                     }
                 })
             }
-
-
-            //Toast.makeText(baseContext, token, Toast.LENGTH_SHORT).show()
         })
 
 
