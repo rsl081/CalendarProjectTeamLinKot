@@ -73,6 +73,7 @@
                     android:id="@+id/delete_tasks_item"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:foreground="?attr/selectableItemBackground"
                     android:layout_marginStart="@dimen/ti_margin2"
                     android:drawablePadding="@dimen/ti_drawable_padding"
                     android:text="@string/delete"

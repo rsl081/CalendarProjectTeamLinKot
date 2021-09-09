@@ -42,6 +42,10 @@ class SignInActivity : BaseActivity() {
         tv_register.setOnClickListener {
             startActivity(Intent(this, UsernameActivity::class.java))
         }
+
+        btn_forgot_password.setOnClickListener {
+            startActivity(Intent(this, ForgetPassActivity::class.java))
+        }
     }
 
     override fun onResume() {
