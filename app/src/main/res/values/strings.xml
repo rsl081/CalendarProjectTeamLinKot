@@ -97,4 +97,12 @@
     <string name="fp_did_not_receive_code">If you didn\'t receive a code!</string>
     <string name="fp_resend">Resend</string>
 
+    <!--ChangePassword-->
+    <string name="cp_change_password">Change Password</string>
+    <string name="cp_please_recreate">Please re-create a unique password.</string>
+    <string name="cp_new_password">New Password</string>
+    <string name="cp_confirm_password">Confirm Password</string>
+    <string name="cp_image_description">Box Waving</string>
+    <string name="cp_confirm_button">Confirm</string>
+
 </resources>

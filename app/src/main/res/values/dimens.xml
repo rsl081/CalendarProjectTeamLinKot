@@ -111,6 +111,8 @@
     <!--ChangePass-->
     <dimen name="cp_guidelines">20dp</dimen>
     <dimen name="cp_margin">20dp</dimen>
-    <dimen name="cp_text_size">25sp</dimen>
+    <dimen name="cp_margin2">30dp</dimen>
+    <dimen name="cp_text_size">23sp</dimen>
+    <dimen name="cp_image_height">200dp</dimen>
 
 </resources>
