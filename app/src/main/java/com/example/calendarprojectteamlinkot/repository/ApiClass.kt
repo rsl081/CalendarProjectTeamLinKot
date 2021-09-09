@@ -2,10 +2,8 @@ package com.example.calendarprojectteamlinkot.repository
 
 import android.content.Context
 import android.content.Intent
-import android.media.session.MediaSession
 import android.os.Build
 import android.util.Log
-import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.annotation.RequiresApi
@@ -17,9 +15,7 @@ import com.example.calendarprojectteamlinkot.utils.Constants
 import com.example.calendarprojectteamlinkot.view.*
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_create_task.*
-import kotlinx.android.synthetic.main.activity_day.*
 import kotlinx.android.synthetic.main.activity_task.*
-import kotlinx.android.synthetic.main.activity_username.*
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.Request
@@ -171,6 +167,42 @@ class ApiClass: Interceptor {
             }
         })
     }//end of getUsernameFromApi
+
+    fun changePasswordUser(activity: ChangePassActivity,changePassword: ChangePassword){
+        if(Constants.MSHAREDPREFERENCES.contains(Constants.TOKEN_USER_MODEL)) {
+            val msharedToken =
+                Constants.MSHAREDPREFERENCES.getString(Constants.TOKEN_USER_MODEL, "")
+
+            val loginResponseCall: Call<User>? =
+                ApiClass().getUserServiceHeader()?.changePasswordUser("Bearer " + msharedToken!!,changePassword)
+
+            loginResponseCall?.enqueue(object : Callback<User> {
+                @RequiresApi(Build.VERSION_CODES.N)
+                override fun onResponse(call: Call<User>, response: Response<User>) {
+                    if (response.isSuccessful) {
+                        activity.proceedToNextAct()
+                    } else {
+                        val rc = response.code()
+                        when (rc) {
+                            400 -> {
+                                Log.e("Error 400", "Bad Request")
+                            }
+                            404 -> {
+                                Log.e("Error 404", "Not Found")
+                            }
+                            else -> {
+                                Log.e("Error", "Generic Error" + rc)
+                            }
+                        }
+                    }
+                }
+
+                override fun onFailure(call: Call<User>, t: Throwable) {
+                    Log.e("Errorrrrr", t!!.message.toString())
+                }
+            })
+        }
+    }
 
     fun getCurrentUser(userCallback: (String?) -> Unit)
     {

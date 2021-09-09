@@ -26,6 +26,14 @@ interface ApiServices {
     @GET("Account/list")
     fun getAllUser(@Header("Authorization") auth: String): Call<List<User>>
 
+    @Headers("Content-Type: application/json")
+    @POST("Account/password/change")
+    fun changePasswordUser(
+        @Header("Authorization") auth: String,
+        @Body changePassword: ChangePassword
+    ): Call<User>
+
+
     //Task
     @Headers("Content-Type: application/json")
     @GET("tasks")
