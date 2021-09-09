@@ -1,22 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <!-- Primary brand color. -->
     <color name="green_cyan">#b1cbbb</color>
     <color name="rosebud">#eea29a</color>
-
     <color name="sunset">#c94c4c</color>
     <color name="light_black">#99000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="black">#000000</color>
     <color name="light_gray">#707070</color>
+    <color name="light_gray2">#bebebe</color>
     <color name="dark_gray">#808080</color>
     <color name="blue">#0000FF</color>
     <color name="gradiant_green">#83D475</color>
-
-
     <color name="mtrl_textinput_default_box_stroke_color">#b1cbbb</color>
-
     <color name="snackbar_error_color">#F72400</color>
 
 </resources>

@@ -6,115 +6,109 @@
     android:layout_height="match_parent"
     tools:context=".view.ForgetPassActivity">
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline_left"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_begin="20dp" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline_right"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_end="20dp" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline_top"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_begin="20dp" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline_bottom"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_end="20dp" />
-
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/tv_forgot_password"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:layout_marginBottom="20dp"
-        android:text="Forgot Password?"
-        android:textColor="@color/black"
-        android:textSize="25sp"
-        app:layout_constraintBottom_toTopOf="@+id/curious"
+        android:layout_marginTop="@dimen/fp_margin2"
+        android:text="@string/fp_forgot_password"
+        android:textStyle="bold"
+        android:textSize="@dimen/fp_text_size2"
         app:layout_constraintEnd_toStartOf="@+id/guideline_right"
         app:layout_constraintStart_toStartOf="@+id/guideline_left"
         app:layout_constraintTop_toTopOf="@+id/guideline_top" />
 
     <ImageView
         android:id="@+id/curious"
-        android:layout_width="350dp"
-        android:layout_height="200dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="20dp"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/fp_image_height"
+        android:layout_marginTop="@dimen/fp_margin2"
+        android:layout_marginStart="@dimen/fp_margin2"
+        android:layout_marginEnd="@dimen/fp_margin2"
+        android:contentDescription="@string/fp_image_description"
         android:src="@drawable/curious_toast"
         app:layout_constraintEnd_toStartOf="@+id/guideline_right"
         app:layout_constraintStart_toStartOf="@+id/guideline_left"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_forgot_password" />
 
     <TextView
-        android:id="@+id/tv_enterEmail"
+        android:id="@+id/tv_enter_email"
         android:layout_width="0dp"
-        android:layout_height="80dp"
-        android:layout_marginStart="25dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="25dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/fp_margin2"
         android:gravity="center"
-        android:text="Enter the email address associated with your account."
-        android:textColor="@color/black"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toStartOf="@+id/guideline_right"
-        app:layout_constraintHorizontal_bias="0.505"
-        app:layout_constraintStart_toStartOf="@+id/guideline_left"
+        android:text="@string/fp_enter_email"
+        android:textSize="@dimen/fp_text_size2"
+        app:layout_constraintEnd_toEndOf="@+id/curious"
+        app:layout_constraintStart_toStartOf="@+id/curious"
         app:layout_constraintTop_toBottomOf="@+id/curious" />
 
     <EditText
-        android:id="@+id/et_enterEmail"
+        android:id="@+id/et_enter_email"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginBottom="20dp"
-        android:ellipsize="middle"
-        android:hint="Enter Email Address"
-        app:layout_constraintBottom_toTopOf="@+id/tv_weWillEmail"
-        app:layout_constraintEnd_toStartOf="@+id/guideline_right"
-        app:layout_constraintStart_toStartOf="@+id/guideline_left"
-        app:layout_constraintTop_toBottomOf="@+id/tv_enterEmail" />
+        android:layout_marginTop="@dimen/fp_margin2"
+        android:gravity="center"
+        android:hint="@string/fp_enter_email_address"
+        android:padding="@dimen/fp_padding"
+        android:textSize="@dimen/fp_text_size2"
+        android:textColor="@color/light_gray2"
+        android:inputType="textEmailAddress"
+        android:autofillHints="emailAddress"
+        app:layout_constraintEnd_toEndOf="@+id/tv_enter_email"
+        app:layout_constraintStart_toStartOf="@+id/tv_enter_email"
+        app:layout_constraintTop_toBottomOf="@+id/tv_enter_email"
+        tools:ignore="TextContrastCheck" />
 
     <TextView
-        android:id="@+id/tv_weWillEmail"
+        android:id="@+id/tv_we_will_email"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="25dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="25dp"
-        android:text="We will email you a link to reset your password."
-        android:textSize="18sp"
-        app:layout_constraintEnd_toStartOf="@+id/guideline_right"
-        app:layout_constraintStart_toStartOf="@+id/guideline_left"
-        app:layout_constraintTop_toBottomOf="@+id/et_enterEmail" />
+        android:layout_marginTop="@dimen/fp_margin2"
+        android:gravity="center"
+        android:text="@string/fp_email_you_a_link"
+        android:textColor="@color/light_gray2"
+        android:textSize="22sp"
+        app:layout_constraintEnd_toEndOf="@+id/et_enter_email"
+        app:layout_constraintStart_toStartOf="@+id/et_enter_email"
+        app:layout_constraintTop_toBottomOf="@+id/et_enter_email"
+        tools:ignore="TextContrastCheck" />
 
     <Button
         android:id="@+id/btn_send"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:backgroundTint="#FF5349"
-        android:text="Send"
+        android:layout_marginTop="@dimen/fp_margin2"
+        android:backgroundTint="@color/light_gray"
+        android:text="@string/fp_send"
         android:textColor="@color/white"
-        app:layout_constraintEnd_toStartOf="@+id/guideline_right"
-        app:layout_constraintStart_toStartOf="@+id/guideline_left"
-        app:layout_constraintTop_toBottomOf="@+id/tv_weWillEmail" />
+        android:textSize="@dimen/fp_text_size2"
+        android:textAllCaps="false"
+        app:layout_constraintEnd_toEndOf="@+id/tv_we_will_email"
+        app:layout_constraintStart_toStartOf="@+id/tv_we_will_email"
+        app:layout_constraintTop_toBottomOf="@+id/tv_we_will_email"
+        tools:ignore="TextContrastCheck" />
 
+    <!--Guidelines-->
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_left"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="@dimen/fp_guidelines" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_right"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_end="@dimen/fp_guidelines" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_top"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="@dimen/fp_guidelines" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

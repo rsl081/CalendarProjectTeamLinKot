@@ -25,6 +25,7 @@
         android:layout_height="wrap_content"
         android:text="@string/selected_task_date"
         android:textSize="@dimen/ta_text_size2"
+        android:foreground="?attr/selectableItemBackground"
         app:layout_constraintBottom_toBottomOf="@+id/ib_previous"
         app:layout_constraintEnd_toStartOf="@+id/ib_previous"
         app:layout_constraintStart_toEndOf="@+id/ib_previous"

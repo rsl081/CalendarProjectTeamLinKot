@@ -96,10 +96,21 @@
     <dimen name="reg_padding">20dp</dimen>
     <dimen name="reg_drawable_padding">10dp</dimen>
     
+    <!--ForgotPassword-->
+    <dimen name="fp_margin">10dp</dimen>
+    <dimen name="fp_margin2">20dp</dimen>
+    <dimen name="fp_margin3">30dp</dimen>
+    <dimen name="fp_text_size">18sp</dimen>
+    <dimen name="fp_text_size2">23sp</dimen>
+    <dimen name="fp_width">48dp</dimen>
+    <dimen name="fp_min_height">48dp</dimen>
+    <dimen name="fp_image_height">200dp</dimen>
+    <dimen name="fp_padding">20dp</dimen>
+    <dimen name="fp_guidelines">20dp</dimen>
+
     <!--ChangePass-->
     <dimen name="cp_guidelines">20dp</dimen>
     <dimen name="cp_margin">20dp</dimen>
     <dimen name="cp_text_size">25sp</dimen>
-
 
 </resources>
