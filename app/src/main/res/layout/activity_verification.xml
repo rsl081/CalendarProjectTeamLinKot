@@ -79,7 +79,7 @@
         android:layout_marginTop="@dimen/fp_margin2"
         android:importantForAutofill="no"
         android:inputType="number"
-        android:maxLines="1"
+        android:maxLe="1"
         android:minHeight="@dimen/fp_min_height"
         app:layout_constraintEnd_toStartOf="@+id/et_code4"
         app:layout_constraintStart_toEndOf="@+id/et_code2"
