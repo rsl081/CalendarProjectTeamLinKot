@@ -46,6 +46,7 @@ class SignInActivity : BaseActivity() {
         btn_forgot_password.setOnClickListener {
             startActivity(Intent(this, ForgetPassActivity::class.java))
         }
+
     }
 
     override fun onResume() {
@@ -67,7 +68,6 @@ class SignInActivity : BaseActivity() {
         {
             showProgressDialog(resources.getString(R.string.please_wait))
             ApiClass().signinFromApi(this,email,password)
-
         }
     }
 
