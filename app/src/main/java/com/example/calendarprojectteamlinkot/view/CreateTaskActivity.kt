@@ -76,8 +76,10 @@ class CreateTaskActivity : BaseActivity(), DatePickerDialog.OnDateSetListener {
         }
 
         tv_cancel_button.setOnClickListener {
-            onBackPressed()
+            startActivity(Intent(this, MainActivity::class.java))
+            finish()
         }
+
 
         et_task_date.setOnClickListener {
             getDateCalendar()

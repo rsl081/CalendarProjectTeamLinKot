@@ -8,6 +8,8 @@
     tools:context=".view.DayActivity"
     tools:openDrawer="start">
 
+
+
     <androidx.cardview.widget.CardView
         android:id="@+id/cv_greeting"
         android:layout_width="0dp"

@@ -22,8 +22,9 @@ interface ApiServices {
     @GET("Account")
     fun getCurrentUser(@Header("Authorization") auth: String): Call<User>
 
+    @Headers("Content-Type: application/json")
     @GET("Account/list")
-    fun getAllUser(): Call<List<User>>
+    fun getAllUser(@Header("Authorization") auth: String): Call<List<User>>
 
     //Task
     @Headers("Content-Type: application/json")
