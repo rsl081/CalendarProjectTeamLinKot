@@ -96,6 +96,10 @@
     <dimen name="reg_padding">20dp</dimen>
     <dimen name="reg_drawable_padding">10dp</dimen>
     
-    <!--ForgotPass-->
+    <!--ChangePass-->
+    <dimen name="cp_guidelines">20dp</dimen>
+    <dimen name="cp_margin">20dp</dimen>
+    <dimen name="cp_text_size">25sp</dimen>
+
 
 </resources>

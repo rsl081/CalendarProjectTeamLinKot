@@ -15,7 +15,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CalendarProjectTeamLinKot"
         android:usesCleartextTraffic="true">
-        <activity android:name=".view.VerificationActivity"></activity>
+        <activity android:name=".view.ChangePassActivity"></activity>
+        <activity android:name=".view.VerificationActivity" />
         <activity android:name=".view.ForgetPassActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -31,8 +32,7 @@
         <activity android:name=".view.CreateTaskActivity" />
         <activity
             android:name=".view.SignInActivity"
-            android:screenOrientation="portrait">
-        </activity>
+            android:screenOrientation="portrait"></activity>
         <activity android:name=".view.UsernameActivity" />
         <activity
             android:name=".view.SplashActivity"
