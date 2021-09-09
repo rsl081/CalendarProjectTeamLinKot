@@ -2,6 +2,7 @@ package com.example.calendarprojectteamlinkot.repository
 
 import android.content.Context
 import android.content.Intent
+import android.media.session.MediaSession
 import android.os.Build
 import android.util.Log
 import android.view.View
@@ -662,8 +663,44 @@ class ApiClass: Interceptor {
         }
     }
 
+    fun deleteTokenNotification(){
+        if(Constants.MSHAREDPREFERENCES.contains(Constants.TOKEN_NOTIFICATION)){
+            val msharedToken = Constants.MSHAREDPREFERENCES.getString(Constants.TOKEN_USER_MODEL, "")
+            val msharedTokenNotification = Constants.MSHAREDPREFERENCES.getString(Constants.TOKEN_NOTIFICATION, "")
+
+            val newToken = msharedTokenNotification?.let { Notification(it) }
+
+            val tokenNotificaitonResponseCall: Call<Task>? =
+                    ApiClass().getUserServiceHeader()?.token_delete("Bearer "+msharedToken!!,newToken!!)
+            tokenNotificaitonResponseCall?.enqueue(object: Callback<Task> {
+                @RequiresApi(Build.VERSION_CODES.N)
+                override fun onResponse(call: Call<Task>, response: Response<Task>) {
+                    if(response.isSuccessful) {
+                        Log.i("OkayNotif", "Good Request")
+                    }else{
+                        val rc =  response.code()
+                        when(rc){
+                            400->{
+                                Log.e("Error 400 showAllTask", "Bad Request")
+                            }
+                            403-> {
+                                Log.e("Error 403", "Not Found" + rc)
+                            }else ->{
+                            Log.e("Error", "Happy Generic Error" + rc)
+                        }
+                        }
+                    }
+                }
+                override fun onFailure(call: Call<Task>, t: Throwable) {
+                    Log.e("Errorrrrr", t!!.message.toString())
+                }
+            })
+        }
+    }
+
     fun signOut()
     {
+        deleteTokenNotification()
         Constants.MSHAREDPREFERENCES.edit().clear().commit()
     }
 

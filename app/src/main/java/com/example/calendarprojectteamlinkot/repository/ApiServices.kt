@@ -87,4 +87,12 @@ interface ApiServices {
         @Body token: Notification,
     ): Call<Task>
 
+    @Headers("Content-Type: application/json")
+//    @DELETE("Account/tokens/delete")
+    @HTTP(method = "DELETE", path = "Account/tokens/delete", hasBody = true)
+    fun token_delete(
+        @Header("Authorization") auth: String,
+        @Body token: Notification,
+    ): Call<Task>
+
 }
